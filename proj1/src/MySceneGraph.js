@@ -24,6 +24,9 @@ function MySceneGraph(filename, scene) {
     
     this.idRoot = null;                    // The id of the root element.
 
+    this.objectNodes = [];
+    this.objectLeaves = [];
+
     this.axisCoords = [];
     this.axisCoords['x'] = [1, 0, 0];
     this.axisCoords['y'] = [0, 1, 0];
@@ -71,6 +74,7 @@ MySceneGraph.prototype.parseLSXFile = function(rootElement) {
         return "root tag <SCENE> missing";
     
     var nodes = rootElement.children;
+    console.log(nodes);
     
     // Reads the names of the nodes to an auxiliary buffer.
     var nodeNames = [];
@@ -1178,8 +1182,10 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 if (root == null )
                     return "failed to retrieve root node ID";
                 this.idRoot = root;
+                var rootNode = new MyGraphNode(this, this.idRoot);
+                this.objectNodes.push(rootNode);
             }
-        } 
+        }
         else if (nodeName == "NODE") {
             // Retrieves node ID.
             var nodeID = this.reader.getString(children[i], 'id');
@@ -1348,7 +1354,9 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 							this.warn("Error in leaf");
 						
 						//parse leaf
-						//this.nodes[nodeID].addLeaf(new MyGraphLeaf(this,descendants[j]);
+						var leaf = new MyGraphLeaf(this, type);
+					//	this.nodes[nodeID].addLeaf(leaf);
+						this.objectLeaves.push(leaf);
                         sizeChildren++;
 					}
 					else
@@ -1357,6 +1365,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
             }
             if (sizeChildren == 0)
                 return "at least one descendant must be defined for each intermediate node";
+            this.objectNodes.push(this.nodes[nodeID]);
         } 
         else
             this.onXMLMinorError("unknown tag name <" + nodeName);
@@ -1424,5 +1433,8 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function() {
 	// entry point for graph rendering
 	// remove log below to avoid performance issues
-	this.log("Graph should be rendered here...");
+	//this.log("Graph should be rendered here...");
+	//console.log(this.objectNodes.length);
+	for (var i = 0; i < this.objectLeaves.length; i++)
+	   this.objectLeaves[i].primitive.display();
 }
