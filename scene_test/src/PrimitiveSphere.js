@@ -24,20 +24,21 @@ PrimitiveSphere.prototype.initBuffers = function()
 	this.texCoords = [];
 
 	dfi = (2 * Math.PI) / this.slices;
-	dtheta = Math.PI / (2 * this.stacks);
+	dtheta = Math.PI / this.stacks;
 	ds = 1 / this.slices;
 	dt = 1 / this.stacks;
+	r = this.radius
 
 	for (i = 0, fi = 0, s = 1.0; i <= this.slices; i++, fi += dfi, s -= ds)
 	{
 		for (j = 0, theta = 0, t = 0; j <= this.stacks; j++, theta += dtheta, t += dt)
 		{
-			this.vertices.push(	Math.sin(theta) * Math.cos(fi),
-								Math.sin(theta) * Math.sin(fi),
-								Math.cos(theta));
-			this.normals.push(	Math.sin(theta) * Math.cos(fi),
-								Math.sin(theta) * Math.sin(fi),
-								Math.cos(theta));
+			this.vertices.push(	Math.sin(theta)*r * Math.cos(fi),
+								Math.sin(theta)*r * Math.sin(fi),
+								Math.cos(theta)*r);
+			this.normals.push(	Math.sin(theta)*r * Math.cos(fi),
+								Math.sin(theta)*r * Math.sin(fi),
+								Math.cos(theta)*r);
 			this.texCoords.push(s, t);
 		}
 	}
@@ -56,15 +57,3 @@ PrimitiveSphere.prototype.initBuffers = function()
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };
-
- PrimitiveSphere.prototype.display = function()
- {
-	this.scene.pushMatrix();
-	this.scene.scale(this.radius, this.radius, this.radius);
- 	this.drawElements(this.scene.gl.TRIANGLES);
-	this.scene.pushMatrix();
-	this.scene.rotate(Math.PI, 0, 1, 0);
-	this.drawElements(this.scene.gl.TRIANGLES);
-	this.scene.popMatrix();
-	this.scene.popMatrix();
- }

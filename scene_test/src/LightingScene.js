@@ -30,9 +30,9 @@ LightingScene.prototype.init = function(application) {
 
 	/* PRIMITIVES INSTANCIATION */
 	this.rect = new PrimitiveRectangle(this, 0, 4, 5, 0);
-	this.cyl = new PrimitiveCylinder(this, 4, 1, 1, 20, 20);
+	this.cyl = new PrimitiveCylinder(this, 8, 1, 1, 20, 20);
 	this.sp = new PrimitiveSphere(this, 2, 20, 20);
-	this.sp1 = new PrimitiveSphere(this, 1, 20, 20);
+	this.sp1 = new PrimitiveSphere(this, 3, 20, 20);
 	this.rt = new PrimitiveTriangle(this, 2, 0, 0, 0, 2, 0, 0, 0, 2);
 };
 
@@ -116,13 +116,10 @@ LightingScene.prototype.display = function() {
 
 	// ---- BEGIN Primitive drawing section
 //	this.rect.display();
-//	this.cyl.display();
-/*	this.sp.display();
-	this.pushMatrix();
-	this.translate(3, 0, 0);
+//  this.cyl.display();
+//	this.sp.display();
 	this.sp1.display();
-	this.popMatrix();*/
-	this.rt.display();
+//	this.rt.display();
 
 	console.log("ok");
 	// ---- END Primitive drawing section
