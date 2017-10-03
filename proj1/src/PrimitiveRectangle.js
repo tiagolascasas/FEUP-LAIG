@@ -1,12 +1,12 @@
 /**
- * MyQuad
+ * PrimitiveRectangle
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function MyQuad(scene, minS, maxS, minT, maxT) 
+function PrimitiveRectangle(scene, xleft, yleft, xright, yright/*minS, maxS, minT, maxT*/)
 {
-	CGFobject.call(this,scene);
-	
+	CGFobject.call(this, scene);
+/*
 	if (minS != null)
 		this.minS = minS;
 	else
@@ -21,29 +21,30 @@ function MyQuad(scene, minS, maxS, minT, maxT)
 		this.minT = minT;
 	else
 		this.minT = 0.0;
-		
+
 	if (maxT != null)
 		this.maxT = maxT;
 	else
-		this.maxT = 1.0;
+		this.maxT = 1.0;*/
 
-	this.initBuffers();
+	this.initBuffers(xleft, yleft, xright, yright);
 };
 
-MyQuad.prototype = Object.create(CGFobject.prototype);
-MyQuad.prototype.constructor=MyQuad;
+PrimitiveRectangle.prototype = Object.create(CGFobject.prototype);
+PrimitiveRectangle.prototype.constructor=PrimitiveRectangle;
 
-MyQuad.prototype.initBuffers = function () {
+PrimitiveRectangle.prototype.initBuffers = function (xleft, yleft, xright, yright)
+{
 	this.vertices = [
-            -0.5, -0.5, 0,
-            0.5, -0.5, 0,
-            -0.5, 0.5, 0,
-            0.5, 0.5, 0
+			xleft, yleft, 0,
+			0, 0, 0,
+			xright, yright, 0,
+			xright, yleft, 0
 			];
-
+	console.log(this.vertices);
 	this.indices = [
-            0, 1, 2, 
-			3, 2, 1
+            0, 1, 2,
+			2, 3, 0
         ];
 
 	this.normals = [
@@ -52,13 +53,13 @@ MyQuad.prototype.initBuffers = function () {
 			0, 0, 1,
 			0, 0, 1
 	];
-
+/*
 	this.texCoords = [
 		this.minS, this.maxT,
 		this.maxS, this.maxT,
 		this.minS, this.minT,
 		this.maxS, this.minT
-	];
+	];*/
 
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
