@@ -1358,16 +1358,18 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 					if (descendants[j].nodeName == "LEAF")
 					{
 						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
-
 						if (type != null)
 							this.log("   Leaf: "+ type);
 						else
 							this.warn("Error in leaf");
 
-						//parse leaf
-					//	var leaf = new MyGraphLeaf(this, type);
-					//	this.nodes[nodeID].addLeaf(leaf);
-						obj.addLeaf(type, /*args here*/ null);
+						var args=this.reader.getString(descendants[j], 'args');
+						if (type != null)
+							this.log("args = " + args);
+						else
+							this.warn("No arguments were specified for primitive");
+
+						obj.addLeaf(type, args);
                         sizeChildren++;
 					}
 					else
@@ -1386,7 +1388,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 
 	this.objGraph.makeRoot();
 	console.log("PRINTING TREE USING DFS");
-	this.objGraph.printTree("ROOT");
+	this.objGraph.printTreeInformation("ROOT");
 /*	console.log("Length of obj: " + this.objGraph.obj.length);
 	for (var i = 0; i < this.objGraph.obj.length; i++)
 		console.log(this.objGraph.obj[i].id);*/
@@ -1451,11 +1453,8 @@ MySceneGraph.generateRandomString = function(length) {
 /**
  * Displays the scene, processing each node, starting in the root node.
  */
-MySceneGraph.prototype.displayScene = function() {
-	// entry point for graph rendering
-	// remove log below to avoid performance issues
-	//this.log("Graph should be rendered here...");
-	//console.log(this.objectNodes.length);
-	for (var i = 0; i < this.objectLeaves.length; i++)
-	   this.objectLeaves[i].primitive.display();
+MySceneGraph.prototype.displayScene = function()
+{
+	this.materials[this.defaultMaterialID].apply();	//temporary
+	this.objGraph.displayObjects();
 }

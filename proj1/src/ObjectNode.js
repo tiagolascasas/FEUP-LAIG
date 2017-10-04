@@ -17,22 +17,26 @@ ObjectNode.prototype.addChild = function(id)
 
 ObjectNode.prototype.addLeaf = function(id, args)
 {
+	var ar = args.split(" ");
+	for(var i = 0; i < ar.length; i++)
+		ar[i] = +ar[i];
+
 	switch (id)
 	{
 		case 'rectangle':
-			var rect = new PrimitiveRectangle(this.scene, 0, 0, 1, 1);
+			var rect = new PrimitiveRectangle(this.scene, ar[0], ar[1], ar[2], ar[3]);
 			this.leaves.push(rect);
 			break;
 		case 'cylinder':
-			var cyl = new PrimitiveCylinder(this.scene, 1, 1, 1, 20, 20);
+			var cyl = new PrimitiveCylinder(this.scene, ar[0], ar[1], ar[2], ar[3], ar[4]);
 			this.leaves.push(cyl);
 			break;
 		case 'sphere':
-			var sp = new PrimitiveSphere(this.scene, 1, 20, 20);
+			var sp = new PrimitiveSphere(this.scene, ar[0], ar[1], ar[2]);
 			this.leaves.push(sp);
 			break;
 		case 'triangle':
-			var tr = new PrimitiveTriangle(this.scene, 1, 0, 0, 0, 1, 0, 0, 0, 1);
+			var tr = new PrimitiveTriangle(this.scene, ar[0], ar[1], ar[2], ar[3], ar[4], ar[5], ar[6], ar[7], ar[8]);
 			this.leaves.push(tr);
 			break;
 	}

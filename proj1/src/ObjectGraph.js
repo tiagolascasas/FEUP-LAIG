@@ -31,14 +31,11 @@ ObjectGraph.prototype.getNodeByID = function(id)
 	return null;
 };
 
-ObjectGraph.prototype.printTree = function(node)
+ObjectGraph.prototype.printTreeInformation = function(node)
 {
-	var current = this.getNodeByID(node);
-	if (current != null)
+	for (var i = 0; i < this.obj.length; i++)
 	{
-		console.log(node);
-		for (var i = 0; i < current.children.length; i++)
-			this.printTree(current.children[i].id);
+		console.log("Node " + this.obj[i].id + " has " + this.obj[i].children.length + " children");
 	}
 };
 
@@ -69,3 +66,17 @@ ObjectGraph.prototype.makeRoot = function()
 	}
 	this.obj.push(rt);
 };
+
+ObjectGraph.prototype.displayObjects = function()
+{
+	counter = 0;
+	for (var i = 0; i < this.obj.length; i++)
+	{
+		for (var j = 0; j < this.obj[i].leaves.length; j++)
+		{
+			this.obj[i].leaves[j].display();
+			counter++;
+		}
+	}
+	console.log("Drew " + counter + " primitives");
+}
