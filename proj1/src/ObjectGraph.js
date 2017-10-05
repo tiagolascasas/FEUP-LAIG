@@ -39,51 +39,14 @@ ObjectGraph.prototype.printTreeInformation = function(node)
 	}
 };
 
-ObjectGraph.prototype.makeRoot = function()
+ObjectGraph.prototype.displayObjects = function(node)
 {
-	var rt = new ObjectNode("ROOT", this.scene);
-
-	for (var i = 0; i < this.obj.length; i++)
-	{
-		var id = this.obj[i].id;
-		var found = false;
-		for (var j = 0; j < this.obj.length; j++)
-		{
-			if (i != j)
-			{
-				for (var k = 0; k < this.obj[j].children.length; j++)
-				{
-					if (this.obj[j].children[k] == id && this.obj[j].leaves.length == 0)
-					{
-						found = true;
-						break;
-					}
-				}
-			}
-		}
-		if (found == false)
-			rt.addChild(this.obj[i].id);
-	}
-	this.obj.push(rt);
-};
-
-ObjectGraph.prototype.displayObjects = function()
-{
-	var stack = [];
-	var id;
-	var currNode;
-
-	stack.push("root");
-	while(stack.length > 0)
-	{
-		id = stack.pop();
-		currNode = this.getNodeByID(id);
-		this.scene.pushMatrix();
-		this.scene.multMatrix(currNode.matrix);		//
-		currNode.displayLeaves();					//swap?
-		this.scene.popMatrix();
-		var children = currNode.children;
-		for (var i = 0; i < children.length; i++)
-			stack.push(children[i]);
-	}
+	var currNode = this.getNodeByID(node);
+	this.scene.pushMatrix();
+	this.scene.multMatrix(currNode.matrix);
+	currNode.displayPrimitives();
+	var children = currNode.children;
+	for (var i = 0; i < children.length; i++)
+		this.displayObjects(children[i]);
+	this.scene.popMatrix();
 }

@@ -15,12 +15,13 @@ ObjectNode.prototype.addChild = function(id)
     this.children.push(id);
 };
 
-ObjectNode.prototype.displayLeaves = function(id)
+ObjectNode.prototype.displayPrimitives = function(id)
 {
     for (var i = 0; i < this.leaves.length; i++)
 	{
-		console.log("Drawing primitive");
+		this.scene.pushMatrix();
 		this.leaves[i].display();
+		this.scene.popMatrix();
 	}
 };
 

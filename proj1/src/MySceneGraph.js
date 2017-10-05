@@ -1456,5 +1456,6 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function()
 {
 	this.materials[this.defaultMaterialID].apply();	//temporary
-	this.objGraph.displayObjects();
+	//this.objGraph.displayObjects();
+	this.objGraph.displayObjects("root");
 }
