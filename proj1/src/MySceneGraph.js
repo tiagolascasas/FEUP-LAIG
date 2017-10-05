@@ -917,8 +917,10 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
                 return "t amplification factor undefined for texture with ID = " + textureID;
 
             var texture = new CGFtexture(this.scene,"./scenes/" + filepath);
+			var textureObj = new ObjectTexture(texture, amplifFactorS, amplifFactorT);
 
             this.textures[textureID] = [texture, amplifFactorS, amplifFactorT];
+			this.objGraph.addTexture(textureID, textureObj);
             oneTextureDefined = true;
         }
         else
@@ -1153,6 +1155,8 @@ MySceneGraph.prototype.parseMaterials = function(materialsNode) {
         newMaterial.setEmission(emissionComponent[0], emissionComponent[1], emissionComponent[2], emissionComponent[3]);
         this.materials[materialID] = newMaterial;
         oneMaterialDefined = true;
+
+		this.objGraph.addMaterial(materialID, newMaterial);
     }
 
     if (!oneMaterialDefined)
@@ -1435,6 +1439,7 @@ MySceneGraph.prototype.generateDefaultMaterial = function() {
     while (this.materials[this.defaultMaterialID] != null);
 
     this.materials[this.defaultMaterialID] = materialDefault;
+	this.objGraph.defaultMaterial = materialDefault;
 }
 
 /**
@@ -1456,6 +1461,5 @@ MySceneGraph.generateRandomString = function(length) {
 MySceneGraph.prototype.displayScene = function()
 {
 	this.materials[this.defaultMaterialID].apply();	//temporary
-	//this.objGraph.displayObjects();
-	this.objGraph.displayObjects("root");
+	this.objGraph.display();
 }

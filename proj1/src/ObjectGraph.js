@@ -2,8 +2,9 @@ function ObjectGraph(scene)
 {
 	this.scene = scene;
 	this.obj = [];
-	this.mat = [];
-	this.tex = [];
+	this.mat = {};
+	this.tex = {};
+	this.defaultMaterial = null;
 };
 
 ObjectGraph.prototype.addMaterial = function(id, material)
@@ -39,14 +40,48 @@ ObjectGraph.prototype.printTreeInformation = function(node)
 	}
 };
 
+ObjectGraph.prototype.display = function()
+{
+	this.displayObjects("root");
+};
+
 ObjectGraph.prototype.displayObjects = function(node)
 {
 	var currNode = this.getNodeByID(node);
+
 	this.scene.pushMatrix();
+	this.applyAppearences(currNode);
 	this.scene.multMatrix(currNode.matrix);
 	currNode.displayPrimitives();
+
 	var children = currNode.children;
 	for (var i = 0; i < children.length; i++)
 		this.displayObjects(children[i]);
+
 	this.scene.popMatrix();
-}
+};
+
+ObjectGraph.prototype.applyAppearences = function (node)
+{
+	switch(node.material)
+	{
+		case "null":
+			break;
+		case "clear":
+			this.defaultMaterial.apply();
+			break;
+		default:
+			this.mat[node.material].apply();
+	}
+/*
+	switch(node.texture)
+	{
+		case "null":
+			break;
+		case "clear":
+			//this.defaultMaterial.tex.apply();
+			break;
+		default:
+			this.textures[node.texture].tex.bind();
+	}*/
+};
