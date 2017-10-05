@@ -25,7 +25,7 @@ ObjectGraph.prototype.getNodeByID = function(id)
 {
 	for (var i = 0; i < this.obj.length; i++)
 	{
-		if (this.obj[i].id = id)
+		if (this.obj[i].id == id)
 			return this.obj[i];
 	}
 	return null;
@@ -35,7 +35,7 @@ ObjectGraph.prototype.printTreeInformation = function(node)
 {
 	for (var i = 0; i < this.obj.length; i++)
 	{
-		console.log("Node " + this.obj[i].id + " has " + this.obj[i].children.length + " children");
+		console.log("Node " + this.obj[i].id + " has " + this.obj[i].children.length + " children: " + this.obj[i].children);
 	}
 };
 
@@ -53,7 +53,7 @@ ObjectGraph.prototype.makeRoot = function()
 			{
 				for (var k = 0; k < this.obj[j].children.length; j++)
 				{
-					if (this.obj[j].children[k].id == id)
+					if (this.obj[j].children[k] == id && this.obj[j].leaves.length == 0)
 					{
 						found = true;
 						break;
@@ -69,14 +69,21 @@ ObjectGraph.prototype.makeRoot = function()
 
 ObjectGraph.prototype.displayObjects = function()
 {
-	counter = 0;
-	for (var i = 0; i < this.obj.length; i++)
+	var stack = [];
+	var id;
+	var currNode;
+
+	stack.push("root");
+	while(stack.length > 0)
 	{
-		for (var j = 0; j < this.obj[i].leaves.length; j++)
-		{
-			this.obj[i].leaves[j].display();
-			counter++;
-		}
+		id = stack.pop();
+		currNode = this.getNodeByID(id);
+		this.scene.pushMatrix();
+		this.scene.multMatrix(currNode.matrix);		//
+		currNode.displayLeaves();					//swap?
+		this.scene.popMatrix();
+		var children = currNode.children;
+		for (var i = 0; i < children.length; i++)
+			stack.push(children[i]);
 	}
-	console.log("Drew " + counter + " primitives");
 }

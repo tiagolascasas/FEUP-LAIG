@@ -15,6 +15,15 @@ ObjectNode.prototype.addChild = function(id)
     this.children.push(id);
 };
 
+ObjectNode.prototype.displayLeaves = function(id)
+{
+    for (var i = 0; i < this.leaves.length; i++)
+	{
+		console.log("Drawing primitive");
+		this.leaves[i].display();
+	}
+};
+
 ObjectNode.prototype.addLeaf = function(id, args)
 {
 	var ar = args.split(" ");

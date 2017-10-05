@@ -1386,7 +1386,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
     }
 
 
-	this.objGraph.makeRoot();
+	//this.objGraph.makeRoot();
 	console.log("PRINTING TREE USING DFS");
 	this.objGraph.printTreeInformation("ROOT");
 /*	console.log("Length of obj: " + this.objGraph.obj.length);
