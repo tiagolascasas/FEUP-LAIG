@@ -1,6 +1,7 @@
-function ObjectTexture(tex, s, t)
-{
-	this.tex = tex;
-	this.s = s;
-	this.t = t;
-};
+
+function ObjectTexture(id, path, s, t) {
+    this.id = id;
+    this.path = path;
+    this.s = s;
+    this.t = t;
+}
