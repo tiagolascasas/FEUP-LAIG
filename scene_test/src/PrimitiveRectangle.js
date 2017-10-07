@@ -3,10 +3,10 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function PrimitiveRectangle(scene, xleft, yleft, xright, yright/*minS, maxS, minT, maxT*/)
+function PrimitiveRectangle(scene, xleft, yleft, xright, yright, minS, maxS, minT, maxT)
 {
 	CGFobject.call(this, scene);
-/*
+
 	if (minS != null)
 		this.minS = minS;
 	else
@@ -25,7 +25,7 @@ function PrimitiveRectangle(scene, xleft, yleft, xright, yright/*minS, maxS, min
 	if (maxT != null)
 		this.maxT = maxT;
 	else
-		this.maxT = 1.0;*/
+		this.maxT = 1.0;
 
 	this.initBuffers(xleft, yleft, xright, yright);
 };
@@ -40,12 +40,12 @@ PrimitiveRectangle.prototype.initBuffers = function (xleft, yleft, xright, yrigh
 			0, 0, 0,
 			xright, yright, 0,
 			xright, yleft, 0
-			];
-	console.log(this.vertices);
+	];
+
 	this.indices = [
             0, 1, 2,
 			2, 3, 0
-        ];
+    ];
 
 	this.normals = [
 			0, 0, 1,
@@ -53,13 +53,13 @@ PrimitiveRectangle.prototype.initBuffers = function (xleft, yleft, xright, yrigh
 			0, 0, 1,
 			0, 0, 1
 	];
-/*
+
 	this.texCoords = [
-		this.minS, this.maxT,
-		this.maxS, this.maxT,
-		this.minS, this.minT,
-		this.maxS, this.minT
-	];*/
+			this.minS, this.maxT,
+			this.minS, this.minT,
+			this.maxS, this.minT,
+			this.maxS, this.maxT
+	];
 
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
