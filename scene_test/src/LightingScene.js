@@ -34,14 +34,16 @@ LightingScene.prototype.init = function(application) {
 	this.cyl = new PrimitiveCylinder(this, 3, 0.7, 0.7, 20, 20);
 	this.sp = new PrimitiveSphere(this, 0.5, 20, 20);
 	this.sp1 = new PrimitiveSphere(this, 0.5, 20, 20);
-	this.rt = new PrimitiveTriangle(this, 0, 0, 0, 1, 0, 0, 0.5, 1, -1);
+	this.rt = new PrimitiveTriangle(this, 0, 0, 0, 1, 0, 0, 0.5, 1, -1, 0, 1, 0, 1);
 	this.sq = new PrimitiveRectangle(this, 0, 1, 1, 0, 0, 4, 0, 1);
 	this.roof = new PrimitiveCylinder(this, 3, 0.9, 0.1, 20, 20);
+	this.pole = new PrimitiveCylinder(this, 1.5, 0.05, 0.05, 20, 20);
 
 	this.wallt = new CGFappearance(this);
-	this.wallt.setAmbient(0.2, 0.2, 0.2, 1);
+	this.wallt.setAmbient(0.5, 0.5, 0.5, 1);
 	this.wallt.setSpecular(0.1, 0.1, 0.1, 1);
-	this.wallt.setDiffuse(0.4, 0.4, 0.4, 1);
+	this.wallt.setDiffuse(0.8, 0.8, 0.8, 1);
+	this.wallt.setShininess(200);
 	this.wallt.loadTexture("wall.jpg");
 	this.wallt.setTextureWrap('REPEAT', 'REPEAT');
 
@@ -51,13 +53,6 @@ LightingScene.prototype.init = function(application) {
 	this.grass.setDiffuse(0.4, 0.4, 0.4, 1);
 	this.grass.loadTexture("grass.jpg");
 	this.grass.setTextureWrap('REPEAT', 'REPEAT');
-
-	this.stone = new CGFappearance(this);
-	this.stone.setAmbient(0.2, 0.2, 0.2, 1);
-	this.stone.setSpecular(0.1, 0.1, 0.1, 1);
-	this.stone.setDiffuse(0.4, 0.4, 0.4, 1);
-	this.stone.loadTexture("stone.jpg");
-	this.stone.setTextureWrap('REPEAT', 'REPEAT');
 
 	this.stone = new CGFappearance(this);
 	this.stone.setAmbient(0.2, 0.2, 0.2, 1);
@@ -86,11 +81,18 @@ LightingScene.prototype.init = function(application) {
 	this.bush.setDiffuse(0.4, 0.4, 0.4, 1);
 	this.bush.loadTexture("bush.jpg");
 	this.bush.setTextureWrap('REPEAT', 'REPEAT');
-	//120, 183, 117
+
 	this.trig = new CGFappearance(this);
 	this.trig.setAmbient(120/255.0, 183/255.0, 117/255.0, 1);
 	this.trig.setSpecular(0.1, 0.1, 0.1, 1);
 	this.trig.setDiffuse(120/255.0, 183/255.0, 117/255.0, 1);
+	this.trig.loadTexture("roofgreen.jpg");
+	this.trig.setTextureWrap('REPEAT', 'REPEAT');
+
+	this.pl = new CGFappearance(this);
+	this.pl.setAmbient(0.5, 0.5, 0.5, 1);
+	this.pl.setSpecular(0.7, 0.7, 0.7, 1);
+	this.pl.setDiffuse(0.5, 0.5, 0.5, 1);
 };
 
 LightingScene.prototype.initCameras = function() {
@@ -99,32 +101,32 @@ LightingScene.prototype.initCameras = function() {
 
 LightingScene.prototype.initLights = function() {
 	//this.setGlobalAmbientLight(0.5,0.5,0.5, 1.0);
-	this.setGlobalAmbientLight(0, 0, 0, 1.0);
+	this.setGlobalAmbientLight(0.25, 0.25, 0.25, 1.0);
 
 	// Positions for four lights
-	this.lights[0].setPosition(2, 3, 1, 1);
+	this.lights[0].setPosition(2, 1, 1, 1);
 	this.lights[0].setVisible(true); // show marker on light position (different from enabled)
 
-	this.lights[1].setPosition(8.5, 3.0, 1.0, 1.0);
+	this.lights[1].setPosition(8.5, 1.0, 1.0, 1.0);
 	this.lights[1].setVisible(true); // show marker on light position (different from enabled)
 
-	this.lights[2].setPosition(8.5, 3.0, 8.0, 1.0);
+	this.lights[2].setPosition(9.5, 1.0, 8.0, 1.0);
 	this.lights[2].setVisible(true);
 
-	this.lights[3].setPosition(2, 3.0, 8.0, 1.0);
+	this.lights[3].setPosition(2, 1.0, 8.0, 1.0);
 	this.lights[3].setVisible(true);
 
 
-	this.lights[0].setAmbient(0, 0, 0, 1);
+	this.lights[0].setAmbient(0.0, 0.0, 0.0, 1);
 	this.lights[0].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[0].setSpecular(1.0, 1.0, 0.0, 1.0);
 	this.lights[0].enable();
 
-	this.lights[1].setAmbient(0, 0, 0, 1);
+	this.lights[1].setAmbient(0.0, 0.0, 0.0, 1);
 	this.lights[1].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[1].enable();
 
-	this.lights[2].setAmbient(0, 0, 0, 1);
+	this.lights[2].setAmbient(0.7, 0.7, 0.7, 1);
 	this.lights[2].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[2].setSpecular(1,1,1,1);
 	this.lights[2].setConstantAttenuation(0);
@@ -132,7 +134,7 @@ LightingScene.prototype.initLights = function() {
 	this.lights[2].setQuadraticAttenuation(0);
 	this.lights[2].enable();
 
-	this.lights[3].setAmbient(0, 0, 0, 1);
+	this.lights[3].setAmbient(0.0, 0.0, 0.0, 1);
 	this.lights[3].setDiffuse(1.0, 1.0, 1.0, 1.0);
 	this.lights[3].setSpecular(1.0, 1.0, 0.0, 1.0);
 	this.lights[3].setConstantAttenuation(0);
@@ -194,6 +196,11 @@ LightingScene.prototype.display = function() {
 				this.translate(0, 0, 3);
 				this.tile.apply();
 				this.roof.display();
+				this.pushMatrix();
+					this.translate(0, 0, 3);
+					this.pl.apply();
+					this.pole.display();
+				this.popMatrix()
 			this.popMatrix();
 		this.popMatrix();
 	this.popMatrix();
@@ -208,6 +215,11 @@ LightingScene.prototype.display = function() {
 				this.translate(0, 0, 3);
 				this.tile.apply();
 				this.roof.display();
+				this.pushMatrix();
+					this.translate(0, 0, 3);
+					this.pl.apply();
+					this.pole.display();
+				this.popMatrix()
 			this.popMatrix();
 		this.popMatrix();
 	this.popMatrix();
@@ -222,6 +234,11 @@ LightingScene.prototype.display = function() {
 				this.translate(0, 0, 3);
 				this.tile.apply();
 				this.roof.display();
+				this.pushMatrix();
+					this.translate(0, 0, 3);
+					this.pl.apply();
+					this.pole.display();
+				this.popMatrix()
 			this.popMatrix();
 		this.popMatrix();
 	this.popMatrix();

@@ -3,10 +3,10 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function PrimitiveTriangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3/*minS, maxS, minT, maxT*/)
+function PrimitiveTriangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3, minS, maxS, minT, maxT)
 {
 	CGFobject.call(this, scene);
-/*
+
 	if (minS != null)
 		this.minS = minS;
 	else
@@ -25,7 +25,7 @@ function PrimitiveTriangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3/*minS, maxS
 	if (maxT != null)
 		this.maxT = maxT;
 	else
-		this.maxT = 1.0;*/
+		this.maxT = 1.0;
 
 	this.initBuffers(x1, y1, z1, x2, y2, z2, x3, y3, z3);
 };
@@ -50,13 +50,12 @@ PrimitiveTriangle.prototype.initBuffers = function (x1, y1, z1, x2, y2, z2, x3, 
 			0, 0, 1,
 			0, 0, 1
 			];
-/*
+
 	this.texCoords = [
-		this.minS, this.maxT,
-		this.maxS, this.maxT,
 		this.minS, this.minT,
-		this.maxS, this.minT
-	];*/
+		this.maxS, this.minT,
+		this.minS, this.maxT
+	];
 
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
