@@ -73,15 +73,14 @@ ObjectGraph.prototype.applyAppearences = function (node)
 		default:
 			this.mat[node.material].apply();
 	}
-/*
+
 	switch(node.texture)
 	{
 		case "null":
 			break;
 		case "clear":
-			//this.defaultMaterial.tex.apply();
 			break;
 		default:
-			this.textures[node.texture].tex.bind();
-	}*/
+			this.tex[node.texture].tex.bind();
+	}
 };

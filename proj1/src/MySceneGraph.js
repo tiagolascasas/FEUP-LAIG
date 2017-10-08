@@ -917,10 +917,11 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
                 return "t amplification factor undefined for texture with ID = " + textureID;
 
             var texture = new CGFtexture(this.scene,"./scenes/" + filepath);
-			var textureObj = new ObjectTexture(texture, amplifFactorS, amplifFactorT);
+			this.textures[textureID] = [texture, amplifFactorS, amplifFactorT];
 
-            this.textures[textureID] = [texture, amplifFactorS, amplifFactorT];
+			var textureObj = new ObjectTexture(texture, amplifFactorS, amplifFactorT);
 			this.objGraph.addTexture(textureID, textureObj);
+			
             oneTextureDefined = true;
         }
         else
