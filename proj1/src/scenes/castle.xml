@@ -543,7 +543,7 @@
 
 	<NODE id="roundTower1">
 	   <MATERIAL id="stoneMaterial" />
-	   <TEXTURE id="stone" />
+	   <TEXTURE id="null" />
 
 	   <TRANSLATION x="0" y="0" z="6" />
 	   <ROTATION axis="x" angle="270" />
@@ -557,7 +557,7 @@
 
 	<NODE id="roundTower2">
 	   <MATERIAL id="stoneMaterial" />
-	   <TEXTURE id="stone" />
+	   <TEXTURE id="null" />
 
 	   <TRANSLATION x="8" y="0" z="0" />
 	   <ROTATION axis="x" angle="270" />
@@ -571,7 +571,7 @@
 
 	<NODE id="roundTower3">
 	   <MATERIAL id="stoneMaterial" />
-	   <TEXTURE id="stone" />
+	   <TEXTURE id="null" />
 
 	   <TRANSLATION x="8" y="0" z="6" />
 	   <ROTATION axis="x" angle="270" />
@@ -585,7 +585,7 @@
 
 	<NODE id="towerBody">
 	   <MATERIAL id="null" />
-	   <TEXTURE id="null" />
+	   <TEXTURE id="tower" />
 
 	   <DESCENDANTS>
 		   <LEAF  type="cylinder" args="3 0.7 0.7 20 20 1 1" />
