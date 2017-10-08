@@ -2,7 +2,8 @@
  * PrimitiveCylinder
  * @constructor
  */
- function PrimitiveCylinder(scene, height, bottomR, topR, stacks, slices) {
+ function PrimitiveCylinder(scene, height, bottomR, topR, stacks, slices, topcap, botcap)
+ {
  	CGFobject.call(this,scene);
 
 	this.slices = slices;
@@ -11,6 +12,8 @@
 	this.bottomR = bottomR;
 	this.topR = topR;
 	this.diff = topR - bottomR;
+	this.topcap = topcap;
+	this.botcap = botcap;
 
  	this.initBuffers();
  };
@@ -18,8 +21,8 @@
  PrimitiveCylinder.prototype = Object.create(CGFobject.prototype);
  PrimitiveCylinder.prototype.constructor = PrimitiveCylinder;
 
- PrimitiveCylinder.prototype.initBuffers = function() {
-
+ PrimitiveCylinder.prototype.initBuffers = function()
+ {
  	this.vertices = [];
 
  	this.indices = [];
@@ -56,9 +59,26 @@
 
 			this.indices.push(j + 1, j, j + 3);
 			this.indices.push(j + 2, j + 3, j);
-
 			this.indices.push(j + 3, j, j + 1);
 			this.indices.push(j, j + 3, j + 2);
+
+			if (k == 0 && this.botcap == 1)
+			{
+				this.vertices.push(0, 0, 0);
+				this.normals.push(0, 0, -1);
+				this.texCoords.push(0, 0);
+				this.indices.push(j + 4, j + 2, j);
+				j++;
+			}
+
+			if (k + dh >= this.height && this.topcap == 1)
+			{
+				this.vertices.push(0, 0, this.height);
+				this.normals.push(0, 0, 1);
+				this.texCoords.push(0, 0);
+				this.indices.push(j + 1, j + 3, j + 4);
+				j++;
+			}
 		}
 	}
 

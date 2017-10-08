@@ -31,13 +31,15 @@ LightingScene.prototype.init = function(application) {
 
 	/* PRIMITIVES INSTANCIATION */
 	this.rect = new PrimitiveRectangle(this, 0, 10, 12, 0, 0, 4, 0, 5);
-	this.cyl = new PrimitiveCylinder(this, 3, 0.7, 0.7, 20, 20);
+	this.cyl = new PrimitiveCylinder(this, 3, 0.7, 0.7, 20, 20, 1, 1);
 	this.sp = new PrimitiveSphere(this, 0.5, 20, 20);
 	this.sp1 = new PrimitiveSphere(this, 0.5, 20, 20);
 	this.rt = new PrimitiveTriangle(this, 0, 0, 0, 1, 0, 0, 0.5, 1, -1, 0, 1, 0, 1);
 	this.sq = new PrimitiveRectangle(this, 0, 1, 1, 0, 0, 4, 0, 1);
-	this.roof = new PrimitiveCylinder(this, 3, 0.9, 0.1, 20, 20);
-	this.pole = new PrimitiveCylinder(this, 1.5, 0.05, 0.05, 20, 20);
+	this.roof = new PrimitiveCylinder(this, 3, 0.9, 0.1, 20, 20, 1, 1);
+	this.pole = new PrimitiveCylinder(this, 1.5, 0.05, 0.05, 20, 20, 1, 1);
+
+	this.testCyl = new PrimitiveCylinder(this, 1, 2, 2, 20, 20, 1, 1);
 
 	this.wallt = new CGFappearance(this);
 	this.wallt.setAmbient(0.5, 0.5, 0.5, 1);
@@ -176,7 +178,6 @@ LightingScene.prototype.display = function() {
 	// ---- BEGIN Primitive drawing section
 
 	//floor
-
 	this.pushMatrix();
 		this.translate(-2, 0, 8);
 		this.rotate(3 * Math.PI / 2, 1, 0, 0);

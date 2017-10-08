@@ -588,7 +588,7 @@
 	   <TEXTURE id="null" />
 
 	   <DESCENDANTS>
-		   <LEAF  type="cylinder" args="3 0.7 0.7 20 20" />
+		   <LEAF  type="cylinder" args="3 0.7 0.7 20 20 1 1" />
 	   </DESCENDANTS>
 
 	</NODE>
@@ -601,7 +601,7 @@
 
 	   <DESCENDANTS>
 		   <NODEREF id="flagpole"/>
-		   <LEAF  type="cylinder" args="3 0.9 0.1 20 20" />
+		   <LEAF  type="cylinder" args="3 0.9 0.1 20 20 1 1" />
 	   </DESCENDANTS>
 
 	</NODE>
@@ -613,7 +613,8 @@
 	   <TRANSLATION x="0" y="0" z="3" />
 
 	   <DESCENDANTS>
-		   <LEAF  type="cylinder" args="1.5 0.05 0.05 20 20" />
+		   <LEAF  type="cylinder" args="1.5 0.05 0.05 20 20 1 1" />
+		   <!-- will reference a patch here in the future to make a flag -->
 	   </DESCENDANTS>
 
 	</NODE>

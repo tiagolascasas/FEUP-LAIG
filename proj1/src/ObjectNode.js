@@ -38,7 +38,7 @@ ObjectNode.prototype.addLeaf = function(id, args)
 			this.leaves.push(rect);
 			break;
 		case 'cylinder':
-			var cyl = new PrimitiveCylinder(this.scene, ar[0], ar[1], ar[2], ar[3], ar[4]);
+			var cyl = new PrimitiveCylinder(this.scene, ar[0], ar[1], ar[2], ar[3], ar[4], ar[5], ar[6]);
 			this.leaves.push(cyl);
 			break;
 		case 'sphere':
