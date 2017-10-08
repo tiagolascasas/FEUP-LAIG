@@ -50,7 +50,7 @@ ObjectGraph.prototype.displayObjects = function(node)
 	var currNode = this.getNodeByID(node);
 
 	this.scene.pushMatrix();
-//	this.applyAppearences(currNode);
+	this.applyAppearences(currNode);
 	this.scene.multMatrix(currNode.matrix);
 	currNode.displayPrimitives();
 

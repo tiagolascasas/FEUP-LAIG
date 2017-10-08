@@ -54,7 +54,7 @@ PrimitiveTriangle.prototype.initBuffers = function (x1, y1, z1, x2, y2, z2, x3, 
 	this.texCoords = [
 		this.minS, this.minT,
 		this.maxS, this.minT,
-		this.minS, this.maxT
+		this.maxS, this.maxT
 	];
 
 	this.primitiveType=this.scene.gl.TRIANGLES;

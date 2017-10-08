@@ -101,7 +101,7 @@ LightingScene.prototype.initCameras = function() {
 
 LightingScene.prototype.initLights = function() {
 	//this.setGlobalAmbientLight(0.5,0.5,0.5, 1.0);
-	this.setGlobalAmbientLight(0.25, 0.25, 0.25, 1.0);
+	this.setGlobalAmbientLight(0.25, 0.25, 0.2, 1.0);
 
 	// Positions for four lights
 	this.lights[0].setPosition(2, 1, 1, 1);
@@ -187,7 +187,6 @@ LightingScene.prototype.display = function() {
 	//Towers
 	this.pushMatrix();
 		this.translate(0, 0, 6);
-		this.pushMatrix();
 		this.materialDefault.apply();
 		this.rotate(3 * Math.PI / 2, 1, 0, 0);
 		this.tower.apply();
@@ -202,12 +201,10 @@ LightingScene.prototype.display = function() {
 					this.pole.display();
 				this.popMatrix()
 			this.popMatrix();
-		this.popMatrix();
 	this.popMatrix();
 
 	this.pushMatrix();
 		this.translate(8, 0, 0);
-		this.pushMatrix();
 		this.rotate(3 * Math.PI / 2, 1, 0, 0);
 		this.tower.apply();
 		this.cyl.display();
@@ -221,7 +218,6 @@ LightingScene.prototype.display = function() {
 					this.pole.display();
 				this.popMatrix()
 			this.popMatrix();
-		this.popMatrix();
 	this.popMatrix();
 
 	this.pushMatrix();

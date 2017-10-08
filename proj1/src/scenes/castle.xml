@@ -198,11 +198,9 @@
         <TEXTURE id="null" />
 
         <DESCENDANTS>
-
             <NODEREF id="ground" />
             <NODEREF id="bushes" />
 			<NODEREF id="castle" />
-
         </DESCENDANTS>
 
     </NODE>
@@ -232,7 +230,6 @@
             <NODEREF id="bush3" />
             <NODEREF id="bush4" />
         </DESCENDANTS>
-
     </NODE>
 
 	<!-- The castle-->
@@ -243,9 +240,8 @@
 		<DESCENDANTS>
 			<NODEREF id="walls" />
 			<NODEREF id="squareTower" />
-			<!-- <NODEREF id="bush3" /> -->
+			<NODEREF id="roundTowers" />
 		</DESCENDANTS>
-
 	</NODE>
 
     <!-- The first bush -->
@@ -258,7 +254,6 @@
         <DESCENDANTS>
             <NODEREF id="bushPrimitive" />
         </DESCENDANTS>
-
     </NODE>
 
 	<!-- The second bush -->
@@ -533,6 +528,95 @@
 
 	</NODE>
 
+	<!-- The round towers-->
+     <NODE id="roundTowers">
+        <MATERIAL id="null" />
+        <TEXTURE id="null" />
+
+        <DESCENDANTS>
+            <NODEREF id="roundTower1" />
+            <NODEREF id="roundTower2" />
+            <NODEREF id="roundTower3" />
+        </DESCENDANTS>
+
+    </NODE>
+
+	<NODE id="roundTower1">
+	   <MATERIAL id="stoneMaterial" />
+	   <TEXTURE id="stone" />
+
+	   <TRANSLATION x="0" y="0" z="6" />
+	   <ROTATION axis="x" angle="270" />
+
+	   <DESCENDANTS>
+		   <NODEREF id="conicRoof"/>
+		   <NODEREF id="towerBody"/>
+	   </DESCENDANTS>
+
+	</NODE>
+
+	<NODE id="roundTower2">
+	   <MATERIAL id="stoneMaterial" />
+	   <TEXTURE id="stone" />
+
+	   <TRANSLATION x="8" y="0" z="0" />
+	   <ROTATION axis="x" angle="270" />
+
+	   <DESCENDANTS>
+		   <NODEREF id="conicRoof"/>
+		   <NODEREF id="towerBody"/>
+	   </DESCENDANTS>
+
+	</NODE>
+
+	<NODE id="roundTower3">
+	   <MATERIAL id="stoneMaterial" />
+	   <TEXTURE id="stone" />
+
+	   <TRANSLATION x="8" y="0" z="6" />
+	   <ROTATION axis="x" angle="270" />
+
+	   <DESCENDANTS>
+		   <NODEREF id="conicRoof"/>
+		   <NODEREF id="towerBody"/>
+	   </DESCENDANTS>
+
+	</NODE>
+
+	<NODE id="towerBody">
+	   <MATERIAL id="null" />
+	   <TEXTURE id="null" />
+
+	   <DESCENDANTS>
+		   <LEAF  type="cylinder" args="3 0.7 0.7 20 20" />
+	   </DESCENDANTS>
+
+	</NODE>
+
+	<NODE id="conicRoof">
+	   <MATERIAL id="conicalTileMaterial" />
+	   <TEXTURE id="tiles" />
+
+	   <TRANSLATION x="0" y="0" z="3" />
+
+	   <DESCENDANTS>
+		   <NODEREF id="flagpole"/>
+		   <LEAF  type="cylinder" args="3 0.9 0.1 20 20" />
+	   </DESCENDANTS>
+
+	</NODE>
+
+	<NODE id="flagpole">
+	   <MATERIAL id="poleMaterial" />
+	   <TEXTURE id="null" />
+
+	   <TRANSLATION x="0" y="0" z="3" />
+
+	   <DESCENDANTS>
+		   <LEAF  type="cylinder" args="1.5 0.05 0.05 20 20" />
+	   </DESCENDANTS>
+
+	</NODE>
 
 </NODES>
 
