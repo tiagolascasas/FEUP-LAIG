@@ -201,6 +201,7 @@
 
             <NODEREF id="ground" />
             <NODEREF id="bushes" />
+			<NODEREF id="castle" />
 
         </DESCENDANTS>
 
@@ -233,6 +234,19 @@
         </DESCENDANTS>
 
     </NODE>
+
+	<!-- The castle-->
+	 <NODE id="castle">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<DESCENDANTS>
+			<NODEREF id="walls" />
+			<NODEREF id="squareTower" />
+			<!-- <NODEREF id="bush3" /> -->
+		</DESCENDANTS>
+
+	</NODE>
 
     <!-- The first bush -->
      <NODE id="bush1">
@@ -296,6 +310,228 @@
         </DESCENDANTS>
 
     </NODE>
+
+	<!-- The walls-->
+	 <NODE id="walls">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<DESCENDANTS>
+			<NODEREF id="wall1" />
+			<NODEREF id="wall2" />
+			<NODEREF id="wall3" />
+			<NODEREF id="wall4" />
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- The first wall -->
+	 <NODE id="wall1">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<DESCENDANTS>
+			<NODEREF id="3sidedWall" />
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- The second wall -->
+	 <NODE id="wall2">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<ROTATION axis="y" angle="270" />
+		<SCALE sx="0.8" sy="1" sz="1" />
+
+		<DESCENDANTS>
+			<NODEREF id="3sidedWall"/>
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- The third wall -->
+	 <NODE id="wall3">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<TRANSLATION x="0" y="0" z="6" />
+
+		<DESCENDANTS>
+			<NODEREF id="3sidedWall"/>
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- The fourth wall -->
+	 <NODE id="wall4">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<TRANSLATION x="8" y="0" z="0" />
+		<ROTATION axis="y" angle="270" />
+		<SCALE sx="0.8" sy="1" sz="1" />
+
+		<DESCENDANTS>
+			<NODEREF id="3sidedWall"/>
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- A wall with two sides and a top -->
+	 <NODE id="3sidedWall">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<DESCENDANTS>
+			<NODEREF id="side1" />
+			<NODEREF id="side2" />
+			<NODEREF id="top" />
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- One of the sides of the wall -->
+	 <NODE id="side1">
+		<MATERIAL id="wallMaterial" />
+		<TEXTURE id="wall" />
+
+		<TRANSLATION x="0" y="0" z="0.3" />
+		<SCALE sx="8" sy="2" sz="1" />
+
+		<DESCENDANTS>
+			<NODEREF id="wallPrimitive"/>
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- The other side the wall -->
+	 <NODE id="side2">
+		<MATERIAL id="wallMaterial" />
+		<TEXTURE id="wall" />
+
+		<TRANSLATION x="8" y="0" z="-0.3" />
+		<ROTATION axis="y" angle="180" />
+		<SCALE sx="8" sy="2" sz="1" />
+
+		<DESCENDANTS>
+			<NODEREF id="wallPrimitive"/>
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- The top of the wall -->
+	 <NODE id="top">
+		<MATERIAL id="stoneMaterial" />
+		<TEXTURE id="stone" />
+
+		<TRANSLATION x="0" y="2" z="0.3" />
+		<ROTATION axis="x" angle="270" />
+		<SCALE sx="8" sy="0.6" sz="1" />
+
+		<DESCENDANTS>
+			<NODEREF id="wallPrimitive"/>
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- Node with a rectangle primitive -->
+	 <NODE id="wallPrimitive">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<DESCENDANTS>
+			<LEAF  type="rectangle" args="0 1 1 0" />
+		</DESCENDANTS>
+
+	</NODE>
+
+	<!-- The square tower-->
+	 <NODE id="squareTower">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<TRANSLATION x="-0.5" y="0" z="0" />
+
+		<DESCENDANTS>
+			<NODEREF id="towerWall1" />
+			<NODEREF id="towerWall2" />
+			<NODEREF id="towerWall3" />
+			<NODEREF id="towerWall4" />
+		</DESCENDANTS>
+
+	</NODE>
+
+	<NODE id="towerWall1">
+	   <MATERIAL id="towerMaterial" />
+	   <TEXTURE id="tower" />
+
+	   <TRANSLATION x="-0.5" y="0" z="1" />
+	   <SCALE sx="2" sy="5" sz="1" />
+
+	   <DESCENDANTS>
+		   <NODEREF id="wallPrimitive"/>
+		   <NODEREF id="roofPiece" />
+	   </DESCENDANTS>
+
+   </NODE>
+
+   <NODE id="towerWall2">
+	  <MATERIAL id="towerMaterial" />
+	  <TEXTURE id="tower" />
+
+	  <TRANSLATION x="1.5" y="0" z="-1" />
+	  <ROTATION axis="y" angle="180" />
+	  <SCALE sx="2" sy="5" sz="1" />
+
+	  <DESCENDANTS>
+		  <NODEREF id="wallPrimitive"/>
+		  <NODEREF id="roofPiece" />
+	  </DESCENDANTS>
+
+	 </NODE>
+
+	 <NODE id="towerWall3">
+		<MATERIAL id="towerMaterial" />
+		<TEXTURE id="tower" />
+
+		<TRANSLATION x="1.5" y="0" z="1" />
+		<ROTATION axis="y" angle="90" />
+		<SCALE sx="2" sy="5" sz="1" />
+
+		<DESCENDANTS>
+			<NODEREF id="wallPrimitive"/>
+			<NODEREF id="roofPiece" />
+		</DESCENDANTS>
+
+	 </NODE>
+
+	 <NODE id="towerWall4">
+		<MATERIAL id="towerMaterial" />
+		<TEXTURE id="tower" />
+
+		<TRANSLATION x="-0.5" y="0" z="-1" />
+		<ROTATION axis="y" angle="270" />
+		<SCALE sx="2" sy="5" sz="1" />
+
+		<DESCENDANTS>
+			<NODEREF id="wallPrimitive"/>
+			<NODEREF id="roofPiece" />
+		</DESCENDANTS>
+
+	 </NODE>
+
+	 <NODE id="roofPiece">
+		<MATERIAL id="pyramidalTilesMaterial" />
+		<TEXTURE id="roofgreen" />
+
+		<TRANSLATION x="0" y="1" z="0" />
+
+		<DESCENDANTS>
+			<LEAF  type="triangle" args="0 0 0 1 0 0 0.5 1 -1" />
+		</DESCENDANTS>
+
+	</NODE>
 
 
 </NODES>
