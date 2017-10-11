@@ -27,30 +27,26 @@ ObjectNode.prototype.displayPrimitives = function(id)
 
 ObjectNode.prototype.addLeaf = function(id, args)
 {
-	var ar = args.split(" ");
-	for(var i = 0; i < ar.length; i++)
-		ar[i] = +ar[i];
-
 	switch (id)
 	{
 		case 'rectangle':
-			var rect = new PrimitiveRectangle(this.scene, ar[0], ar[1], ar[2], ar[3]);
+			var rect = new PrimitiveRectangle(this.scene, args[0], args[1], args[2], args[3]);
 			this.leaves.push(rect);
 			break;
 		case 'cylinder':
-			var cyl = new PrimitiveCylinder(this.scene, ar[0], ar[1], ar[2], ar[3], ar[4], ar[5], ar[6]);
+			var cyl = new PrimitiveCylinder(this.scene, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
 			this.leaves.push(cyl);
 			break;
 		case 'sphere':
-			var sp = new PrimitiveSphere(this.scene, ar[0], ar[1], ar[2]);
+			var sp = new PrimitiveSphere(this.scene, args[0], args[1], args[2]);
 			this.leaves.push(sp);
 			break;
 		case 'triangle':
-			var tr = new PrimitiveTriangle(this.scene, ar[0], ar[1], ar[2], ar[3], ar[4], ar[5], ar[6], ar[7], ar[8]);
+			var tr = new PrimitiveTriangle(this.scene, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
 			this.leaves.push(tr);
 			break;
 		case 'patch':
-			var pat = new PrimitiveNURBS(this.scene, ar[0], ar[1], ar[2]);
+			var pat = new PrimitiveNURBS(this.scene, args[0], args[1], args[2]);
 			this.leaves.push(pat);
 			break;
 	}
