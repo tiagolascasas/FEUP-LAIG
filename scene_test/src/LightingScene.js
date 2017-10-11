@@ -38,8 +38,30 @@ LightingScene.prototype.init = function(application) {
 	this.sq = new PrimitiveRectangle(this, 0, 1, 1, 0, 0, 4, 0, 1);
 	this.roof = new PrimitiveCylinder(this, 3, 0.9, 0.1, 20, 20, 1, 1);
 	this.pole = new PrimitiveCylinder(this, 1.5, 0.05, 0.05, 20, 20, 1, 1);
-
 	this.testCyl = new PrimitiveCylinder(this, 1, 2, 2, 20, 20, 1, 1);
+
+	this.nurbs = new PrimitiveNURBS(this, 3, 1,	[	// U = 0
+						[ // V = 0..1;
+							 [ -1.5, -1.5, 0.0, 1 ],
+							 [ -1.5,  1.5, 0.0, 1 ]
+
+						],
+						// U = 1
+						[ // V = 0..1
+							 [ 0, -1.5, 3.0, 1 ],
+							 [ 0,  1.5, 3.0, 1 ]
+						],
+						// U = 2
+						[ // V = 0..1
+							[ 1.5, -1.5, 0.0, 1 ],
+							[ 1.5,  1.5, 0.0, 1 ]
+						],
+						// U = 3
+						[ // V = 0..1
+							[ 2.0, -2.0, 2.0, 1 ],
+							[ 2.0,  2.0, 2.0, 1 ]
+						]
+					]);
 
 	this.wallt = new CGFappearance(this);
 	this.wallt.setAmbient(0.5, 0.5, 0.5, 1);
@@ -90,6 +112,13 @@ LightingScene.prototype.init = function(application) {
 	this.trig.setDiffuse(120/255.0, 183/255.0, 117/255.0, 1);
 	this.trig.loadTexture("roofgreen.jpg");
 	this.trig.setTextureWrap('REPEAT', 'REPEAT');
+
+	this.flag = new CGFappearance(this);
+	this.flag.setAmbient(120/255.0, 183/255.0, 117/255.0, 1);
+	this.flag.setSpecular(0.1, 0.1, 0.1, 1);
+	this.flag.setDiffuse(120/255.0, 183/255.0, 117/255.0, 1);
+	this.flag.loadTexture("flag.png");
+	this.flag.setTextureWrap('REPEAT', 'REPEAT');
 
 	this.pl = new CGFappearance(this);
 	this.pl.setAmbient(0.5, 0.5, 0.5, 1);
@@ -177,6 +206,11 @@ LightingScene.prototype.display = function() {
 
 	// ---- BEGIN Primitive drawing section
 
+	this.pushMatrix();
+		this.translate(4, 10, 0);
+
+	this.popMatrix();
+
 	//floor
 	this.pushMatrix();
 		this.translate(-2, 0, 8);
@@ -200,6 +234,15 @@ LightingScene.prototype.display = function() {
 					this.translate(0, 0, 3);
 					this.pl.apply();
 					this.pole.display();
+					this.pushMatrix();
+						this.translate(0.3, 0.77, 1);
+						this.rotate(Math.PI / 2, 1, 0, 0);
+						this.rotate(Math.PI / 6, 0, 1, 0);
+						this.rotate(Math.PI, 0, 0, 1);
+						this.scale(0.3, 0.3, 0.3);
+						this.flag.apply();
+						this.nurbs.display();
+					this.popMatrix();
 				this.popMatrix()
 			this.popMatrix();
 	this.popMatrix();
@@ -217,6 +260,15 @@ LightingScene.prototype.display = function() {
 					this.translate(0, 0, 3);
 					this.pl.apply();
 					this.pole.display();
+					this.pushMatrix();
+						this.translate(0.3, 0.77, 1);
+						this.rotate(Math.PI / 2, 1, 0, 0);
+						this.rotate(Math.PI / 6, 0, 1, 0);
+						this.rotate(Math.PI, 0, 0, 1);
+						this.scale(0.3, 0.3, 0.3);
+						this.flag.apply();
+						this.nurbs.display();
+					this.popMatrix();
 				this.popMatrix()
 			this.popMatrix();
 	this.popMatrix();
@@ -235,6 +287,15 @@ LightingScene.prototype.display = function() {
 					this.translate(0, 0, 3);
 					this.pl.apply();
 					this.pole.display();
+					this.pushMatrix();
+						this.translate(0.3, 0.77, 1);
+						this.rotate(Math.PI / 2, 1, 0, 0);
+						this.rotate(Math.PI / 6, 0, 1, 0);
+						this.rotate(Math.PI, 0, 0, 1);
+						this.scale(0.3, 0.3, 0.3);
+						this.flag.apply();
+						this.nurbs.display();
+					this.popMatrix();
 				this.popMatrix()
 			this.popMatrix();
 		this.popMatrix();

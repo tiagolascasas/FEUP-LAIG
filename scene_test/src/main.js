@@ -5,11 +5,13 @@ serialInclude=function(a){var b=console,c=serialInclude.l;if(a.length>0)c.splice
 serialInclude([
 	'../lib/CGF.js',
 	'LightingScene.js',
+	'PrimitiveNURBS.js',
 	'PrimitiveRectangle.js',
 	'PrimitiveCylinder.js',
 	'PrimitiveSphere.js',
 	'PrimitiveTriangle.js',
 	'MyInterface.js',
+
 
 	main=function() {
 		var app = new CGFapplication(document.body);
