@@ -49,5 +49,9 @@ ObjectNode.prototype.addLeaf = function(id, args)
 			var tr = new PrimitiveTriangle(this.scene, ar[0], ar[1], ar[2], ar[3], ar[4], ar[5], ar[6], ar[7], ar[8]);
 			this.leaves.push(tr);
 			break;
+		case 'patch':
+			var pat = new PrimitiveNURBS(this.scene, ar[0], ar[1], ar[2]);
+			this.leaves.push(pat);
+			break;
 	}
 };

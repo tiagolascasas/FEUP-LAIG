@@ -921,7 +921,7 @@ MySceneGraph.prototype.parseTextures = function(texturesNode) {
 
 			var textureObj = new ObjectTexture(texture, amplifFactorS, amplifFactorT);
 			this.objGraph.addTexture(textureID, textureObj);
-			
+
             oneTextureDefined = true;
         }
         else
@@ -1362,7 +1362,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 else
 					if (descendants[j].nodeName == "LEAF")
 					{
-						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle']);
+						var type=this.reader.getItem(descendants[j], 'type', ['rectangle', 'cylinder', 'sphere', 'triangle', 'patch']);
 						if (type != null)
 							this.log("   Leaf: "+ type);
 						else
@@ -1374,12 +1374,69 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						else
 							this.warn("No arguments were specified for primitive");
 
+						if (type == 'patch')
+						{
+							console.log("Processing a patch");
+							var points = [];
+							var currPoint = 0;
+
+							//Process points
+							var upoints = descendants[j].children;
+							for (var u = 0; u <= upoints.length; u++)
+							{
+								if (upoints[u].nodeName != 'CPLINE')
+									this.onXMLError("unknown tag <" + upoints[u].nodeName + ">");
+								var umat = [];
+								var vpoints = upoints[u].children;
+								for (var v = 0; v <= vpoints.length; v++)
+								{
+									if (vpoints[v].nodeName != 'CPLINE')
+										this.onXMLError("unknown tag <" + vpoints[v].nodeName + ">");
+									var vvec = [];
+
+									var x = this.reader.getFloat(nodeSpecs[j], 'xx');
+									if (x == null ) {
+										this.onXMLMinorError("unable to parse x component of v point; discarding");
+										break;
+									}
+									else if (isNaN(x))
+										return "non-numeric value for x component of v point of patch (node ID = " + nodeID + ")";
+
+									var y = this.reader.getFloat(nodeSpecs[j], 'yy');
+									if (y == null ) {
+										this.onXMLMinorError("unable to parse x component of v point; discarding");
+										break;
+									}
+									else if (isNaN(y))
+										return "non-numeric value for y component of v point of patch (node ID = " + nodeID + ")";
+
+									var w = this.reader.getFloat(nodeSpecs[j], 'zz');
+									if (z == null ) {
+										this.onXMLMinorError("unable to parse x component of v point; discarding");
+										break;
+									}
+									else if (isNaN(z))
+										return "non-numeric value for z component of v point of patch (node ID = " + nodeID + ")";
+
+									var w = this.reader.getFloat(nodeSpecs[j], 'ww');
+									if (w == null ) {
+										this.onXMLMinorError("unable to parse x component of v point; discarding");
+										break;
+									}
+									else if (isNaN(w))
+										return "non-numeric value for w component of v point of patch (node ID = " + nodeID + ")";
+
+									vvec.push(x, y, z, w);
+									umat.push(vvec);
+								}
+							}
+							args.push(points);
+						}
 						obj.addLeaf(type, args);
-                        sizeChildren++;
+						sizeChildren++;
 					}
 					else
 						this.onXMLMinorError("unknown tag <" + descendants[j].nodeName + ">");
-
             }
             if (sizeChildren == 0)
                 return "at least one descendant must be defined for each intermediate node";
