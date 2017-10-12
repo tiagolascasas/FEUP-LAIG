@@ -64,3 +64,21 @@ PrimitiveRectangle.prototype.initBuffers = function (xleft, yleft, xright, yrigh
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
+
+PrimitiveRectangle.prototype.setTexCoords = function (s, t)
+{
+	if (this.maxS == s && this.maxT == t)
+		return;
+
+	console.log("Updating tex buffers");
+	this.maxS = s;
+	this.maxT = t;
+
+	this.texCoords = [
+			0, this.maxT,
+			0, 0,
+			this.maxS, 0,
+			this.maxS, this.maxT
+	];
+	this.updateTexCoordsGLBuffers();
+}

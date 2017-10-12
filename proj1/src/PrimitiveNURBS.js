@@ -34,3 +34,5 @@ PrimitiveNURBS.prototype.display = function ()
 {
 	this.nurbs.display();
 };
+
+PrimitiveNURBS.prototype.setTexCoords = function (s, t){}

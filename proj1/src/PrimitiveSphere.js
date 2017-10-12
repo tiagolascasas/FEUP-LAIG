@@ -57,3 +57,5 @@ PrimitiveSphere.prototype.initBuffers = function()
  	this.primitiveType = this.scene.gl.TRIANGLES;
  	this.initGLBuffers();
  };
+
+ PrimitiveSphere.prototype.setTexCoords = function (s, t){};

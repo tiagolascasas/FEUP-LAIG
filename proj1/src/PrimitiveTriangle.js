@@ -60,3 +60,5 @@ PrimitiveTriangle.prototype.initBuffers = function (x1, y1, z1, x2, y2, z2, x3, 
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
+
+PrimitiveTriangle.prototype.setTexCoords = function (s, t){}

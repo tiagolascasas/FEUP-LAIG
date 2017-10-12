@@ -4,6 +4,8 @@ function ObjectGraph(scene)
 	this.obj = [];
 	this.mat = {};
 	this.tex = {};
+	this.matStack = [];
+	this.texStack = [];
 	this.defaultMaterial = null;
 };
 
@@ -52,13 +54,18 @@ ObjectGraph.prototype.displayObjects = function(node)
 	this.scene.pushMatrix();
 	this.applyAppearences(currNode);
 	this.scene.multMatrix(currNode.matrix);
-	currNode.displayPrimitives();
+	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
 
 	var children = currNode.children;
 	for (var i = 0; i < children.length; i++)
 		this.displayObjects(children[i]);
 
 	this.scene.popMatrix();
+	if (this.texStack > 1)
+	{
+		this.texStack[this.texStack.length - 1].tex.unbind();
+		this.texStack.pop();
+	}
 };
 
 ObjectGraph.prototype.applyAppearences = function (node)
@@ -68,19 +75,29 @@ ObjectGraph.prototype.applyAppearences = function (node)
 		case "null":
 			break;
 		case "clear":
+			//this.matStack.pop();
 			this.defaultMaterial.apply();
 			break;
 		default:
+			this.matStack.push(node.material);
 			this.mat[node.material].apply();
 	}
 
 	switch(node.texture)
 	{
 		case "null":
+			this.texStack.push(this.texStack[this.texStack.length - 1]);
+			//this.texStack[this.texStack.length - 1].bind();
 			break;
 		case "clear":
+			if (this.texStack.length > 0)
+			{
+				this.texStack[this.texStack.length - 1].tex.unbind();
+				this.texStack.pop();
+			}
 			break;
 		default:
+			this.texStack.push(this.tex[node.texture]);
 			this.tex[node.texture].tex.bind();
 	}
 };
