@@ -342,6 +342,7 @@
 
 		<DESCENDANTS>
 			<NODEREF id="3sidedWall" />
+			<NODEREF id = "decoration" />
 		</DESCENDANTS>
 
 	</NODE>
@@ -356,6 +357,7 @@
 
 		<DESCENDANTS>
 			<NODEREF id="3sidedWall"/>
+			<NODEREF id = "decoration" />
 		</DESCENDANTS>
 
 	</NODE>
@@ -369,6 +371,7 @@
 
 		<DESCENDANTS>
 			<NODEREF id="3sidedWall"/>
+			<NODEREF id = "decoration" />
 		</DESCENDANTS>
 
 	</NODE>
@@ -384,6 +387,7 @@
 
 		<DESCENDANTS>
 			<NODEREF id="3sidedWall"/>
+			<NODEREF id = "decoration" />
 		</DESCENDANTS>
 
 	</NODE>
@@ -632,6 +636,142 @@
 		   <LEAF  type="cylinder" args="1.5 0.05 0.05 20 20 1 1" />
 	   </DESCENDANTS>
 
+	</NODE>
+
+	<!-- Decoration -->
+
+	<NODE id="decoration">
+		<MATERIAL id="stoneMaterial"/>
+		<TEXTURE id = "tower"/>
+
+		<DESCENDANTS>
+			<NODEREF id = "cube1"/>
+			<NODEREF id = "cube2"/>
+			<NODEREF id = "cube3"/>
+			<NODEREF id = "cube4"/>
+			<NODEREF id = "cube5"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cube1">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+		<TRANSLATION x = "0.7" y = "2" z ="-0.7"/>
+		<DESCENDANTS>
+			<NODEREF id = "cube"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cube2">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+		<TRANSLATION x = "2.2" y = "2" z ="-0.7"/>
+		<DESCENDANTS>
+			<NODEREF id = "cube"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cube3">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+		<TRANSLATION x = "3.7" y = "2" z ="-0.7"/>
+		<DESCENDANTS>
+			<NODEREF id = "cube"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cube4">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+		<TRANSLATION x = "5.1" y = "2" z ="-0.7"/>
+		<DESCENDANTS>
+			<NODEREF id = "cube"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cube5">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+		<TRANSLATION x = "6.6" y = "2" z ="-0.7"/>
+		<DESCENDANTS>
+			<NODEREF id = "cube"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cube">
+		<MATERIAL id = "null"/>
+		<TEXTURE id = "null" />
+
+		<DESCENDANTS>
+			<NODEREF id = "cside1"/>
+			<NODEREF id = "cside2"/>
+			<NODEREF id = "cside3"/>
+			<NODEREF id = "cside4"/>
+			<NODEREF id = "ctop"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cside1">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+
+		<TRANSLATION x="0" y = "0" z = "0.42" />
+		<DESCENDANTS>
+			<LEAF  type="rectangle" args="0 0.5 1 0" />
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cside2">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+		
+		<TRANSLATION x="0" y ="0" z= "0.4" />
+		<SCALE sx="1" sy = "1" sz="0.6" />
+		<ROTATION axis="y" angle="-90"/>
+
+
+		<DESCENDANTS>
+			<LEAF  type="rectangle" args="0 0.5 1 0" />
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cside3">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+
+		<TRANSLATION x ="1" y ="0" z = "1"/>
+		<SCALE sx="1" sy = "1" sz ="0.6"/>
+		<ROTATION axis="y" angle="90"/>
+
+
+
+		<DESCENDANTS>
+			<LEAF  type="rectangle" args="0 0.5 1 0" />
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "cside4">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+		
+		<TRANSLATION x ="1" y ="0" z = "1"/>
+		<ROTATION axis="y" angle="180"/>
+
+		<DESCENDANTS>
+			<LEAF  type="rectangle" args="0 0.5 1 0" />
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id = "ctop">
+		<MATERIAL id = "null" />
+		<TEXTURE id = "null" />
+		<SCALE sx="1" sy = "1" sz ="0.6"/>
+		<ROTATION axis="x" angle="90"/>
+		<TRANSLATION x ="0" y ="0.7" z = "-0.5"/>
+
+		<DESCENDANTS>
+			<LEAF  type="rectangle" args="0 1 1 0" />
+		</DESCENDANTS>
 	</NODE>
 
 	<NODE id="flag">
