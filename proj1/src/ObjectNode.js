@@ -19,7 +19,8 @@ ObjectNode.prototype.displayPrimitives = function(currTex)
 {
     for (var i = 0; i < this.leaves.length; i++)
 	{
-		this.leaves[i].setTexCoords(currTex.s, currTex.t);
+		if (currTex != null)
+			this.leaves[i].setTexCoords(currTex.s, currTex.t);
 		this.scene.pushMatrix();
 		this.leaves[i].display();
 		this.scene.popMatrix();

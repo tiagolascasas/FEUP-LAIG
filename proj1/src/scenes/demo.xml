@@ -608,37 +608,9 @@
 
         <DESCENDANTS>
 					<LEAF id="triangle1" type="triangle" args="2 0 12 12 0 2 0 0 0" />
-					<NODEREF id="nurb"/>
         </DESCENDANTS>
 
     </NODE>
-
-	<NODE id="nurb">
-		<MATERIAL id="null" />
-		<TEXTURE id="null" />
-
-		<TRANSLATION x="2.5" y="4" z="2.5" />
-		<ROTATION axis="x" angle="90" />
-		<SCALE sx="1" sy="1.25" sz="1" />
-
-		<DESCENDANTS>
-				<LEAF  type="patch" args="2 1" >
-					<CPLINE>
-						<CPOINT xx="-1.5" yy="-1.5" zz="0.0" ww="1"/>
-						<CPOINT xx="-1.5" yy="1.5" zz="0.0" ww="1"/>
-					</CPLINE>
-					<CPLINE>
-						<CPOINT xx="0" yy="-1.5" zz="3.0" ww="1"/>
-						<CPOINT xx="0" yy="1.5" zz="3.0" ww="1"/>
-					</CPLINE>
-					<CPLINE>
-						<CPOINT xx="1.5" yy="-1.5" zz="0.0" ww="1"/>
-						<CPOINT xx="1.5" yy="1.5" zz="0.0" ww="1"/>
-					</CPLINE>
-				</LEAF>
-		</DESCENDANTS>
-
-	</NODE>
 
 </NODES>
 
