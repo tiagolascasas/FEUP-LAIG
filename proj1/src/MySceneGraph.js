@@ -1189,10 +1189,9 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
                 if (root == null )
                     return "failed to retrieve root node ID";
                 this.idRoot = root;
+				this.objGraph.setRootID(root);
                 var rootNode = new MyGraphNode(this, this.idRoot);
                 this.objectNodes.push(rootNode);
-
-				//var node = new ObjectNode("ROOT", )
             }
         }
         else if (nodeName == "NODE")
@@ -1453,15 +1452,6 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
         else
             this.onXMLMinorError("unknown tag name <" + nodeName);
     }
-
-
-	//this.objGraph.makeRoot();
-	console.log("PRINTING TREE USING DFS");
-	this.objGraph.printTreeInformation("ROOT");
-/*	console.log("Length of obj: " + this.objGraph.obj.length);
-	for (var i = 0; i < this.objGraph.obj.length; i++)
-		console.log(this.objGraph.obj[i].id);*/
-
 
     console.log("Parsed nodes");
     return null ;

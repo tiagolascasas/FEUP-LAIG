@@ -7,6 +7,7 @@ function ObjectGraph(scene)
 	this.matStack = [];
 	this.texStack = [];
 	this.defaultMaterial = null;
+	this.rootID = null;
 };
 
 ObjectGraph.prototype.addMaterial = function(id, material)
@@ -24,6 +25,12 @@ ObjectGraph.prototype.addObject = function(object)
 	this.obj.push(object);
 };
 
+ObjectGraph.prototype.setRootID = function(id)
+{
+	this.rootID = id;
+};
+
+
 ObjectGraph.prototype.getNodeByID = function(id)
 {
 	for (var i = 0; i < this.obj.length; i++)
@@ -34,19 +41,11 @@ ObjectGraph.prototype.getNodeByID = function(id)
 	return null;
 };
 
-ObjectGraph.prototype.printTreeInformation = function(node)
-{
-	for (var i = 0; i < this.obj.length; i++)
-	{
-		console.log("Node " + this.obj[i].id + " has " + this.obj[i].children.length + " children: " + this.obj[i].children);
-	}
-};
-
 ObjectGraph.prototype.display = function()
 {
 	this.texStack.length = 0;
 	this.matStack.length = 0;
-	this.displayObjects("root");
+	this.displayObjects(this.rootID);
 };
 
 ObjectGraph.prototype.displayObjects = function(node)
@@ -63,6 +62,7 @@ ObjectGraph.prototype.displayObjects = function(node)
 		this.displayObjects(children[i]);
 
 	this.scene.popMatrix();
+
 	if (this.texStack > 1)
 	{
 		this.texStack[this.texStack.length - 1].tex.unbind();
@@ -72,7 +72,7 @@ ObjectGraph.prototype.displayObjects = function(node)
 		this.matStack.pop();
 };
 
-ObjectGraph.prototype.applyAppearences = function (node)
+ObjectGraph.prototype.applyAppearences = function(node)
 {
 	switch(node.material)
 	{
