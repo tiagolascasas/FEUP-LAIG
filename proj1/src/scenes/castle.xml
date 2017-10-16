@@ -78,8 +78,13 @@
     <!-- Wall tops -->
     <TEXTURE id="stone">
         <file path="castleTex/stone.jpg" />
-        <amplif_factor s="4" t="1" />
+        <amplif_factor s="0.25" t="1" />
     </TEXTURE>
+
+	<TEXTURE id="roundStone">
+		<file path="castleTex/roundStones.jpg" />
+		<amplif_factor s="1" t="1" />
+	</TEXTURE>
 
     <!-- Conical roofs -->
     <TEXTURE id="tiles">
@@ -578,7 +583,7 @@
 
 	   <DESCENDANTS>
 		   <NODEREF id="conicRoof"/>
-		   <NODEREF id="towerBody"/>
+		   <NODEREF id="windowTransform1"/>
 	   </DESCENDANTS>
 
 	</NODE>
@@ -592,7 +597,7 @@
 
 	   <DESCENDANTS>
 		   <NODEREF id="conicRoof"/>
-		   <NODEREF id="towerBody"/>
+		   <NODEREF id="windowTransform2"/>
 	   </DESCENDANTS>
 
 	</NODE>
@@ -606,14 +611,47 @@
 
 	   <DESCENDANTS>
 		   <NODEREF id="conicRoof"/>
-		   <NODEREF id="towerBody"/>
+		   <NODEREF id="windowTransform3"/>
 	   </DESCENDANTS>
 
 	</NODE>
 
+	<NODE id="windowTransform1">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<ROTATION axis="z" angle="45" />
+
+		<DESCENDANTS>
+			<NODEREF id="towerBody"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id="windowTransform2">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<ROTATION axis="z" angle="-140" />
+
+		<DESCENDANTS>
+			<NODEREF id="towerBody"/>
+		</DESCENDANTS>
+	</NODE>
+
+	<NODE id="windowTransform3">
+		<MATERIAL id="null" />
+		<TEXTURE id="null" />
+
+		<ROTATION axis="z" angle="140" />
+
+		<DESCENDANTS>
+			<NODEREF id="towerBody"/>
+		</DESCENDANTS>
+	</NODE>
+
 	<NODE id="towerBody">
 	   <MATERIAL id="null" />
-	   <TEXTURE id="tower" />
+	   <TEXTURE id="roundStone" />
 
 	   <DESCENDANTS>
 		   <LEAF  type="cylinder" args="3 0.7 0.7 20 20 1 1" />
