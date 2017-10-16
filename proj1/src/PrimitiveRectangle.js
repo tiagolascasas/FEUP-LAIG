@@ -3,48 +3,36 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function PrimitiveRectangle(scene, xleft, yleft, xright, yright, minS, maxS, minT, maxT)
+function PrimitiveRectangle(scene, xleft, yleft, xright, yright)
 {
 	CGFobject.call(this, scene);
 
-	if (minS != null)
-		this.minS = minS;
-	else
-		this.minS = 0.0;
+	this.minX = xleft;
+	this.maxX = xright;
+	this.minY = yright;
+	this.maxY = yleft;
 
-	if (maxS != null)
-		this.maxS = maxS;
-	else
-		this.maxS = 1.0;
+	this.ampS = null;
+	this.ampT = null;
 
-	if (minT != null)
-		this.minT = minT;
-	else
-		this.minT = 0.0;
-
-	if (maxT != null)
-		this.maxT = maxT;
-	else
-		this.maxT = 1.0;
-
-	this.initBuffers(xleft, yleft, xright, yright);
+	this.initBuffers();
 };
 
 PrimitiveRectangle.prototype = Object.create(CGFobject.prototype);
 PrimitiveRectangle.prototype.constructor=PrimitiveRectangle;
 
-PrimitiveRectangle.prototype.initBuffers = function (xleft, yleft, xright, yright)
+PrimitiveRectangle.prototype.initBuffers = function()
 {
 	this.vertices = [
-			xleft, yleft, 0,
-			0, 0, 0,
-			xright, yright, 0,
-			xright, yleft, 0
+			this.minX, this.minY, 0,
+			this.maxX, this.minY, 0,
+			this.maxX, this.maxY, 0,
+			this.minX, this.maxY, 0
 	];
 
 	this.indices = [
-            0, 1, 2,
-			2, 3, 0
+			0, 1, 2,
+			0, 2, 3
     ];
 
 	this.normals = [
@@ -55,30 +43,30 @@ PrimitiveRectangle.prototype.initBuffers = function (xleft, yleft, xright, yrigh
 	];
 
 	this.texCoords = [
-			this.minS, this.maxT,
-			this.minS, this.minT,
-			this.maxS, this.minT,
-			this.maxS, this.maxT
+			1, 1,
+			0, 1,
+			0, 0,
+			1, 0
 	];
 
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
 
-PrimitiveRectangle.prototype.setTexCoords = function (s, t)
+PrimitiveRectangle.prototype.setTexCoords = function(ampS, ampT)
 {
-	if (this.maxS == s && this.maxT == t)
+	if (this.ampS == ampS && this.ampT == ampT)
 		return;
 
-	console.log("Updating tex buffers");
-	this.maxS = s;
-	this.maxT = t;
+	this.ampS = ampS;
+	this.ampT = ampT;
 
 	this.texCoords = [
-			0, this.maxT,
-			0, 0,
-			this.maxS, 0,
-			this.maxS, this.maxT
+		(this.maxY- this.minY) / this.ampS, (this.maxX - this.minX) / this.ampT,
+		0, (this.maxX - this.minX) / this.ampT,
+		0, 0,
+		(this.maxY- this.minY) / this.ampS, 0
 	];
+
 	this.updateTexCoordsGLBuffers();
 }

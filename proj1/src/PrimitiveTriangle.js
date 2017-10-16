@@ -3,19 +3,12 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function PrimitiveTriangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3, s, t)
+function PrimitiveTriangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3)
 {
 	CGFobject.call(this, scene);
 
-	if (t != null)
-		this.t = t;
-	else
-		this.t = 1.0;
-
-	if (s != null)
-		this.s = s;
-	else
-		this.s = 1.0;
+	this.ampT = null;
+	this.ampS = null;
 
 	this.initBuffers(x1, y1, z1, x2, y2, z2, x3, y3, z3);
 };
@@ -49,31 +42,27 @@ PrimitiveTriangle.prototype.initBuffers = function (x1, y1, z1, x2, y2, z2, x3, 
 			0, 0, 1
 			];
 
-	this.texCoords = [
-		0.5, 0,
-		0, 1,
-		1, 1
-	];
-
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
 
-PrimitiveTriangle.prototype.setTexCoords = function (s, t)
+PrimitiveTriangle.prototype.setTexCoords = function (ampS, ampT)
 {
-	if (this.s == s && this.t == t)
+	if (this.ampS == ampS && this.ampT == ampT)
 		return;
-	this.s = s;
-	this.t = t;
 
-	console.log("Updating tex buffers on triangle");
+	this.ampS = ampS;
+	this.ampT = ampT;
 
 	var sin_b = Math.sqrt(1 - Math.pow(this.cos_b, 2));
 
+	var p0_u = this.c - this.a * this.cos_b;
+	var p0_v = 1 / this.ampT - this.a * sin_b;
+
 	this.texCoords = [];
-	this.texCoords.push(this.c - this.a * this.cos_b, this.a * sin_b);
-	this.texCoords.push(0, s);
-	this.texCoords.push(c, s);
+	this.texCoords.push(p0_u / this.ampS, p0_v / this.ampT);
+	this.texCoords.push(0, 1 / this.ampT);
+	this.texCoords.push(this.c / this.ampS, 1 / this.ampT);
 
 	this.updateTexCoordsGLBuffers();
 };
