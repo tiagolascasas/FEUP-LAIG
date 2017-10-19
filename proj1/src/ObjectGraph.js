@@ -57,6 +57,12 @@ ObjectGraph.prototype.displayObjects = function(node)
 	this.applyAppearences(currNode);
 	this.scene.multMatrix(currNode.matrix);
 	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
+	//console.log(node);
+	//console.log(this.texStack[this.texStack.length - 1]);
+/*	console.log(this.texStack.length);
+	console.log(this.texStack);
+	console.log(this.matStack.length);
+	console.log(this.matStack);*/
 
 	var children = currNode.children;
 	for (var i = 0; i < children.length; i++)
@@ -64,12 +70,14 @@ ObjectGraph.prototype.displayObjects = function(node)
 
 	this.scene.popMatrix();
 
-	if (this.texStack > 1)
+
+
+	if (this.texStack.length > 1)
 	{
-		this.texStack[this.texStack.length - 1].tex.unbind();
+		//this.texStack[this.texStack.length - 1].tex.unbind();
 		this.texStack.pop();
 	}
-	if (this.matStack > 1)
+	if (this.matStack.length > 1)
 		this.matStack.pop();
 };
 
@@ -78,31 +86,40 @@ ObjectGraph.prototype.applyAppearences = function(node)
 	switch(node.material)
 	{
 		case "null":
-			this.matStack.push(this.matStack[this.matStack.length - 1]);
+			if (this.matStack.length > 0)
+				this.matStack.push(this.matStack[this.matStack.length - 1]);
 			break;
 		case "clear":
-			this.matStack.pop();
-			this.matStack[this.matStack.length - 1].apply();
+			if (this.matStack.length > 0)
+			{
+				this.matStack.push(this.matStack[this.matStack.length - 1]);
+				this.defaultMaterial.apply();
+			}
 			break;
 		default:
 			this.matStack.push(this.mat[node.material]);
 			this.mat[node.material].apply();
+			break;
 	}
 
 	switch(node.texture)
 	{
 		case "null":
-			this.texStack.push(this.texStack[this.texStack.length - 1]);
+			if (this.texStack.length > 0){
+				this.texStack.push(this.texStack[this.texStack.length - 1]);
+				this.texStack[this.texStack.length - 1].tex.bind();
+			}
 			break;
 		case "clear":
-			if (this.texStack.length > 1)
+			if (this.texStack.length > 0)
 			{
+				this.texStack.push(this.texStack[this.texStack.length - 1]);
 				this.texStack[this.texStack.length - 1].tex.unbind();
-				this.texStack.pop();
 			}
 			break;
 		default:
 			this.texStack.push(this.tex[node.texture]);
 			this.tex[node.texture].tex.bind();
+			break;
 	}
 };

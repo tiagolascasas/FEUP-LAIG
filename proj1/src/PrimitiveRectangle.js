@@ -41,13 +41,13 @@ PrimitiveRectangle.prototype.initBuffers = function()
 			0, 0, 1,
 			0, 0, 1
 	];
-
+/*
 	this.texCoords = [
 			1, 1,
 			0, 1,
 			0, 0,
 			1, 0
-	];
+	];*/
 
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
@@ -60,7 +60,13 @@ PrimitiveRectangle.prototype.setTexCoords = function(ampS, ampT)
 
 	this.ampS = ampS;
 	this.ampT = ampT;
-
+	/*
+	this.texCoords = [
+		(this.maxY- this.minY) / this.ampS, (this.maxX - this.minX) / this.ampT,
+		0, (this.maxX - this.minX) / this.ampT,
+		0, 0,
+		(this.maxY- this.minY) / this.ampS, 0
+	];*/
 	this.texCoords = [
 		(this.maxY- this.minY) / this.ampS, (this.maxX - this.minX) / this.ampT,
 		0, (this.maxX - this.minX) / this.ampT,

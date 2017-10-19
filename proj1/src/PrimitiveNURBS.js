@@ -3,9 +3,12 @@
  * @param gl {WebGLRenderingContext}
  * @constructor
  */
-function PrimitiveNURBS(scene, degree1, degree2, controlvertexes)
+function PrimitiveNURBS(scene, div1, div2, controlvertexes)
 {
 	this.scene = scene;
+
+	var degree1 = controlvertexes.length - 1;
+	var degree2 = controlvertexes[0].length - 1;
 	var knots1 = this.makeKnots(degree1);
 	var knots2 = this.makeKnots(degree2);
 
@@ -14,7 +17,7 @@ function PrimitiveNURBS(scene, degree1, degree2, controlvertexes)
 	{
 		return nurbsSurface.getPoint(u, v);
 	};
-	this.nurbs = new CGFnurbsObject(this.scene, getSurfacePoint, 20, 20);
+	this.nurbs = new CGFnurbsObject(this.scene, getSurfacePoint, div1, div2);
 };
 
 PrimitiveNURBS.prototype = Object.create(CGFobject.prototype);

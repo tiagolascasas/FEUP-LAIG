@@ -324,7 +324,7 @@
     <!-- Node with a sphere primitive -->
     <NODE id="bushPrimitive">
         <MATERIAL id="bushMaterial" />
-        <TEXTURE id="bush" />
+        <TEXTURE id="null" />
 
         <DESCENDANTS>
            <LEAF  type="sphere" args="0.5 20 20" />
@@ -845,7 +845,7 @@
 		<SCALE sx="0.3" sy="0.3" sz="0.3" />
 
 		<DESCENDANTS>
-				<LEAF  type="patch" args="3 1" >
+				<LEAF  type="patch" args="20 20" >
 					<CPLINE>
 						<CPOINT xx="-1.5" yy="-1.5" zz="0.0" ww="1"/>
 						<CPOINT xx="-1.5" yy="1.5" zz="0.0" ww="1"/>

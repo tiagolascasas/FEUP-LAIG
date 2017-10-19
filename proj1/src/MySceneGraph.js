@@ -1438,6 +1438,7 @@ MySceneGraph.prototype.parseNodes = function(nodesNode) {
 						ar.push(points);
 						console.log(points);
 					}
+
 					obj.addLeaf(type, ar);
 					sizeChildren++;
 				}
