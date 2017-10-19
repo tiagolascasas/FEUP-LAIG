@@ -60,19 +60,20 @@ PrimitiveRectangle.prototype.setTexCoords = function(ampS, ampT)
 
 	this.ampS = ampS;
 	this.ampT = ampT;
-	/*
-	this.texCoords = [
-		(this.maxY- this.minY) / this.ampS, (this.maxX - this.minX) / this.ampT,
-		0, (this.maxX - this.minX) / this.ampT,
-		0, 0,
-		(this.maxY- this.minY) / this.ampS, 0
-	];*/
+
 	this.texCoords = [
 		(this.maxY- this.minY) / this.ampS, (this.maxX - this.minX) / this.ampT,
 		0, (this.maxX - this.minX) / this.ampT,
 		0, 0,
 		(this.maxY- this.minY) / this.ampS, 0
 	];
+
+	/*
+	this.texCoords = [
+		0,0,
+		0, (this.maxX - this.minX) / this.ampS,
+		(this.maxY- this.minY) / this.ampT, (this.maxX - this.minX) / this.ampS,
+		0, (this.maxY- this.minY) / this.ampS ];*/
 
 	this.updateTexCoordsGLBuffers();
 }

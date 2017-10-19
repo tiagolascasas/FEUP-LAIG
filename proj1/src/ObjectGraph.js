@@ -57,12 +57,6 @@ ObjectGraph.prototype.displayObjects = function(node)
 	this.applyAppearences(currNode);
 	this.scene.multMatrix(currNode.matrix);
 	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
-	//console.log(node);
-	//console.log(this.texStack[this.texStack.length - 1]);
-/*	console.log(this.texStack.length);
-	console.log(this.texStack);
-	console.log(this.matStack.length);
-	console.log(this.matStack);*/
 
 	var children = currNode.children;
 	for (var i = 0; i < children.length; i++)
@@ -87,7 +81,10 @@ ObjectGraph.prototype.applyAppearences = function(node)
 	{
 		case "null":
 			if (this.matStack.length > 0)
+			{
 				this.matStack.push(this.matStack[this.matStack.length - 1]);
+				this.matStack[this.matStack.length - 1].apply();
+			}
 			break;
 		case "clear":
 			if (this.matStack.length > 0)

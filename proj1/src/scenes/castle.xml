@@ -674,7 +674,7 @@
 
 	<NODE id="flagpole">
 	   <MATERIAL id="poleMaterial" />
-	   <TEXTURE id="null" />
+	   <TEXTURE id="clear" />
 
 	   <TRANSLATION x="0" y="0" z="3" />
 
