@@ -24,15 +24,15 @@ PrimitiveRectangle.prototype.constructor=PrimitiveRectangle;
 PrimitiveRectangle.prototype.initBuffers = function()
 {
 	this.vertices = [
+			this.minX, this.maxY, 0,
 			this.minX, this.minY, 0,
-			this.maxX, this.minY, 0,
 			this.maxX, this.maxY, 0,
-			this.minX, this.maxY, 0
+			this.maxX, this.minY, 0
 	];
 
 	this.indices = [
-			0, 1, 2,
-			0, 2, 3
+		  0, 1, 2,
+			3, 2, 1
     ];
 
 	this.normals = [
@@ -41,18 +41,21 @@ PrimitiveRectangle.prototype.initBuffers = function()
 			0, 0, 1,
 			0, 0, 1
 	];
-/*
-	this.texCoords = [
-			1, 1,
-			0, 1,
-			0, 0,
-			1, 0
-	];*/
 
+	//texCoords without amplification factor
+	this.regTexCoords = [
+		0, 0,
+		0, Math.abs(this.maxY-this.minY),
+		Math.abs(this.maxX-this.minX), 0,
+		Math.abs(this.maxX-this.minX), Math.abs(this.maxY-this.minY)
+	 ];
+
+	this.texCoords = this.regTexCoords.slice();
 	this.primitiveType=this.scene.gl.TRIANGLES;
 	this.initGLBuffers();
 };
 
+// setting the amplification factors
 PrimitiveRectangle.prototype.setTexCoords = function(ampS, ampT)
 {
 	if (this.ampS == ampS && this.ampT == ampT)
@@ -61,19 +64,10 @@ PrimitiveRectangle.prototype.setTexCoords = function(ampS, ampT)
 	this.ampS = ampS;
 	this.ampT = ampT;
 
-	this.texCoords = [
-		(this.maxY- this.minY) / this.ampS, (this.maxX - this.minX) / this.ampT,
-		0, (this.maxX - this.minX) / this.ampT,
-		0, 0,
-		(this.maxY- this.minY) / this.ampS, 0
-	];
-
-	/*
-	this.texCoords = [
-		0,0,
-		0, (this.maxX - this.minX) / this.ampS,
-		(this.maxY- this.minY) / this.ampT, (this.maxX - this.minX) / this.ampS,
-		0, (this.maxY- this.minY) / this.ampS ];*/
+	for (var i = 0; i < this.texCoords.length; i+=2) {
+        this.texCoords[i] = this.regTexCoords[i]/this.ampS;
+        this.texCoords[i+1] = this.regTexCoords[i+1]/this.ampT;
+    }
 
 	this.updateTexCoordsGLBuffers();
 }
