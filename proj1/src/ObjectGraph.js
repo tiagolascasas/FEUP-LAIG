@@ -66,8 +66,7 @@ ObjectGraph.prototype.displayObjects = function(node)
 
 
 
-	if (this.texStack.length > 1)
-	{
+	if (this.texStack.length > 1){
 		//this.texStack[this.texStack.length - 1].tex.unbind();
 		this.texStack.pop();
 	}
@@ -77,19 +76,19 @@ ObjectGraph.prototype.displayObjects = function(node)
 
 ObjectGraph.prototype.applyAppearences = function(node)
 {
+	var lastMat = this.matStack[this.matStack.length - 1];
 	switch(node.material)
 	{
 		case "null":
-			if (this.matStack.length > 0)
-			{
-				this.matStack.push(this.matStack[this.matStack.length - 1]);
-				this.matStack[this.matStack.length - 1].apply();
+			if (this.matStack.length > 0){
+				this.matStack.push(lastMat);
+				lastMat.apply();
 			}
 			break;
 		case "clear":
 			if (this.matStack.length > 0)
 			{
-				this.matStack.push(this.matStack[this.matStack.length - 1]);
+				this.matStack.push(lastMat);
 				this.defaultMaterial.apply();
 			}
 			break;
@@ -99,19 +98,20 @@ ObjectGraph.prototype.applyAppearences = function(node)
 			break;
 	}
 
+	var lastTex = this.texStack[this.texStack.length - 1];
 	switch(node.texture)
 	{
 		case "null":
 			if (this.texStack.length > 0){
-				this.texStack.push(this.texStack[this.texStack.length - 1]);
-				this.texStack[this.texStack.length - 1].tex.bind();
+				this.texStack.push(lastTex);
+				lastTex.tex.bind();
 			}
 			break;
 		case "clear":
 			if (this.texStack.length > 0)
 			{
-				this.texStack.push(this.texStack[this.texStack.length - 1]);
-				this.texStack[this.texStack.length - 1].tex.unbind();
+				this.texStack.push(lastTex);
+				lastTex.tex.unbind();
 			}
 			break;
 		default:
