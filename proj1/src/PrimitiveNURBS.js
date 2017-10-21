@@ -1,7 +1,10 @@
 /**
- * PrimitiveNURBS
- * @param gl {WebGLRenderingContext}
+ * Primitive that represents a NURBS surface
  * @constructor
+ * @param {CGFScene} scene - the scene to which this primitive will belong
+ * @param {int} div1 - the number of divisions alongside the U dimension
+ * @param {int} div2 - the number of divisions alongside the V dimension
+ * @param {int} controlvertexes - a matrix holding the control vertexes in the (U, V) space
  */
 function PrimitiveNURBS(scene, div1, div2, controlvertexes)
 {
@@ -23,7 +26,12 @@ function PrimitiveNURBS(scene, div1, div2, controlvertexes)
 PrimitiveNURBS.prototype = Object.create(CGFobject.prototype);
 PrimitiveNURBS.prototype.constructor=PrimitiveNURBS;
 
-PrimitiveNURBS.prototype.makeKnots = function (degree)
+/**
+ * Creates a knots vector based on the degree of a dimension
+ * @param {int} degree - the degree of a dimension
+ * @return {Array} an array with the calculated knots
+ */
+PrimitiveNURBS.prototype.makeKnots = function(degree)
 {
 	var knots = [];
 	for (var i = 0; i <= degree; i++)
@@ -33,9 +41,19 @@ PrimitiveNURBS.prototype.makeKnots = function (degree)
 	return knots;
 };
 
-PrimitiveNURBS.prototype.display = function ()
+/**
+ * Displays the primitive, simply by calling the inner CGFnurbsObject's
+ * display method.
+ */
+PrimitiveNURBS.prototype.display = function()
 {
 	this.nurbs.display();
 };
 
-PrimitiveNURBS.prototype.setTexCoords = function (s, t){}
+/**
+  * Applies texture amplification factors to the texture coordinates.
+  * It does nothing, but it is required in all primitive classes
+  * @param {int} ampS - amplification factor in the S dimension
+  * @param {int} ampT - amplification factor in the T dimension
+  */
+PrimitiveNURBS.prototype.setTexCoords = function(ampS, ampT){}

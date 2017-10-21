@@ -1,6 +1,10 @@
 /**
- * PrimitiveSphere
+ * Primitive that represents a sphere
  * @constructor
+ * @param {CGFScene} scene - the scene to which this primitive will belong
+ * @param {int} radius - the radius of the sphere
+ * @param {int} slices - the number of slices
+ * @param {int} stacks - the number of stacks
  */
  function PrimitiveSphere(scene, radius, slices, stacks)
  {
@@ -16,6 +20,11 @@
  PrimitiveSphere.prototype = Object.create(CGFobject.prototype);
  PrimitiveSphere.prototype.constructor = PrimitiveSphere;
 
+ /**
+   * Initializes the sphere's buffers, calculating
+   * all the coordinates based on the definitions
+   * set on the constructor
+   */
 PrimitiveSphere.prototype.initBuffers = function()
 {
  	this.vertices = [];
@@ -58,4 +67,10 @@ PrimitiveSphere.prototype.initBuffers = function()
  	this.initGLBuffers();
  };
 
+ /**
+   * Applies texture amplification factors to the texture coordinates.
+   * It does nothing, but it is required in all primitive classes
+   * @param {int} ampS - amplification factor in the S dimension
+   * @param {int} ampT - amplification factor in the T dimension
+   */
  PrimitiveSphere.prototype.setTexCoords = function (s, t){};

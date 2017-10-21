@@ -11,7 +11,7 @@ function getUrlVars() {
     return vars;
 }
 
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js',
+serialInclude(['../lib/CGF.js', 'XMLscene.js', 'SceneGraphParser.js',
 			 'MyGraphNode.js', 'MyInterface.js',
 			 'ObjectNode.js', 'ObjectGraph.js', 'ObjectTexture.js',
 			 'PrimitiveRectangle.js', 'PrimitiveCylinder.js', 'PrimitiveSphere.js',
@@ -38,7 +38,7 @@ main=function()
 
 	// create and load graph, and associate it to scene.
 	// Check console for loading errors
-	var myGraph = new MySceneGraph(filename, myScene);
+	var myGraph = new SceneGraphParser(filename, myScene);
 
 	// start
     app.run();

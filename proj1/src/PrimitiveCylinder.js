@@ -1,6 +1,15 @@
 /**
- * PrimitiveCylinder
+ * Primitive that represents a cylinder with configurable dimensions
+ * and whose base is on the x0y plan
  * @constructor
+ * @param {CGFScene} scene - the scene to which this primitive will belong
+ * @param {int} height - the height of the cylinder
+ * @param {int} bottomR - the radius of the bottom lid
+ * @param {int} topR - the radius of the top lid
+ * @param {int} stacks - the number of stacks
+ * @param {int} slices - the number of slices
+ * @param {boolean} topcap - flag that indicates whether to include the top lid or not
+ * @param {boolean} botcap - flag that indicates whether to include the bottom lid or not
  */
  function PrimitiveCylinder(scene, height, bottomR, topR, stacks, slices, topcap, botcap)
  {
@@ -21,6 +30,11 @@
  PrimitiveCylinder.prototype = Object.create(CGFobject.prototype);
  PrimitiveCylinder.prototype.constructor = PrimitiveCylinder;
 
+ /**
+   * Initializes the cylinder's buffers, calculating
+   * all the coordinates based on the definitions
+   * set on the constructor
+   */
  PrimitiveCylinder.prototype.initBuffers = function()
  {
  	this.vertices = [];
@@ -86,4 +100,10 @@
  	this.initGLBuffers();
  };
 
- PrimitiveCylinder.prototype.setTexCoords = function (s, t){}
+ /**
+   * Applies texture amplification factors to the texture coordinates.
+   * It does nothing, but it is required in all primitive classes
+   * @param {int} ampS - amplification factor in the S dimension
+   * @param {int} ampT - amplification factor in the T dimension
+   */
+ PrimitiveCylinder.prototype.setTexCoords = function(ampS, ampT){}

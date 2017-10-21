@@ -1,7 +1,11 @@
 /**
- * PrimitiveRectangle
- * @param gl {WebGLRenderingContext}
+ * Primitive that represents a rectangle in the x0y plane
  * @constructor
+ * @param {CGFScene} scene - the scene to which this primitive will belong
+ * @param {int} xleft - the X coordinate of the top left point
+ * @param {int} yleft - the Y coordinate of the top left point
+ * @param {int} xright - the X coordinate of the bottom right point
+ * @param {int} yright - the Y coordinate of the bottom right point
  */
 function PrimitiveRectangle(scene, xleft, yleft, xright, yright)
 {
@@ -21,6 +25,9 @@ function PrimitiveRectangle(scene, xleft, yleft, xright, yright)
 PrimitiveRectangle.prototype = Object.create(CGFobject.prototype);
 PrimitiveRectangle.prototype.constructor=PrimitiveRectangle;
 
+/**
+  * Initializes the rectangle's buffers
+  */
 PrimitiveRectangle.prototype.initBuffers = function()
 {
 	this.vertices = [
@@ -55,7 +62,11 @@ PrimitiveRectangle.prototype.initBuffers = function()
 	this.initGLBuffers();
 };
 
-// setting the amplification factors
+/**
+  * Applies texture amplification factors to the texture coordinates
+  * @param {int} ampS - amplification factor in the S dimension
+  * @param {int} ampT - amplification factor in the T dimension
+  */
 PrimitiveRectangle.prototype.setTexCoords = function(ampS, ampT)
 {
 	if (this.ampS == ampS && this.ampT == ampT)
