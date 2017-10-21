@@ -102,11 +102,11 @@ ObjectGraph.prototype.displayObjects = function(node)
 
 	this.scene.popMatrix();
 
-	if (this.texStack.length > 1){
-		//this.texStack[this.texStack.length - 1].tex.unbind();
+	if (this.texStack.length > 0){
+		this.texStack[this.texStack.length - 1].tex.unbind();
 		this.texStack.pop();
 	}
-	if (this.matStack.length > 1)
+	if (this.matStack.length > 0)
 		this.matStack.pop();
 };
 

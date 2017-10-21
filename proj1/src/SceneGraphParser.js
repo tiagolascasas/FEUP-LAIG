@@ -11,24 +11,22 @@ var NODES_INDEX = 6;
 
 /**
  * SceneGraphParser class, which parses a xml file with a scene graph and builds
- * a scene graph of the type ObjectGraph with it
+ * an ObjectGraph with the nodes information, and also holds all the configuration and lights
+ * definitions
  * @constructor
  */
 function SceneGraphParser(filename, scene) {
-    this.loadedOk = null ;
+    this.loadedOk = null;
 
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
 
-    this.nodes = [];
+	this.objGraph = new ObjectGraph(this.scene);	//Scene graph proper
 
-    this.idRoot = null;                    // The id of the root element.
-
-    this.objectNodes = [];
-    this.objectLeaves = [];
-
-	this.objGraph = new ObjectGraph(this.scene);
+    this.nodes = [];		//id of the nodes, to check if there are duplicates
+	this.textures = [];		//id of the textures, to check if there are duplicates
+	this.materials = []; 	//id of the materials, to check if there are duplicates
 
     this.axisCoords = [];
     this.axisCoords['x'] = [1, 0, 0];
@@ -857,7 +855,6 @@ SceneGraphParser.prototype.parseLights = function(lightsNode) {
  */
 SceneGraphParser.prototype.parseTextures = function(texturesNode) {
 
-    this.textures = [];
 
     var eachTexture = texturesNode.children;
     // Each texture.
@@ -917,12 +914,12 @@ SceneGraphParser.prototype.parseTextures = function(texturesNode) {
             else if (amplifFactorT == null )
                 return "t amplification factor undefined for texture with ID = " + textureID;
 
+			//add texture to scene graph
             var texture = new CGFtexture(this.scene,"./scenes/" + filepath);
-			this.textures[textureID] = [texture, amplifFactorS, amplifFactorT];
-
 			var textureObj = new ObjectTexture(texture, amplifFactorS, amplifFactorT);
 			this.objGraph.addTexture(textureID, textureObj);
 
+			this.textures[textureID] = textureID;
             oneTextureDefined = true;
         }
         else
@@ -942,8 +939,6 @@ SceneGraphParser.prototype.parseMaterials = function(materialsNode) {
 
     var children = materialsNode.children;
     // Each material.
-
-    this.materials = [];
 
     var oneMaterialDefined = false;
 
@@ -1155,10 +1150,12 @@ SceneGraphParser.prototype.parseMaterials = function(materialsNode) {
         newMaterial.setDiffuse(diffuseComponent[0], diffuseComponent[1], diffuseComponent[2], diffuseComponent[3]);
         newMaterial.setSpecular(specularComponent[0], specularComponent[1], specularComponent[2], specularComponent[3]);
         newMaterial.setEmission(emissionComponent[0], emissionComponent[1], emissionComponent[2], emissionComponent[3]);
-        this.materials[materialID] = newMaterial;
-        oneMaterialDefined = true;
 
+		//adds the material to the scene graph
 		this.objGraph.addMaterial(materialID, newMaterial);
+
+		this.materials[materialID] = materialID;
+		oneMaterialDefined = true;
     }
 
     if (!oneMaterialDefined)
@@ -1189,10 +1186,10 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
                 var root = this.reader.getString(children[i], 'id');
                 if (root == null )
                     return "failed to retrieve root node ID";
-                this.idRoot = root;
+
+				//set root of scene graph
 				this.objGraph.setRootID(root);
-                var rootNode = new MyGraphNode(this, this.idRoot);
-                this.objectNodes.push(rootNode);
+
             }
         }
         else if (nodeName == "NODE")
@@ -1205,11 +1202,12 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
             if (this.nodes[nodeID] != null )
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
+			// Creates node
 			var obj = new ObjectNode(nodeID, this.scene);
             this.log("Processing node "+nodeID);
 
-            // Creates node.
-            this.nodes[nodeID] = new MyGraphNode(this,nodeID);
+			//registers the node id to keep track of duplicates
+			this.nodes[nodeID] = nodeID;
 
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
@@ -1233,7 +1231,7 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
             if (materialID != "null" && this.materials[materialID] == null )
                 return "ID does not correspond to a valid material (node ID = " + nodeID + ")";
 
-            this.nodes[nodeID].materialID = materialID;
+            //this.nodes[nodeID].materialID = materialID;
 			obj.material = materialID;
 
             // Retrieves texture ID.
@@ -1246,7 +1244,7 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
             if (textureID != "null" && textureID != "clear" && this.textures[textureID] == null )
                 return "ID does not correspond to a valid texture (node ID = " + nodeID + ")";
 
-            this.nodes[nodeID].textureID = textureID;
+            //this.nodes[nodeID].textureID = textureID;
 			obj.texture = textureID;
 
             // Retrieves possible transformations.
@@ -1278,7 +1276,6 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
                     else if (isNaN(z))
                         return "non-numeric value for z-coordinate of translation (node ID = " + nodeID + ")";
 
-                    mat4.translate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [x, y, z]);
 					mat4.translate(obj.matrix, obj.matrix, [x, y, z]);
                     break;
                 case "ROTATION":
@@ -1296,7 +1293,6 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
                     else if (isNaN(angle))
                         return "non-numeric value for rotation angle (node ID = " + nodeID + ")";
 
-                    mat4.rotate(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
 					mat4.rotate(obj.matrix, obj.matrix, angle * DEGREE_TO_RAD, this.axisCoords[axis]);
                     break;
                 case "SCALE":
@@ -1325,7 +1321,6 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
                     else if (isNaN(sz))
                         return "non-numeric value for z component of scaling (node ID = " + nodeID + ")";
 
-                    mat4.scale(this.nodes[nodeID].transformMatrix, this.nodes[nodeID].transformMatrix, [sx, sy, sz]);
 					mat4.scale(obj.matrix, obj.matrix, [sx, sy, sz]);
                     break;
                 default:
@@ -1354,7 +1349,7 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
                     else if (curId == nodeID)
                         return "a node may not be a child of its own";
                     else {
-                        this.nodes[nodeID].addChild(curId);
+                        //adds child to the current node
 						obj.addChild(curId);
                         sizeChildren++;
                     }
@@ -1383,6 +1378,7 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
 						console.log("Processing a patch");
 						var points = [];
 						var currPoint = 0;
+						var vpointsSize = null;
 
 						var upoints = descendants[j].children;
 						for (var u = 0; u < upoints.length; u++)
@@ -1391,12 +1387,17 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
 								this.onXMLError("unknown tag <" + upoints[u].nodeName + ">");
 							var umat = [];
 							var vpoints = upoints[u].children;
-							console.log(vpoints);
+
+							if (vpointsSize == null)
+								vpointsSize = vpoints.length;
+							else if (vpointsSize != vpoints.length)
+								this.onXMLError("Wrong number of points in a V dimension of a patch");
+
 							for (var v = 0; v < vpoints.length; v++)
 							{
-								console.log(vpoints[v].nodeName);
 								if (vpoints[v].nodeName != "CPOINT")
 									this.onXMLError("unknown tag <" + vpoints[v].nodeName + ">");
+
 								var vvec = [];
 
 								var x = this.reader.getFloat(vpoints[v], 'xx');
@@ -1448,15 +1449,15 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
             }
             if (sizeChildren == 0)
                 return "at least one descendant must be defined for each intermediate node";
-            this.objectNodes.push(this.nodes[nodeID]);
+
+			//adds the node to the scene graph
 			this.objGraph.addObject(obj);
         }
         else
             this.onXMLMinorError("unknown tag name <" + nodeName);
     }
-
     console.log("Parsed nodes");
-    return null ;
+    return null;
 }
 
 /*
@@ -1494,8 +1495,9 @@ SceneGraphParser.prototype.generateDefaultMaterial = function() {
     this.defaultMaterialID = null;
     do this.defaultMaterialID = SceneGraphParser.generateRandomString(5);
     while (this.materials[this.defaultMaterialID] != null);
+	this.materials[this.defaultMaterialID] = materialDefault;
 
-    this.materials[this.defaultMaterialID] = materialDefault;
+	//sets a default material on the scene graph
 	this.objGraph.defaultMaterial = materialDefault;
 }
 
@@ -1513,10 +1515,9 @@ SceneGraphParser.generateRandomString = function(length) {
 }
 
 /**
- * Displays the scene, processing each node, starting in the root node.
+ * Displays the scene graph by calling its display method
  */
 SceneGraphParser.prototype.displayScene = function()
 {
-	this.materials[this.defaultMaterialID].apply();	//temporary
 	this.objGraph.display();
 }
