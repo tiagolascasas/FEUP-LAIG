@@ -15,7 +15,8 @@
   <!-- Illumination and clear colour -->
   <ILLUMINATION>
     <ambient r="0.25" g="0.25" b="0.25" a="1" />
-    <background r="0.9" g="0.9" b="0.9" a="1" />
+    <!-- <background r="0.9" g="0.9" b="0.9" a="1" /> -->
+	<background r="0.77" g="0.89" b="0.976" a="1" />
   </ILLUMINATION>
 
 
@@ -216,6 +217,7 @@
   <!-- The nodes -->
   <NODES>
 
+	<!-- id of root node -->
     <ROOT id="root" />
 
     <!-- The root node -->
@@ -356,7 +358,7 @@
 
       <DESCENDANTS>
         <NODEREF id="3sidedWall" />
-        <NODEREF id = "decoration"/>
+        <NODEREF id= "decoration"/>
       </DESCENDANTS>
 
     </NODE>
@@ -490,6 +492,7 @@
 
     </NODE>
 
+	<!-- First wall of the tower, with a rectangle and a triange -->
     <NODE id="towerWall1">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -504,6 +507,7 @@
 
     </NODE>
 
+	<!-- Second wall of the tower, with a rectangle and a triange -->
     <NODE id="towerWall2">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -519,6 +523,7 @@
 
     </NODE>
 
+	<!-- Third wall of the tower, with a rectangle and a triange -->
     <NODE id="towerWall3">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -534,6 +539,7 @@
 
     </NODE>
 
+	<!-- Fourth wall of the tower, with a rectangle and a triange -->
     <NODE id="towerWall4">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -549,6 +555,7 @@
 
     </NODE>
 
+	<!-- Triangle making a section of the roof -->
     <NODE id="roofPiece">
       <MATERIAL id="pyramidalTilesMaterial" />
       <TEXTURE id="roofgreen" />
@@ -574,6 +581,7 @@
 
     </NODE>
 
+	<!-- The first round tower -->
     <NODE id="roundTower1">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -588,6 +596,7 @@
 
     </NODE>
 
+	<!-- The second round tower -->
     <NODE id="roundTower2">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -602,6 +611,7 @@
 
     </NODE>
 
+	<!-- The third round tower -->
     <NODE id="roundTower3">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -616,6 +626,7 @@
 
     </NODE>
 
+	<!-- Transformation for tower 1 in order to have the window on a specific orientation -->
     <NODE id="windowTransform1">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -627,6 +638,7 @@
       </DESCENDANTS>
     </NODE>
 
+	<!-- Transformation for tower 2 in order to have the window on a specific orientation -->
     <NODE id="windowTransform2">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -638,6 +650,7 @@
       </DESCENDANTS>
     </NODE>
 
+	<!-- Transformation for tower 3 in order to have the window on a specific orientation -->
     <NODE id="windowTransform3">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
@@ -649,16 +662,18 @@
       </DESCENDANTS>
     </NODE>
 
+	<!-- The cylindrical body of a round tower -->
     <NODE id="towerBody">
       <MATERIAL id="null" />
       <TEXTURE id="roundStone" />
 
       <DESCENDANTS>
-        <LEAF  type="cylinder" args="3 0.7 0.7 20 20 1 1" />
+        <LEAF  type="cylinder" args="3 0.7 0.7 20 20 0 1" />
       </DESCENDANTS>
 
     </NODE>
 
+	<!-- An almost conical roof for a round tower (a cylinder with a very small top lid)-->
     <NODE id="conicRoof">
       <MATERIAL id="conicalTileMaterial" />
       <TEXTURE id="tiles" />
@@ -672,6 +687,7 @@
 
     </NODE>
 
+	<!-- A flagpole for a conic roof -->
     <NODE id="flagpole">
       <MATERIAL id="poleMaterial" />
       <TEXTURE id="clear" />
@@ -685,8 +701,7 @@
 
     </NODE>
 
-    <!-- Decoration -->
-
+    <!-- Decoration of the walls -->
     <NODE id="decoration">
       <MATERIAL id="null"/>
       <TEXTURE id = "null"/>
@@ -694,74 +709,80 @@
       <TRANSLATION x = "0" y = "0" z = "0.5" />
 
       <DESCENDANTS>
-        <NODEREF id = "cube1"/>
-        <NODEREF id = "cube2"/>
-        <NODEREF id = "cube3"/>
-        <NODEREF id = "cube4"/>
-        <NODEREF id = "cube5"/>
+        <NODEREF id = "block1"/>
+        <NODEREF id = "block2"/>
+        <NODEREF id = "block3"/>
+        <NODEREF id = "block4"/>
+        <NODEREF id = "block5"/>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id = "cube1">
+	<!-- First block of the decoration -->
+    <NODE id = "block1">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
       <TRANSLATION x = "0.5" y = "2" z ="-0.7"/>
       <DESCENDANTS>
-        <NODEREF id = "cube"/>
+        <NODEREF id = "block"/>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id = "cube2">
+	<!-- Second block of the decoration -->
+    <NODE id = "block2">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
       <TRANSLATION x = "2" y = "2" z ="-0.7"/>
       <DESCENDANTS>
-        <NODEREF id = "cube"/>
+        <NODEREF id = "block"/>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id = "cube3">
+	<!-- Third block of the decoration -->
+    <NODE id = "block3">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
       <TRANSLATION x = "3.5" y = "2" z ="-0.7"/>
       <DESCENDANTS>
-        <NODEREF id = "cube"/>
+        <NODEREF id = "block"/>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id = "cube4">
+	<!-- Fourth block of the decoration -->
+    <NODE id = "block4">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
       <TRANSLATION x = "5" y = "2" z ="-0.7"/>
       <DESCENDANTS>
-        <NODEREF id = "cube"/>
+        <NODEREF id = "block"/>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id = "cube5">
+	<!-- Fifth block of the decoration -->
+    <NODE id = "block5">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
       <TRANSLATION x = "6.5" y = "2" z ="-0.7"/>
       <DESCENDANTS>
-        <NODEREF id = "cube"/>
+        <NODEREF id = "block"/>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id = "cube">
+	<!-- Block made with rectangles -->
+    <NODE id = "block">
       <MATERIAL id = "stoneMaterial"/>
       <TEXTURE id = "block" />
 
       <DESCENDANTS>
-        <NODEREF id = "cside1"/>
-        <NODEREF id = "cside2"/>
-        <NODEREF id = "cside3"/>
-        <NODEREF id = "cside4"/>
-        <NODEREF id = "ctop"/>
+        <NODEREF id = "blockSide1"/>
+        <NODEREF id = "blockSide2"/>
+        <NODEREF id = "blockSide3"/>
+        <NODEREF id = "blockSide4"/>
+        <NODEREF id = "blockTop"/>
       </DESCENDANTS>
     </NODE>
 
-    <!-- Back side of cube -->
-    <NODE id = "cside1">
+    <!-- Back side of block -->
+    <NODE id = "blockSide1">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
 
@@ -769,24 +790,24 @@
       <ROTATION axis = "x" angle = "180" />
 
       <DESCENDANTS>
-        <NODEREF id = "cubeFace"/>
+        <NODEREF id = "blockFace"/>
       </DESCENDANTS>
     </NODE>
 
-    <!-- Front side of cube -->
-    <NODE id = "cside2">
+    <!-- Front side of block -->
+    <NODE id = "blockSide2">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
 
       <TRANSLATION x = "0" y = "0" z = "0.5" />
 
       <DESCENDANTS>
-        <NODEREF id = "cubeFace"/>
+        <NODEREF id = "blockFace"/>
       </DESCENDANTS>
     </NODE>
 
-    <!-- Left side of cube -->
-    <NODE id = "cside3">
+    <!-- Left side of block -->
+    <NODE id = "blockSide3">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
 
@@ -794,12 +815,12 @@
       <ROTATION axis = "y" angle = "270" />
 
       <DESCENDANTS>
-        <NODEREF id = "cubeFace"/>
+        <NODEREF id = "blockFace"/>
       </DESCENDANTS>
     </NODE>
 
-    <!-- Right side of cube -->
-    <NODE id = "cside4">
+    <!-- Right side of block -->
+    <NODE id = "blockSide4">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
 
@@ -808,12 +829,12 @@
       <ROTATION axis = "y" angle = "90" />
 
       <DESCENDANTS>
-        <NODEREF id = "cubeFace"/>
+        <NODEREF id = "blockFace"/>
       </DESCENDANTS>
     </NODE>
 
-    <!-- Top of the cube -->
-    <NODE id = "ctop">
+    <!-- Top of the block -->
+    <NODE id = "blockTop">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
 
@@ -822,11 +843,12 @@
       <ROTATION axis = "x" angle = "-90" />
 
       <DESCENDANTS>
-        <NODEREF id = "cubeFace"/>
+        <NODEREF id = "blockFace"/>
       </DESCENDANTS>
     </NODE>
 
-    <NODE id = "cubeFace">
+	<!-- Rectangle that represents a face of a block -->
+    <NODE id = "blockFace">
       <MATERIAL id = "null" />
       <TEXTURE id = "null" />
       <DESCENDANTS>
@@ -834,6 +856,7 @@
       </DESCENDANTS>
     </NODE>
 
+	<!-- A flag made with a patch -->
     <NODE id="flag">
       <MATERIAL id="flagMaterial" />
       <TEXTURE id="flag" />
@@ -864,7 +887,6 @@
           </CPLINE>
         </LEAF>
       </DESCENDANTS>
-
     </NODE>
 
   </NODES>
