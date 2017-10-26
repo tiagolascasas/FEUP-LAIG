@@ -1,0 +1,894 @@
+<SCENE>
+
+  <!-- Initial values -->
+  <INITIALS>
+    <frustum near="0.1" far="500"/>
+    <translation x="-1" y="0" z="0" />
+    <rotation axis="x" angle="0" />
+    <rotation axis="y" angle="0" />
+    <rotation axis="z" angle="0" />
+    <scale sx="0.5" sy="0.5" sz="0.5" />
+    <reference length="5" />
+  </INITIALS>
+
+
+  <!-- Illumination and clear colour -->
+  <ILLUMINATION>
+    <ambient r="0.25" g="0.25" b="0.25" a="1" />
+    <!-- <background r="0.9" g="0.9" b="0.9" a="1" /> -->
+	<background r="0.77" g="0.89" b="0.976" a="1" />
+  </ILLUMINATION>
+
+
+  <!-- Lights -->
+  <LIGHTS>
+    <LIGHT id="Right tower light">
+      <enable value ="1" />
+      <position x="9.0" y="1.0" z="-0.5" w="1.0" />
+      <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+      <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="Front tower light">
+      <enable value ="1" />
+      <position x="9.5" y="1.0" z="8.0" w="1.0" />
+      <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+      <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="Left tower light">
+      <enable value ="1" />
+      <position x="-1.0" y="1.0" z="7.5" w="1" />
+      <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+      <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+    <LIGHT id="Square tower light">
+      <enable value ="0" />
+      <position x="1.0" y="5.0" z="1.0" w="1" />
+      <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+      <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+      <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+    </LIGHT>
+
+  </LIGHTS>
+
+  <!-- Textures -->
+  <TEXTURES>
+    <!-- Bushes -->
+    <TEXTURE id="bush">
+      <file path="castleTex/bush.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Ground -->
+    <TEXTURE id="grass">
+      <file path="castleTex/grass.jpg" />
+      <amplif_factor s="0.1" t="0.08" />
+    </TEXTURE>
+
+    <!-- Square tower's roof -->
+    <TEXTURE id="roofgreen">
+      <file path="castleTex/roofgreen.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Wall tops -->
+    <TEXTURE id="stone">
+      <file path="castleTex/stone.jpg" />
+      <amplif_factor s="0.25" t="1" />
+    </TEXTURE>
+
+    <TEXTURE id="roundStone">
+      <file path="castleTex/roundStones.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Conical roofs -->
+    <TEXTURE id="tiles">
+      <file path="castleTex/tiles.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Square tower -->
+    <TEXTURE id="tower">
+      <file path="castleTex/tower.jpg" />
+      <amplif_factor s="0.25" t="1" />
+    </TEXTURE>
+
+    <!-- Walls -->
+    <TEXTURE id="wall">
+      <file path="castleTex/wall.jpg" />
+      <amplif_factor s="0.25" t="1" />
+    </TEXTURE>
+
+    <!-- Flag -->
+    <TEXTURE id="flag">
+      <file path="castleTex/flag.png" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
+    <!-- Blocks -->
+    <TEXTURE id="block">
+      <file path="castleTex/block.jpg" />
+      <amplif_factor s="1" t="2" />
+    </TEXTURE>
+
+  </TEXTURES>
+
+
+  <MATERIALS>
+    <!-- Wall material -->
+    <MATERIAL id="wallMaterial">
+      <shininess value="50" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+      <ambient r="0.6" g="0.6" b="0.6" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Grass material -->
+    <MATERIAL id="grassMaterial">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Stone material -->
+    <MATERIAL id="stoneMaterial">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Conical tiles material -->
+    <MATERIAL id="conicalTileMaterial">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Tower walls material -->
+    <MATERIAL id="towerMaterial">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Bush material -->
+    <MATERIAL id="bushMaterial">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Pyramidal tiles material -->
+    <MATERIAL id="pyramidalTilesMaterial">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Flag pole material -->
+    <MATERIAL id="poleMaterial">
+      <shininess value="1" />
+      <specular r="0.7" g="0.7" b="0.7" a="1" />
+      <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+      <ambient r="0.5" g="0.5" b="0.5" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- Flag material -->
+    <MATERIAL id="flagMaterial">
+      <shininess value="200" />
+      <specular r="0.4" g="0.4" b="0.4" a="1" />
+      <diffuse r="0.8" g="0.8" b="0.8" a="1" />
+      <ambient r="0.5" g="0.5" b="0.5" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+    <!-- A default material -->
+    <MATERIAL id="defaultMaterial">
+      <shininess value="1" />
+      <specular r="0.1" g="0.1" b="0.1" a="1" />
+      <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+      <ambient r="0.2" g="0.2" b="0.2" a="1" />
+      <emission r="0.0" g="0.0" b="0.0" a="1" />
+    </MATERIAL>
+
+  </MATERIALS>
+
+
+  <!-- The nodes -->
+  <NODES>
+
+	<!-- id of root node -->
+    <ROOT id="root" />
+
+    <!-- The root node -->
+    <NODE id="root">
+      <MATERIAL id="defaultMaterial" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="ground" />
+        <NODEREF id="bushes" />
+        <NODEREF id="castle" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The ground -->
+    <NODE id="ground">
+      <MATERIAL id="grassMaterial" />
+      <TEXTURE id="grass" />
+
+      <TRANSLATION x="-2" y="0" z="9" />
+      <ROTATION axis="x" angle="270" />
+
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 11 12.5 0" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The bushes-->
+    <NODE id="bushes">
+      <MATERIAL id="bushMaterial" />
+      <TEXTURE id="bush" />
+
+      <DESCENDANTS>
+        <NODEREF id="bush1" />
+        <NODEREF id="bush2" />
+        <NODEREF id="bush3" />
+        <NODEREF id="bush4" />
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- The castle-->
+    <NODE id="castle">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="walls" />
+        <NODEREF id="squareTower" />
+        <NODEREF id="roundTowers" />
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- The first bush -->
+    <NODE id="bush1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="1" y="0" z="7.5" />
+
+      <DESCENDANTS>
+        <NODEREF id="bushPrimitive" />
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- The second bush -->
+    <NODE id="bush2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="6" y="0" z="7.3" />
+
+      <DESCENDANTS>
+        <NODEREF id="bushPrimitive" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The third bush -->
+    <NODE id="bush3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="9" y="0" z="5" />
+
+      <DESCENDANTS>
+        <NODEREF id="bushPrimitive" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The fourth bush -->
+    <NODE id="bush4">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="9.3" y="0" z="0.5" />
+
+      <DESCENDANTS>
+        <NODEREF id="bushPrimitive" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Node with a sphere primitive -->
+    <NODE id="bushPrimitive">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <LEAF  type="sphere" args="0.5 20 20" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The walls-->
+    <NODE id="walls">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="wall1" />
+        <NODEREF id="wall2" />
+        <NODEREF id="wall3" />
+        <NODEREF id="wall4" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The first wall -->
+    <NODE id="wall1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x = "8" y = "0" z = "0" />
+      <ROTATION axis = "y" angle = "180" />
+
+      <DESCENDANTS>
+        <NODEREF id="3sidedWall" />
+        <NODEREF id= "decoration"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The second wall -->
+    <NODE id="wall2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <ROTATION axis="y" angle="270" />
+      <SCALE sx="0.8" sy="1" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="3sidedWall"/>
+        <NODEREF id = "decoration"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The third wall -->
+    <NODE id="wall3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="6.4" />
+
+      <DESCENDANTS>
+        <NODEREF id="3sidedWall"/>
+        <NODEREF id = "decoration" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The fourth wall -->
+    <NODE id="wall4">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="8" y="0" z="6.4" />
+      <ROTATION axis="y" angle="90" />
+      <SCALE sx="0.8" sy="1" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="3sidedWall"/>
+        <NODEREF id = "decoration" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- A wall with two sides and a top -->
+    <NODE id="3sidedWall">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="side1" />
+        <NODEREF id="side2" />
+        <NODEREF id="top" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- One of the sides of the wall -->
+    <NODE id="side1">
+      <MATERIAL id="wallMaterial" />
+      <TEXTURE id="wall" />
+
+      <TRANSLATION x="0" y="0" z="0.3" />
+      <SCALE sx="8" sy="2" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="wallPrimitive"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The other side the wall -->
+    <NODE id="side2">
+      <MATERIAL id="wallMaterial" />
+      <TEXTURE id="wall" />
+
+      <TRANSLATION x="8" y="0" z="-0.3" />
+      <ROTATION axis="y" angle="180" />
+      <SCALE sx="8" sy="2" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="wallPrimitive"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The top of the wall -->
+    <NODE id="top">
+      <MATERIAL id="stoneMaterial" />
+      <TEXTURE id="stone" />
+
+      <TRANSLATION x="0" y="2" z="0.3" />
+      <ROTATION axis="x" angle="270" />
+      <SCALE sx="8" sy="0.6" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="wallPrimitive"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Node with a rectangle primitive -->
+    <NODE id="wallPrimitive">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 1 1 0" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The square tower-->
+    <NODE id="squareTower">
+      <MATERIAL id="towerMaterial" />
+      <TEXTURE id="tower" />
+
+      <TRANSLATION x="-0.5" y="0" z="0" />
+
+      <DESCENDANTS>
+        <NODEREF id="towerWall1" />
+        <NODEREF id="towerWall2" />
+        <NODEREF id="towerWall3" />
+        <NODEREF id="towerWall4" />
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- First wall of the tower, with a rectangle and a triange -->
+    <NODE id="towerWall1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="-0.5" y="0" z="1" />
+      <SCALE sx="2" sy="5" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="wallPrimitive"/>
+        <NODEREF id="roofPiece" />
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- Second wall of the tower, with a rectangle and a triange -->
+    <NODE id="towerWall2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="1.5" y="0" z="-1" />
+      <ROTATION axis="y" angle="180" />
+      <SCALE sx="2" sy="5" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="wallPrimitive"/>
+        <NODEREF id="roofPiece" />
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- Third wall of the tower, with a rectangle and a triange -->
+    <NODE id="towerWall3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="1.5" y="0" z="1" />
+      <ROTATION axis="y" angle="90" />
+      <SCALE sx="2" sy="5" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="wallPrimitive"/>
+        <NODEREF id="roofPiece" />
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- Fourth wall of the tower, with a rectangle and a triange -->
+    <NODE id="towerWall4">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="-0.5" y="0" z="-1" />
+      <ROTATION axis="y" angle="270" />
+      <SCALE sx="2" sy="5" sz="1" />
+
+      <DESCENDANTS>
+        <NODEREF id="wallPrimitive"/>
+        <NODEREF id="roofPiece" />
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- Triangle making a section of the roof -->
+    <NODE id="roofPiece">
+      <MATERIAL id="pyramidalTilesMaterial" />
+      <TEXTURE id="roofgreen" />
+
+      <TRANSLATION x="0" y="1" z="0" />
+
+      <DESCENDANTS>
+        <LEAF  type="triangle" args="0 0 0 1 0 0 0.5 1 -1" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- The round towers-->
+    <NODE id="roundTowers">
+      <MATERIAL id="stoneMaterial" />
+      <TEXTURE id="null" />
+
+      <DESCENDANTS>
+        <NODEREF id="roundTower1" />
+        <NODEREF id="roundTower2" />
+        <NODEREF id="roundTower3" />
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- The first round tower -->
+    <NODE id="roundTower1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="0" y="0" z="6.5" />
+      <ROTATION axis="x" angle="270" />
+
+      <DESCENDANTS>
+        <NODEREF id="conicRoof"/>
+        <NODEREF id="windowTransform1"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- The second round tower -->
+    <NODE id="roundTower2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="8" y="0" z="0" />
+      <ROTATION axis="x" angle="270" />
+
+      <DESCENDANTS>
+        <NODEREF id="conicRoof"/>
+        <NODEREF id="windowTransform2"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- The third round tower -->
+    <NODE id="roundTower3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <TRANSLATION x="8" y="0" z="6.5" />
+      <ROTATION axis="x" angle="270" />
+
+      <DESCENDANTS>
+        <NODEREF id="conicRoof"/>
+        <NODEREF id="windowTransform3"/>
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- Transformation for tower 1 in order to have the window on a specific orientation -->
+    <NODE id="windowTransform1">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <ROTATION axis="z" angle="45" />
+
+      <DESCENDANTS>
+        <NODEREF id="towerBody"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- Transformation for tower 2 in order to have the window on a specific orientation -->
+    <NODE id="windowTransform2">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <ROTATION axis="z" angle="-140" />
+
+      <DESCENDANTS>
+        <NODEREF id="towerBody"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- Transformation for tower 3 in order to have the window on a specific orientation -->
+    <NODE id="windowTransform3">
+      <MATERIAL id="null" />
+      <TEXTURE id="null" />
+
+      <ROTATION axis="z" angle="140" />
+
+      <DESCENDANTS>
+        <NODEREF id="towerBody"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- The cylindrical body of a round tower -->
+    <NODE id="towerBody">
+      <MATERIAL id="null" />
+      <TEXTURE id="roundStone" />
+
+      <DESCENDANTS>
+        <LEAF  type="cylinder" args="3 0.7 0.7 20 20 0 1" />
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- An almost conical roof for a round tower (a cylinder with a very small top lid)-->
+    <NODE id="conicRoof">
+      <MATERIAL id="conicalTileMaterial" />
+      <TEXTURE id="tiles" />
+
+      <TRANSLATION x="0" y="0" z="3" />
+
+      <DESCENDANTS>
+        <NODEREF id="flagpole"/>
+        <LEAF  type="cylinder" args="3 0.9 0.1 20 20 1 1" />
+      </DESCENDANTS>
+
+    </NODE>
+
+	<!-- A flagpole for a conic roof -->
+    <NODE id="flagpole">
+      <MATERIAL id="poleMaterial" />
+      <TEXTURE id="clear" />
+
+      <TRANSLATION x="0" y="0" z="3" />
+
+      <DESCENDANTS>
+        <NODEREF id="flag"/>
+        <LEAF  type="cylinder" args="1.5 0.05 0.05 20 20 1 1" />
+      </DESCENDANTS>
+
+    </NODE>
+
+    <!-- Decoration of the walls -->
+    <NODE id="decoration">
+      <MATERIAL id="null"/>
+      <TEXTURE id = "null"/>
+
+      <TRANSLATION x = "0" y = "0" z = "0.5" />
+
+      <DESCENDANTS>
+        <NODEREF id = "block1"/>
+        <NODEREF id = "block2"/>
+        <NODEREF id = "block3"/>
+        <NODEREF id = "block4"/>
+        <NODEREF id = "block5"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- First block of the decoration -->
+    <NODE id = "block1">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+      <TRANSLATION x = "0.5" y = "2" z ="-0.7"/>
+      <DESCENDANTS>
+        <NODEREF id = "block"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- Second block of the decoration -->
+    <NODE id = "block2">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+      <TRANSLATION x = "2" y = "2" z ="-0.7"/>
+      <DESCENDANTS>
+        <NODEREF id = "block"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- Third block of the decoration -->
+    <NODE id = "block3">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+      <TRANSLATION x = "3.5" y = "2" z ="-0.7"/>
+      <DESCENDANTS>
+        <NODEREF id = "block"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- Fourth block of the decoration -->
+    <NODE id = "block4">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+      <TRANSLATION x = "5" y = "2" z ="-0.7"/>
+      <DESCENDANTS>
+        <NODEREF id = "block"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- Fifth block of the decoration -->
+    <NODE id = "block5">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+      <TRANSLATION x = "6.5" y = "2" z ="-0.7"/>
+      <DESCENDANTS>
+        <NODEREF id = "block"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- Block made with rectangles -->
+    <NODE id = "block">
+      <MATERIAL id = "stoneMaterial"/>
+      <TEXTURE id = "block" />
+
+      <DESCENDANTS>
+        <NODEREF id = "blockSide1"/>
+        <NODEREF id = "blockSide2"/>
+        <NODEREF id = "blockSide3"/>
+        <NODEREF id = "blockSide4"/>
+        <NODEREF id = "blockTop"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Back side of block -->
+    <NODE id = "blockSide1">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+
+      <TRANSLATION x = "0" y = "0.5" z = "0" />
+      <ROTATION axis = "x" angle = "180" />
+
+      <DESCENDANTS>
+        <NODEREF id = "blockFace"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Front side of block -->
+    <NODE id = "blockSide2">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+
+      <TRANSLATION x = "0" y = "0" z = "0.5" />
+
+      <DESCENDANTS>
+        <NODEREF id = "blockFace"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Left side of block -->
+    <NODE id = "blockSide3">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+
+      <SCALE sx = "1" sy = "1" sz = "0.5" />
+      <ROTATION axis = "y" angle = "270" />
+
+      <DESCENDANTS>
+        <NODEREF id = "blockFace"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Right side of block -->
+    <NODE id = "blockSide4">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+
+      <TRANSLATION x = "1" y = "0" z = "0.5" />
+      <SCALE sx = "1" sy = "1" sz = "0.5" />
+      <ROTATION axis = "y" angle = "90" />
+
+      <DESCENDANTS>
+        <NODEREF id = "blockFace"/>
+      </DESCENDANTS>
+    </NODE>
+
+    <!-- Top of the block -->
+    <NODE id = "blockTop">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+
+      <TRANSLATION x = "0" y = "0.5" z = "0.5" />
+      <SCALE sx = "1" sy = "1" sz = "1" />
+      <ROTATION axis = "x" angle = "-90" />
+
+      <DESCENDANTS>
+        <NODEREF id = "blockFace"/>
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- Rectangle that represents a face of a block -->
+    <NODE id = "blockFace">
+      <MATERIAL id = "null" />
+      <TEXTURE id = "null" />
+      <DESCENDANTS>
+        <LEAF  type="rectangle" args="0 0.5 1 0" />
+      </DESCENDANTS>
+    </NODE>
+
+	<!-- A flag made with a patch -->
+    <NODE id="flag">
+      <MATERIAL id="flagMaterial" />
+      <TEXTURE id="flag" />
+
+      <TRANSLATION x="0.3" y="0.77" z="1" />
+      <ROTATION axis="x" angle="90" />
+      <ROTATION axis="y" angle="30" />
+      <ROTATION axis="z" angle="180" />
+      <SCALE sx="0.3" sy="0.3" sz="0.3" />
+
+      <DESCENDANTS>
+        <LEAF  type="patch" args="20 20" >
+          <CPLINE>
+            <CPOINT xx="-1.5" yy="-1.5" zz="0.0" ww="1"/>
+            <CPOINT xx="-1.5" yy="1.5" zz="0.0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="0" yy="-1.5" zz="3.0" ww="1"/>
+            <CPOINT xx="0" yy="1.5" zz="3.0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="1.5" yy="-1.5" zz="0.0" ww="1"/>
+            <CPOINT xx="1.5" yy="1.5" zz="0.0" ww="1"/>
+          </CPLINE>
+          <CPLINE>
+            <CPOINT xx="2.0" yy="-2.0" zz="2.0" ww="1"/>
+            <CPOINT xx="2.0" yy="2.0" zz="2.0" ww="1"/>
+          </CPLINE>
+        </LEAF>
+      </DESCENDANTS>
+    </NODE>
+
+  </NODES>
+
+</SCENE>
