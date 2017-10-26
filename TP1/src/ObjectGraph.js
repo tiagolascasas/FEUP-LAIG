@@ -127,13 +127,6 @@ ObjectGraph.prototype.applyAppearences = function(node)
 				lastMat.apply();
 			}
 			break;
-		case "clear":
-			if (this.matStack.length > 0)
-			{
-				this.matStack.push(lastMat);
-				this.defaultMaterial.apply();
-			}
-			break;
 		default:
 			this.matStack.push(this.mat[node.material]);
 			this.mat[node.material].apply();
