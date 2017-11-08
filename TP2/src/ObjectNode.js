@@ -12,6 +12,7 @@ function ObjectNode(id, scene)
 	this.scene = scene;
 	this.children = [];
 	this.leaves = [];
+	this.animations = [];
 	this.material = null;
 	this.texture = null;
 	this.matrix = mat4.create();
@@ -28,6 +29,15 @@ ObjectNode.prototype.addChild = function(id)
 };
 
 /**
+  * Adds a new animation to the node
+  * @param {string} id - the unique identifier of the animation
+  */
+ObjectNode.prototype.addAnimation = function(anim)
+{
+    this.animations.push(anim);
+};
+
+/**
   * Displays all the primitives the node has, changing their
   * texture coordinates based on the current texture's properties
   * @param {ObjectTexture} currTex - the current texture object
@@ -41,6 +51,21 @@ ObjectNode.prototype.displayPrimitives = function(currTex)
 		this.scene.pushMatrix();
 		this.leaves[i].display();
 		this.scene.popMatrix();
+	}
+};
+
+ObjectNode.prototype.applyTransformations = function()
+{
+	this.applyAnimations();
+	this.scene.multMatrix(this.matrix);
+};
+
+ObjectNode.prototype.applyAnimations = function()
+{
+	for (let i = 0; i < this.animations.length; i++)
+	{
+		console.log("in mat");
+		this.scene.multMatrix(this.animations[i].getCurrentMatrix());
 	}
 };
 

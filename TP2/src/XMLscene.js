@@ -31,6 +31,8 @@ XMLscene.prototype.init = function(application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
     this.axis = new CGFaxis(this);
+
+	this.setUpdatePeriod(50);
 }
 
 /**
@@ -78,6 +80,8 @@ XMLscene.prototype.initCameras = function() {
  */
 XMLscene.prototype.onGraphLoaded = function()
 {
+	this.objGraph = this.graph.objGraph;
+
     this.camera.near = this.graph.near;
     this.camera.far = this.graph.far;
     this.axis = new CGFaxis(this,this.graph.referenceLength);
@@ -146,4 +150,11 @@ XMLscene.prototype.display = function() {
 	}
     this.popMatrix();
     // ---- END Background, camera and axis setup
+};
+
+XMLscene.prototype.update = function(currTime)
+{/*
+	if (!this.graph.loadedOK)
+		return;*/
+	this.objGraph.update(currTime);
 };

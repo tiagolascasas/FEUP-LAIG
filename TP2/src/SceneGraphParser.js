@@ -6,7 +6,7 @@ var ILLUMINATION_INDEX = 1;
 var LIGHTS_INDEX = 2;
 var TEXTURES_INDEX = 3;
 var MATERIALS_INDEX = 4;
-var LEAVES_INDEX = 5;
+var ANIMATIONS_INDEX = 5;
 var NODES_INDEX = 6;
 
 /**
@@ -27,6 +27,7 @@ function SceneGraphParser(filename, scene) {
     this.nodes = [];		//id of the nodes, to check if there are duplicates
 	this.textures = [];		//id of the textures, to check if there are duplicates
 	this.materials = []; 	//id of the materials, to check if there are duplicates
+	this.animations = [];	//id of the animations, to check if there are duplicates
 
     this.axisCoords = [];
     this.axisCoords['x'] = [1, 0, 0];
@@ -143,6 +144,17 @@ SceneGraphParser.prototype.parseLSXFile = function(rootElement) {
         if ((error = this.parseMaterials(nodes[index])) != null )
             return error;
     }
+
+	// <ANIMATIONS>
+	if ((index = nodeNames.indexOf("ANIMATIONS")) == -1)
+		console.log("No animations declared");
+	else {
+		if (index != ANIMATIONS_INDEX)
+			this.onXMLMinorError("tag <ANIMATIONS> out of order");
+
+		if ((error = this.parseAnimations(nodes[index])) != null )
+			return error;
+	}
 
     // <NODES>
     if ((index = nodeNames.indexOf("NODES")) == -1)
@@ -854,9 +866,7 @@ SceneGraphParser.prototype.parseLights = function(lightsNode) {
  * Parses the <TEXTURES> block.
  */
 SceneGraphParser.prototype.parseTextures = function(texturesNode) {
-
-
-    var eachTexture = texturesNode.children;
+	var eachTexture = texturesNode.children;
     // Each texture.
 
     var oneTextureDefined = false;
@@ -931,6 +941,53 @@ SceneGraphParser.prototype.parseTextures = function(texturesNode) {
 
     console.log("Parsed textures");
 }
+
+/**
+ * Parses the <ANIMATIONS> block.
+ */
+SceneGraphParser.prototype.parseAnimations = function(animationsNode)
+{
+	var eachAnim = animationsNode.children;
+
+    for (var i = 0; i < eachAnim.length; i++) {
+        var nodeName = eachAnim[i].nodeName;
+        if (nodeName == "ANIMATION") {
+            // Retrieves animation ID.
+            var animID = this.reader.getString(eachAnim[i], 'id');
+            if (animID == null)
+                return "failed to parse animation ID";
+            // Checks if ID is valid.
+            if (this.animations[animID] != null )
+                return "animation ID must unique (conflict with ID = " + animID + ")";
+
+			let args = [];
+			args.push(animID);
+			let type = this.reader.getString(eachAnim[i], 'type');
+			//CHECK VALIDITY HERE
+			switch(type)
+			{
+				case 'circular':
+					let speed = this.reader.getString(eachAnim[i], 'speed');
+					let cx = this.reader.getString(eachAnim[i], 'centerx');
+					let cy = this.reader.getString(eachAnim[i], 'centery');
+					let cz = this.reader.getString(eachAnim[i], 'centerz');
+					let radius = this.reader.getString(eachAnim[i], 'radius');
+					let startang = this.reader.getString(eachAnim[i], 'startang');
+					let rotang = this.reader.getString(eachAnim[i], 'rotang');
+					args.push(speed, type, cx, cy, cz, radius, startang, rotang);
+					this.objGraph.addAnimation(args);
+					break;
+			}
+
+
+			this.animations[animID] = animID;
+        }
+        else
+            this.onXMLMinorError("unknown tag name <" + nodeName + ">");
+    }
+
+    console.log("Parsed animations");
+};
 
 /**
  * Parses the <MATERIALS> node.
@@ -1212,7 +1269,7 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
             // Gathers child nodes.
             var nodeSpecs = children[i].children;
             var specsNames = [];
-            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS"];
+            var possibleValues = ["MATERIAL", "TEXTURE", "TRANSLATION", "ROTATION", "SCALE", "DESCENDANTS", "ANIMATIONREFS"];
             for (var j = 0; j < nodeSpecs.length; j++) {
                 var name = nodeSpecs[j].nodeName;
                 specsNames.push(nodeSpecs[j].nodeName);
@@ -1246,6 +1303,20 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
 
             //this.nodes[nodeID].textureID = textureID;
 			obj.texture = textureID;
+
+			// Retrieves animations IDs.
+            let animationsIndex = specsNames.indexOf("ANIMATIONREFS");
+            if (animationsIndex != -1)
+            {
+				let anims = descendants[animationsIndex].children;
+				for (let i = 0; i < anims.length; i++)
+				{
+					let id = this.reader.getString(anims[i], 'id');
+					obj.addAnimation(id);
+					console.log("added animation " + id + " to node " + nodeID);
+				}
+
+			}
 
             // Retrieves possible transformations.
             for (var j = 0; j < nodeSpecs.length; j++) {

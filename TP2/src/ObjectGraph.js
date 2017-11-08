@@ -9,6 +9,8 @@ function ObjectGraph(scene)
 	this.obj = [];
 	this.mat = {};
 	this.tex = {};
+	this.animations = {};
+	this.animationsIndexed = [];
 	this.matStack = [];
 	this.texStack = [];
 	this.defaultMaterial = null;
@@ -33,6 +35,29 @@ ObjectGraph.prototype.addMaterial = function(id, material)
 ObjectGraph.prototype.addTexture = function(id, tex)
 {
 	this.tex[id] = tex;
+};
+
+/**
+  * Adds an animation object
+  * @param {string} id - the unique animation identifier
+  * @param {ObjectTexture} tex - the animation object
+  */
+ObjectGraph.prototype.addAnimation = function(animArgs)
+{
+	console.log("arguments passed to addAnimation: ");
+	console.log(animArgs);
+
+	switch(animArgs[2])
+	{
+		case 'circular':
+			let center = [+animArgs[3], +animArgs[4], +animArgs[5]];
+			let anim = new CircularAnimation(center, +animArgs[1], +animArgs[6], +animArgs[7] +animArgs[8]);
+			this.animations[animArgs[0]] = anim;
+			this.animationsIndexed.push(anim);
+			break;
+		default:
+			break;
+	}
 };
 
 /**
@@ -68,6 +93,12 @@ ObjectGraph.prototype.getNodeByID = function(id)
 	return null;
 };
 
+ObjectGraph.prototype.update = function(currTime)
+{
+	for (let i = 0; i < this.animationsIndexed.length; i++)
+		this.animationsIndexed[i].update(currTime);
+}
+
 /**
   * Starts the display process of the graph by resetting the
   * textures and materials stacks and by initiating a recursive
@@ -93,7 +124,8 @@ ObjectGraph.prototype.displayObjects = function(node)
 	this.scene.pushMatrix();
 
 	this.applyAppearences(currNode);
-	this.scene.multMatrix(currNode.matrix);
+	//this.scene.multMatrix(currNode.matrix);
+	currNode.applyTransformations();
 	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
 
 	var children = currNode.children;

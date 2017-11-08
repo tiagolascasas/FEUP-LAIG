@@ -15,6 +15,8 @@ serialInclude(['../lib/CGF.js', 'XMLscene.js', 'SceneGraphParser.js', 'MyInterfa
 			 'ObjectNode.js', 'ObjectGraph.js', 'ObjectTexture.js',
 			 'PrimitiveRectangle.js', 'PrimitiveCylinder.js', 'PrimitiveSphere.js',
 			 'PrimitiveTriangle.js', 'PrimitiveNURBS.js',
+			 'Animation.js', 'LinearAnimation.js', 'CircularAnimation.js', 'BezierAnimation.js',
+			 'ComboAnimation.js',
 
 main=function()
 {

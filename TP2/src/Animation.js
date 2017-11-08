@@ -1,10 +1,12 @@
 function Animation(v) {
-	this.x = null;
-	this.y = null;
-	this.z = null;
-	this.v = v;
+	this.matrix = null;
 };
 
 Animation.prototype.constructor = Animation;
 
 Animation.prototype.update = function(time){};
+
+Animation.prototype.getCurrentMatrix = function()
+{
+	return this.matrix;
+};
