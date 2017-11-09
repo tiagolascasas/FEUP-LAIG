@@ -65,6 +65,11 @@
       <amplif_factor s="1" t="1" />
     </TEXTURE>
 
+    <TEXTURE id="roofgreen">
+      <file path="castleTex/roofgreen.jpg" />
+      <amplif_factor s="1" t="1" />
+    </TEXTURE>
+
   </TEXTURES>
 
 
@@ -94,6 +99,12 @@
 					centerx="0" centery="0" centerz="0"
 					radius="3" startang="90" rotang="360"
 		/>
+        <ANIMATION id="bezier1" speed="0.003" type="bezier">
+            <controlpoint xx="0" yy="0" zz="0" />
+            <controlpoint xx="0" yy="0" zz="1" />
+            <controlpoint xx="0" yy="0" zz="1" />
+            <controlpoint xx="5" yy="0" zz="0" />
+		</ANIMATION>
 	</ANIMATIONS>
 
   <!-- The nodes -->
@@ -109,6 +120,7 @@
 
       <DESCENDANTS>
         <NODEREF id="ball" />
+        <!--<NODEREF id="ball1" />-->
       </DESCENDANTS>
 
     </NODE>
@@ -129,6 +141,20 @@
       </DESCENDANTS>
 
     </NODE>
+
+    <NODE id="ball1">
+      <MATERIAL id="wallMaterial" />
+      <TEXTURE id="roofgreen" />
+
+	  <ANIMATIONREFS>
+		  <ANIMATIONREF id="bezier1"/>
+	  </ANIMATIONREFS>
+
+      <DESCENDANTS>
+        <LEAF  type="sphere" args="0.5 20 20" />
+      </DESCENDANTS>
+
+  </NODE>
 </NODES>
 
 </SCENE>

@@ -963,11 +963,12 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 			let args = [];
 			args.push(animID);
 			let type = this.reader.getString(eachAnim[i], 'type');
+            let speed = 0;
 			//CHECK VALIDITY HERE
 			switch(type)
 			{
 				case 'circular':
-					let speed = this.reader.getString(eachAnim[i], 'speed');
+					speed = this.reader.getString(eachAnim[i], 'speed');
 					let cx = this.reader.getString(eachAnim[i], 'centerx');
 					let cy = this.reader.getString(eachAnim[i], 'centery');
 					let cz = this.reader.getString(eachAnim[i], 'centerz');
@@ -977,6 +978,20 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 					args.push(speed, type, cx, cy, cz, radius, startang, rotang);
 					this.objGraph.addAnimation(args);
 					break;
+                case 'bezier':
+                    speed = this.reader.getString(eachAnim[i], 'speed');
+                    let points = eachAnim[i].children;
+                    let pointsMat = [];
+    				for (let j = 0; j < points.length; j++)
+    				{
+    					let x = this.reader.getString(points[j], 'xx');
+                        let y = this.reader.getString(points[j], 'yy');
+                        let z = this.reader.getString(points[j], 'zz');
+                        pointsMat.push([x, y, z]);
+    				}
+                    args.push(speed, pointsMat);
+                    this.objGraph.addAnimation(args);
+                    break;
 			}
 
 

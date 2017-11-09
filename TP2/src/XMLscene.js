@@ -153,8 +153,8 @@ XMLscene.prototype.display = function() {
 };
 
 XMLscene.prototype.update = function(currTime)
-{/*
-	if (!this.graph.loadedOK)
-		return;*/
-	this.objGraph.update(currTime);
+{
+	/*if (!this.graph.loadedOK)
+        return;*/
+    this.graph.objGraph.update(currTime);
 };

@@ -4,14 +4,145 @@ function BezierAnimation(points, v)
 
 	this.points = points;
 	this.time = 0;
+	this.baseTime = 0;
 	this.matrix = mat4.create();
 	mat4.identity(this.matrix);
+
+	this.d = this.calculateDistance();
+	this.t = this.d / v;
+
+	this.stop = false;
 };
 
 BezierAnimation.prototype = Object.create(Animation.prototype);
 BezierAnimation.prototype.constructor=BezierAnimation;
 
+BezierAnimation.prototype.calculateDistance = function()
+{
+	let p1 = this.points[0];
+	let p2 = this.points[1];
+	let p3 = this.points[2];
+	let p4 = this.points[3];
+
+	let p12 = this.calculateMidpoint(p1, p2);
+	let p23 = this.calculateMidpoint(p2, p3);
+	let p34 = this.calculateMidpoint(p3, p4);
+	let p123 = this.calculateMidpoint(p12, p23);
+	let p234 = this.calculateMidpoint(p23, p34);
+
+	let d = this.dist(p12, p1) + this.dist(p123, p12) + this.dist(p234, p123) +
+			this.dist(p34, p23) + this.dist(p4, p34);
+	return d;
+};
+
+BezierAnimation.prototype.calculateMidpoint = function(p1, p2)
+{
+	let p = [
+		(p1[0] + p2[0]) / 2,
+		(p1[1] + p2[1]) / 2,
+		(p1[2] + p2[2]) / 2
+	];
+	return p;
+};
+
+BezierAnimation.prototype.dist = function(p1, p2)
+{
+	let dist = Math.sqrt(
+		Math.pow(p1[0] - p2[0], 2) +
+		Math.pow(p1[1] - p2[1], 2) +
+		Math.pow(p1[2] - p2[2], 2)
+	);
+	return dist;
+};
+
+BezierAnimation.prototype.qs = function(s)
+{
+	let qs = [];
+	qs.push(this.qs_i(0, s));
+	qs.push(this.qs_i(1, s));
+	qs.push(this.qs_i(2, s));
+	return qs;
+};
+
+BezierAnimation.prototype.dqs = function(s)
+{
+	let dqs = [];
+	qs.push(this.dqs_i(0, s));
+	qs.push(this.dqs_i(1, s));
+	qs.push(this.dqs_i(2, s));
+	return dqs;
+};
+
+BezierAnimation.prototype.qs_i = function(i, s)
+{
+	let p1 = this.points[0];
+	let p2 = this.points[1];
+	let p3 = this.points[2];
+	let p4 = this.points[3];
+
+	let qsi = Math.pow(1-s, 3)*p1[i] +
+	 			3*s*Math.pow(1-s, 2)*p2[i] +
+				3*Math.pow(s, 2)*(1-s)*p3[i] +
+				Math.pow(s, 3)*p4[i];
+	return qsi;
+};
+
+BezierAnimation.prototype.dqs_i = function(i, s)
+{
+	let p1 = this.points[0];
+	let p2 = this.points[1];
+	let p3 = this.points[2];
+	let p4 = this.points[3];
+
+	let dqsi = -3*Math.pow(1-s,2)*p1[i] +
+	 			(3*Math.pow(1-s,2)-6*s*(1-s))*p2[i] +
+				(6*s*(1-s)-3*Math.pow(s,2))*p3[i] +
+				3*Math.pow(s, 2)*p4[i];
+	return dqsi;
+};
+
+BezierAnimation.prototype.calcRotation = function(s)
+{
+	let cos_a = this.dqs_i(0, s) / this.dist(this.dqs(s));
+	let sin_a = this.dqs_i(2, s) / this.dist(this.dqs(s));
+
+	let rotation = [
+		[cos_a, 0, sin_a, 0],
+		[0, 1, 0, 0],
+		[-sin_a, 0, cos_a, 0],
+		[0, 0, 0, 1]
+	];
+	return rotation;
+};
+
 BezierAnimation.prototype.update = function(time)
 {
+	console.log("bezier anim");
 
+	if (this.stop)
+		return;
+
+	if (this.baseTime == 0)
+		this.baseTime = time;
+	else
+		this.time = (time - this.baseTime);
+
+	let s = this.time / this.t;
+	let rotationMatrix = this.calcRotation(s);
+	let qs = this.qs(s);
+
+	let p1 = this.points[0];
+	let x = p1[0] + qs[0];
+	let y = p1[1] + qs[1];
+	let z = p1[2] + qs[2];
+
+	let matrix = mat4.create();
+	mat4.identity(matrix);
+	mat4.multiply(matrix, matrix, rotationMatrix);
+	mat4.translate(matrix, matrix, [x, y, z]);
+
+	this.matrix = matrix;
+
+	if (s >= 1)
+		this.stop = true;
 };
