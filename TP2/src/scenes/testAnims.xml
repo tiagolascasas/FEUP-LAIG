@@ -90,9 +90,9 @@
   </MATERIALS>
 
 	<ANIMATIONS>
-		<ANIMATION id="circular1" speed="2" type="circular"
+		<ANIMATION id="circular1" speed="0.003" type="circular"
 					centerx="0" centery="0" centerz="0"
-					radius="3" startang="30" rotang="60"
+					radius="3" startang="90" rotang="360"
 		/>
 	</ANIMATIONS>
 
@@ -121,6 +121,8 @@
 	  <ANIMATIONREFS>
 		  <ANIMATIONREF id="circular1"/>
 	  </ANIMATIONREFS>
+
+      <!--<TRANSLATION x="0" y="0" z="3" />-->
 
       <DESCENDANTS>
         <LEAF  type="sphere" args="0.5 20 20" />

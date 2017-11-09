@@ -1304,18 +1304,18 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
             //this.nodes[nodeID].textureID = textureID;
 			obj.texture = textureID;
 
+
 			// Retrieves animations IDs.
             let animationsIndex = specsNames.indexOf("ANIMATIONREFS");
             if (animationsIndex != -1)
             {
-				let anims = descendants[animationsIndex].children;
+				let anims = nodeSpecs[animationsIndex].children;
 				for (let i = 0; i < anims.length; i++)
 				{
 					let id = this.reader.getString(anims[i], 'id');
 					obj.addAnimation(id);
 					console.log("added animation " + id + " to node " + nodeID);
 				}
-
 			}
 
             // Retrieves possible transformations.

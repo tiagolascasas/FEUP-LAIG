@@ -54,18 +54,17 @@ ObjectNode.prototype.displayPrimitives = function(currTex)
 	}
 };
 
-ObjectNode.prototype.applyTransformations = function()
+ObjectNode.prototype.applyTransformations = function(animations)
 {
-	this.applyAnimations();
+	this.applyAnimations(animations);
 	this.scene.multMatrix(this.matrix);
 };
 
-ObjectNode.prototype.applyAnimations = function()
+ObjectNode.prototype.applyAnimations = function(animations)
 {
 	for (let i = 0; i < this.animations.length; i++)
 	{
-		console.log("in mat");
-		this.scene.multMatrix(this.animations[i].getCurrentMatrix());
+		this.scene.multMatrix(animations[this.animations[i]].getCurrentMatrix());
 	}
 };
 

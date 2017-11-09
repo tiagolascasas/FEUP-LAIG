@@ -51,7 +51,7 @@ ObjectGraph.prototype.addAnimation = function(animArgs)
 	{
 		case 'circular':
 			let center = [+animArgs[3], +animArgs[4], +animArgs[5]];
-			let anim = new CircularAnimation(center, +animArgs[1], +animArgs[6], +animArgs[7] +animArgs[8]);
+			let anim = new CircularAnimation(center, +animArgs[1], +animArgs[6], +animArgs[7], +animArgs[8]);
 			this.animations[animArgs[0]] = anim;
 			this.animationsIndexed.push(anim);
 			break;
@@ -125,7 +125,7 @@ ObjectGraph.prototype.displayObjects = function(node)
 
 	this.applyAppearences(currNode);
 	//this.scene.multMatrix(currNode.matrix);
-	currNode.applyTransformations();
+	currNode.applyTransformations(this.animations);
 	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
 
 	var children = currNode.children;
