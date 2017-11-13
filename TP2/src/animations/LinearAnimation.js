@@ -1,6 +1,7 @@
 function LinearAnimation(v, points)
 {
 	Animation.call(this, v);
+	console.log(points);
 
 	this.simpleLinears = [];
 	for (let i = 0; i < points.length - 1; i++)
@@ -21,17 +22,13 @@ LinearAnimation.prototype.update = function(time)
 {
 	if (this.currentAnimation > this.lastAnimation)
 		return;
-
-	console.log("size: " + this.simpleLinears.length);
-	console.log("current: " + this.currentAnimation);
+	else
+		this.simpleLinears[this.currentAnimation].setActive();
 
 	let currentAnim = this.simpleLinears[this.currentAnimation];
 	currentAnim.update(time);
 	this.matrix = currentAnim.getCurrentMatrix();
 
 	if (!currentAnim.active)
-	{
 		this.currentAnimation++;
-		this.simpleLinears[this.currentAnimation].setActive();
-	}
 };

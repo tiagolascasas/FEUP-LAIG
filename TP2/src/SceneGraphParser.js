@@ -977,10 +977,10 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
     					let x = this.reader.getString(points[j], 'xx');
                         let y = this.reader.getString(points[j], 'yy');
                         let z = this.reader.getString(points[j], 'zz');
-                        pointsMat.push([x, y, z]);
+                        pointsMat.push([+x, +y, +z]);
     				}
                     args.push(pointsMat);
-                    this.objGraph.addAnimation(type, animID, speed, args);
+                    this.objGraph.addAnimation(type, animID, +speed, args);
                     break;
 
 				case 'circular':
@@ -991,8 +991,8 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 					let radius = this.reader.getString(eachAnim[i], 'radius');
 					let startang = this.reader.getString(eachAnim[i], 'startang');
 					let rotang = this.reader.getString(eachAnim[i], 'rotang');
-					args.push([cx, cy, cz], radius, startang, rotang);
-					this.objGraph.addAnimation(type, animID, speed, args);
+					args.push([+cx, +cy, +cz], +radius, +startang, +rotang);
+					this.objGraph.addAnimation(type, animID, +speed, args);
 					break;
 
                 case 'bezier':
@@ -1004,10 +1004,10 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
     					let x = this.reader.getString(points[j], 'xx');
                         let y = this.reader.getString(points[j], 'yy');
                         let z = this.reader.getString(points[j], 'zz');
-                        pointsMat.push([x, y, z]);
+                        pointsMat.push([+x, +y, +z]);
     				}
                     args.push(pointsMat);
-                    this.objGraph.addAnimation(type, animID, speed, args);
+                    this.objGraph.addAnimation(type, animID, +speed, args);
                     break;
 				case 'combo':
 					speed = 0;
@@ -1019,7 +1019,7 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
                         refsList.push(reference);
     				}
                     args.push(reference);
-                    this.objGraph.addAnimation(type, animID, speed, args);
+                    this.objGraph.addAnimation(type, animID, +speed, args);
                     break;
 			}
 

@@ -126,6 +126,12 @@ BezierAnimation.prototype.update = function(time)
 		this.time = (time - this.baseTime);
 
 	let s = this.time / this.t;
+	if (s >= 1)
+	{
+		this.stop = true;
+		return;
+	}
+
 	let rotationAngle = this.calcRotation(s);
 	let qs = this.qs(s);
 
@@ -140,7 +146,4 @@ BezierAnimation.prototype.update = function(time)
 	mat4.rotate(matrix, matrix, rotationAngle, [0, 1, 0]);
 
 	this.matrix = matrix;
-
-	if (s >= 1)
-		this.stop = true;
 };
