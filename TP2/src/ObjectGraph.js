@@ -39,26 +39,27 @@ ObjectGraph.prototype.addTexture = function(id, tex)
 
 /**
   * Adds an animation object
-  * @param {string} id - the unique animation identifier
-  * @param {ObjectTexture} tex - the animation object
+  * @param {String} type - the type of animation
+  * @param {String} id - the id of the animation
+  * @param {Number} velocity - the velocity of the animation
+  * @param {Array} args - an array with the arguments specific to the animatiom
   */
-ObjectGraph.prototype.addAnimation = function(animArgs)
+ObjectGraph.prototype.addAnimation = function(type, id, velocity, args)
 {
 	console.log("arguments passed to addAnimation: ");
-	console.log(animArgs);
+	console.log(args);
 
 	let anim = null;
-	switch(animArgs[2])
+	switch(type)
 	{
 		case 'circular':
-			let center = [+animArgs[3], +animArgs[4], +animArgs[5]];
-			anim = new CircularAnimation(center, +animArgs[1], +animArgs[6], +animArgs[7], +animArgs[8]);
-			this.animations[animArgs[0]] = anim;
+			anim = new CircularAnimation(velocity, args[0], args[1], args[2], args[3]);
+			this.animations[id] = anim;
 			this.animationsIndexed.push(anim);
 			break;
 		case 'bezier':
-			anim = new BezierAnimation(animArgs[3], animArgs[4]);
-			this.animations[animArgs[0]] = anim;
+			anim = new BezierAnimation(velocity, args[0]);
+			this.animations[id] = anim;
 			this.animationsIndexed.push(anim);
 		default:
 			break;

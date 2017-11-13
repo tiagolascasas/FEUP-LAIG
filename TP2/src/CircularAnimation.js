@@ -1,4 +1,4 @@
-function CircularAnimation(center, v, radius, initialAngle, rotationAngle)
+function CircularAnimation(v, center, radius, initialAngle, rotationAngle)
 {
 	Animation.call(this, v);
 
@@ -23,7 +23,6 @@ CircularAnimation.prototype.constructor=CircularAnimation;
 
 CircularAnimation.prototype.update = function(time)
 {
-	console.log("da = " + this.da + " rotationAngle = " + this.rotationAngle);
 	if (this.da >= this.rotationAngle + this.initialAngle)
 		return;
 
@@ -32,7 +31,6 @@ CircularAnimation.prototype.update = function(time)
 	else
 		this.time = (time - this.baseTime);
 
-	console.log(this.time);
 	this.da = this.initialAngle + this.w * this.time;
 
 	let matrix = mat4.create();

@@ -83,6 +83,15 @@
       <emission r="0.0" g="0.0" b="0.0" a="1" />
     </MATERIAL>
 
+	<!-- Yellow material -->
+    <MATERIAL id="yellowMaterial">
+      <shininess value="50" />
+      <specular r="1" g="1" b="0" a="1" />
+      <diffuse r="1" g="1" b="0" a="1" />
+      <ambient r="1" g="1" b="0" a="1" />
+      <emission r="1" g="1" b="0" a="1" />
+    </MATERIAL>
+
     <!-- A default material -->
     <MATERIAL id="defaultMaterial">
       <shininess value="1" />
@@ -99,11 +108,11 @@
 					centerx="0" centery="0" centerz="0"
 					radius="3" startang="90" rotang="360"
 		/>
-        <ANIMATION id="bezier1" speed="0.003" type="bezier">
+        <ANIMATION id="bezier1" speed="0.01" type="bezier">
             <controlpoint xx="0" yy="0" zz="0" />
-            <controlpoint xx="0" yy="0" zz="1" />
-            <controlpoint xx="0" yy="0" zz="1" />
-            <controlpoint xx="5" yy="0" zz="0" />
+            <controlpoint xx="1" yy="0" zz="0" />
+            <controlpoint xx="1" yy="0" zz="5" />
+            <controlpoint xx="0" yy="0" zz="5" />
 		</ANIMATION>
 	</ANIMATIONS>
 
@@ -120,7 +129,7 @@
 
       <DESCENDANTS>
         <NODEREF id="ball" />
-        <!--<NODEREF id="ball1" />-->
+        <NODEREF id="ball1" />
       </DESCENDANTS>
 
     </NODE>
@@ -143,15 +152,15 @@
     </NODE>
 
     <NODE id="ball1">
-      <MATERIAL id="wallMaterial" />
-      <TEXTURE id="roofgreen" />
+      <MATERIAL id="yellowMaterial" />
+      <TEXTURE id="null" />
 
 	  <ANIMATIONREFS>
 		  <ANIMATIONREF id="bezier1"/>
 	  </ANIMATIONREFS>
 
       <DESCENDANTS>
-        <LEAF  type="sphere" args="0.5 20 20" />
+        <LEAF  type="triangle" args="0 0 1 0.3 0 0 -0.3 0 0" />
       </DESCENDANTS>
 
   </NODE>

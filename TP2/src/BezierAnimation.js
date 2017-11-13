@@ -1,4 +1,4 @@
-function BezierAnimation(points, v)
+function BezierAnimation(v, points)
 {
 	Animation.call(this, v);
 
@@ -12,6 +12,8 @@ function BezierAnimation(points, v)
 	this.t = this.d / v;
 
 	this.stop = false;
+
+	console.log("bezier anim created");
 };
 
 BezierAnimation.prototype = Object.create(Animation.prototype);
@@ -55,6 +57,16 @@ BezierAnimation.prototype.dist = function(p1, p2)
 	return dist;
 };
 
+BezierAnimation.prototype.mod = function(p)
+{
+	let mod = Math.sqrt(
+		Math.pow(p[0], 2) +
+		Math.pow(p[1], 2) +
+		Math.pow(p[2], 2)
+	);
+	return mod;
+};
+
 BezierAnimation.prototype.qs = function(s)
 {
 	let qs = [];
@@ -67,9 +79,9 @@ BezierAnimation.prototype.qs = function(s)
 BezierAnimation.prototype.dqs = function(s)
 {
 	let dqs = [];
-	qs.push(this.dqs_i(0, s));
-	qs.push(this.dqs_i(1, s));
-	qs.push(this.dqs_i(2, s));
+	dqs.push(this.dqs_i(0, s));
+	dqs.push(this.dqs_i(1, s));
+	dqs.push(this.dqs_i(2, s));
 	return dqs;
 };
 
@@ -103,22 +115,12 @@ BezierAnimation.prototype.dqs_i = function(i, s)
 
 BezierAnimation.prototype.calcRotation = function(s)
 {
-	let cos_a = this.dqs_i(0, s) / this.dist(this.dqs(s));
-	let sin_a = this.dqs_i(2, s) / this.dist(this.dqs(s));
-
-	let rotation = [
-		[cos_a, 0, sin_a, 0],
-		[0, 1, 0, 0],
-		[-sin_a, 0, cos_a, 0],
-		[0, 0, 0, 1]
-	];
-	return rotation;
+	let angle = Math.atan(this.dqs_i(0, s) / this.dqs_i(2, s));
+	return angle;
 };
 
 BezierAnimation.prototype.update = function(time)
 {
-	console.log("bezier anim");
-
 	if (this.stop)
 		return;
 
@@ -128,7 +130,7 @@ BezierAnimation.prototype.update = function(time)
 		this.time = (time - this.baseTime);
 
 	let s = this.time / this.t;
-	let rotationMatrix = this.calcRotation(s);
+	let rotationAngle = this.calcRotation(s);
 	let qs = this.qs(s);
 
 	let p1 = this.points[0];
@@ -138,8 +140,8 @@ BezierAnimation.prototype.update = function(time)
 
 	let matrix = mat4.create();
 	mat4.identity(matrix);
-	mat4.multiply(matrix, matrix, rotationMatrix);
 	mat4.translate(matrix, matrix, [x, y, z]);
+	mat4.rotate(matrix, matrix, rotationAngle, [0, 1, 0]);
 
 	this.matrix = matrix;
 

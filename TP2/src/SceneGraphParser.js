@@ -961,7 +961,6 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
                 return "animation ID must unique (conflict with ID = " + animID + ")";
 
 			let args = [];
-			args.push(animID);
 			let type = this.reader.getString(eachAnim[i], 'type');
             let speed = 0;
 			//CHECK VALIDITY HERE
@@ -975,8 +974,8 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 					let radius = this.reader.getString(eachAnim[i], 'radius');
 					let startang = this.reader.getString(eachAnim[i], 'startang');
 					let rotang = this.reader.getString(eachAnim[i], 'rotang');
-					args.push(speed, type, cx, cy, cz, radius, startang, rotang);
-					this.objGraph.addAnimation(args);
+					args.push([cx, cy, cz], radius, startang, rotang);
+					this.objGraph.addAnimation(type, animID, speed, args);
 					break;
                 case 'bezier':
                     speed = this.reader.getString(eachAnim[i], 'speed');
@@ -989,8 +988,8 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
                         let z = this.reader.getString(points[j], 'zz');
                         pointsMat.push([x, y, z]);
     				}
-                    args.push(speed, pointsMat);
-                    this.objGraph.addAnimation(args);
+                    args.push(pointsMat);
+                    this.objGraph.addAnimation(type, animID, speed, args);
                     break;
 			}
 
