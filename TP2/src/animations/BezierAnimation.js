@@ -5,15 +5,11 @@ function BezierAnimation(v, points)
 	this.points = points;
 	this.time = 0;
 	this.baseTime = 0;
-	this.matrix = mat4.create();
-	mat4.identity(this.matrix);
 
 	this.d = this.calculateDistance();
 	this.t = this.d / v;
 
 	this.stop = false;
-
-	console.log("bezier anim created");
 };
 
 BezierAnimation.prototype = Object.create(Animation.prototype);

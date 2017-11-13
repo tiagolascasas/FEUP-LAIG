@@ -2,10 +2,6 @@ function CircularAnimation(v, center, radius, initialAngle, rotationAngle)
 {
 	Animation.call(this, v);
 
-	console.log(initialAngle);
-	console.log(rotationAngle );
-	console.log(radius);
-
 	this.center = center;
 	this.radius = radius;
 	this.initialAngle = initialAngle * DEGREE_TO_RAD;
@@ -13,9 +9,7 @@ function CircularAnimation(v, center, radius, initialAngle, rotationAngle)
 	this.w = v / radius;
 	this.time = 0;
 	this.baseTime = 0;
-	this.matrix = mat4.create();
 	this.da = 0;
-	mat4.identity(this.matrix);
 };
 
 CircularAnimation.prototype = Object.create(Animation.prototype);
@@ -43,6 +37,7 @@ CircularAnimation.prototype.update = function(time)
 	this.matrix = matrix;
 };
 
-CircularAnimation.prototype.getCurrentMatrix = function () {
+CircularAnimation.prototype.getCurrentMatrix = function ()
+{
 	return this.matrix;
 };

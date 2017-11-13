@@ -963,9 +963,26 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 			let args = [];
 			let type = this.reader.getString(eachAnim[i], 'type');
             let speed = 0;
+			let points = [];
+			let pointsMat = [];
 			//CHECK VALIDITY HERE
 			switch(type)
 			{
+				case 'linear':
+                    speed = this.reader.getString(eachAnim[i], 'speed');
+                    points = eachAnim[i].children;
+                    pointsMat = [];
+    				for (let j = 0; j < points.length; j++)
+    				{
+    					let x = this.reader.getString(points[j], 'xx');
+                        let y = this.reader.getString(points[j], 'yy');
+                        let z = this.reader.getString(points[j], 'zz');
+                        pointsMat.push([x, y, z]);
+    				}
+                    args.push(pointsMat);
+                    this.objGraph.addAnimation(type, animID, speed, args);
+                    break;
+
 				case 'circular':
 					speed = this.reader.getString(eachAnim[i], 'speed');
 					let cx = this.reader.getString(eachAnim[i], 'centerx');
@@ -977,10 +994,11 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 					args.push([cx, cy, cz], radius, startang, rotang);
 					this.objGraph.addAnimation(type, animID, speed, args);
 					break;
+
                 case 'bezier':
                     speed = this.reader.getString(eachAnim[i], 'speed');
-                    let points = eachAnim[i].children;
-                    let pointsMat = [];
+                    points = eachAnim[i].children;
+                    pointsMat = [];
     				for (let j = 0; j < points.length; j++)
     				{
     					let x = this.reader.getString(points[j], 'xx');
@@ -989,6 +1007,18 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
                         pointsMat.push([x, y, z]);
     				}
                     args.push(pointsMat);
+                    this.objGraph.addAnimation(type, animID, speed, args);
+                    break;
+				case 'combo':
+					speed = 0;
+                    let refs = eachAnim[i].children;
+                    let refsList = [];
+    				for (let j = 0; j < refs.length; j++)
+    				{
+    					let reference = this.reader.getString(refs[j], 'id');
+                        refsList.push(reference);
+    				}
+                    args.push(reference);
                     this.objGraph.addAnimation(type, animID, speed, args);
                     break;
 			}

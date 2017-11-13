@@ -52,6 +52,11 @@ ObjectGraph.prototype.addAnimation = function(type, id, velocity, args)
 	let anim = null;
 	switch(type)
 	{
+		case 'linear':
+			anim = new LinearAnimation(velocity, args[0]);
+			this.animations[id] = anim;
+			this.animationsIndexed.push(anim);
+			break;
 		case 'circular':
 			anim = new CircularAnimation(velocity, args[0], args[1], args[2], args[3]);
 			this.animations[id] = anim;
@@ -61,6 +66,9 @@ ObjectGraph.prototype.addAnimation = function(type, id, velocity, args)
 			anim = new BezierAnimation(velocity, args[0]);
 			this.animations[id] = anim;
 			this.animationsIndexed.push(anim);
+		case 'combo':
+			console.log("Combo anim");
+			break;
 		default:
 			break;
 	}
@@ -130,7 +138,6 @@ ObjectGraph.prototype.displayObjects = function(node)
 	this.scene.pushMatrix();
 
 	this.applyAppearences(currNode);
-	//this.scene.multMatrix(currNode.matrix);
 	currNode.applyTransformations(this.animations);
 	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
 

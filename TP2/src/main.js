@@ -11,12 +11,26 @@ function getUrlVars() {
     return vars;
 }
 
-serialInclude(['../lib/CGF.js', 'XMLscene.js', 'SceneGraphParser.js', 'MyInterface.js',
-			 'ObjectNode.js', 'ObjectGraph.js', 'ObjectTexture.js',
-			 'PrimitiveRectangle.js', 'PrimitiveCylinder.js', 'PrimitiveSphere.js',
-			 'PrimitiveTriangle.js', 'PrimitiveNURBS.js',
-			 'Animation.js', 'LinearAnimation.js', 'CircularAnimation.js', 'BezierAnimation.js',
-			 'ComboAnimation.js',
+serialInclude(['../lib/CGF.js',
+				'XMLscene.js',
+				'SceneGraphParser.js',
+				'MyInterface.js',
+				'ObjectNode.js',
+				'ObjectGraph.js',
+				'ObjectTexture.js',
+
+				'primitives/PrimitiveRectangle.js',
+				'primitives/PrimitiveCylinder.js',
+				'primitives/PrimitiveSphere.js',
+				'primitives/PrimitiveTriangle.js',
+				'primitives/PrimitiveNURBS.js',
+
+				'animations/Animation.js',
+				'animations/LinearAnimation.js',
+				'animations/SimpleLinearAnimation.js',
+				'animations/CircularAnimation.js',
+				'animations/BezierAnimation.js',
+				'animations/ComboAnimation.js',
 
 main=function()
 {
