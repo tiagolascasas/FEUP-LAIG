@@ -3,10 +3,9 @@
  * @constructor
  */
 function MyInterface() {
-    //call CGFinterface constructor 
+    //call CGFinterface constructor
     CGFinterface.call(this);
-}
-;
+};
 
 MyInterface.prototype = Object.create(CGFinterface.prototype);
 MyInterface.prototype.constructor = MyInterface;
@@ -21,11 +20,11 @@ MyInterface.prototype.init = function(application) {
 
     // init GUI. For more information on the methods, check:
     //  http://workshop.chromeexperiments.com/examples/gui
-    
+
     this.gui = new dat.GUI();
 
     // add a group of controls (and open/expand by defult)
-    
+
     return true;
 };
 
@@ -48,3 +47,15 @@ MyInterface.prototype.addLightsGroup = function(lights) {
     }
 }
 
+/**
+ * Adds a folder containing the IDs of the selectable nodes.
+ * @param {Array} nodes - an array with the IDs of the selectable nodes
+ */
+MyInterface.prototype.addNodesGroup = function(nodes)
+{
+    var group = this.gui.addFolder("Nodes selectable with a custom shader");
+    group.open();
+
+	for (var key in nodes)
+        group.add(nodes, key);
+};

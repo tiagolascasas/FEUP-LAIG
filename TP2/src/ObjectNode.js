@@ -6,12 +6,14 @@
   * @param {string} id - the unique id of the node
   * @param {CGFScene} scene - the scene this node refers to
   * @param {ObjectGraph} graph - the graph this node belongs to
+  * @param {Boolean} selectable - whether the node is selectable for a custom shader or not
   */
-function ObjectNode(id, scene, graph)
+function ObjectNode(id, scene, graph, selectable)
 {
 	this.id = id;
 	this.scene = scene;
 	this.graph = graph;
+	this.selectable = selectable;
 	this.children = [];
 	this.leaves = [];
 	this.animations = [];

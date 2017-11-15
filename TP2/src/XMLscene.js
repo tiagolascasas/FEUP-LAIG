@@ -10,7 +10,8 @@ function XMLscene(interface) {
     this.interface = interface;
 
     this.lightValues = {};
-}
+	this.nodesValues = {};
+};
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
 XMLscene.prototype.constructor = XMLscene;
@@ -32,8 +33,10 @@ XMLscene.prototype.init = function(application) {
 
     this.axis = new CGFaxis(this);
 
-	this.setUpdatePeriod(50);
-}
+	this.setUpdatePeriod(10);
+
+	this.customShader = new CGFshader(this.gl, "shaders/dimension.vert", "shaders/saturated.frag");
+};
 
 /**
  * Initializes the scene lights with the values read from the LSX file.
@@ -66,14 +69,14 @@ XMLscene.prototype.initLights = function() {
             i++;
         }
     }
-}
+};
 
 /**
  * Initializes the scene cameras.
  */
 XMLscene.prototype.initCameras = function() {
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
-}
+};
 
 /* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
@@ -93,9 +96,10 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-    // Adds lights group.
+    // Adds lights and selectable nodes group.
     this.interface.addLightsGroup(this.graph.lights);
-}
+	this.interface.addNodesGroup(this.graph.objGraph.getSelectableNodes());
+};
 
 /**
  * Displays the scene.
@@ -154,7 +158,8 @@ XMLscene.prototype.display = function() {
 
 XMLscene.prototype.update = function(currTime)
 {
-	/*if (!this.graph.loadedOK)
-        return;*/
-    this.graph.objGraph.update(currTime);
+	if(!this.graph.loadedOk)
+		return;
+	else
+    	this.graph.objGraph.update(currTime);
 };

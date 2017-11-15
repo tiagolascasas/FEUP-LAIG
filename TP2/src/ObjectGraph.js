@@ -11,6 +11,7 @@ function ObjectGraph(scene)
 	this.tex = {};
 	this.animations = {};
 	this.animationsIndexed = [];
+	this.selectableNodes = {};
 	this.matStack = [];
 	this.texStack = [];
 	this.defaultMaterial = null;
@@ -86,6 +87,10 @@ ObjectGraph.prototype.addAnimation = function(type, id, velocity, args)
   */
 ObjectGraph.prototype.addObject = function(object)
 {
+	if (object.selectable)
+	{
+		this.selectableNodes[object.id] = false;
+	}
 	this.obj.push(object);
 };
 
@@ -111,6 +116,11 @@ ObjectGraph.prototype.getNodeByID = function(id)
 			return this.obj[i];
 	}
 	return null;
+};
+
+ObjectGraph.prototype.getSelectableNodes = function()
+{
+	return this.selectableNodes;
 };
 
 ObjectGraph.prototype.update = function(currTime)
@@ -148,9 +158,11 @@ ObjectGraph.prototype.displayObjects = function(node)
 
 	this.scene.pushMatrix();
 
+	this.applyShader(currNode);
 	this.applyAppearences(currNode);
 	currNode.applyTransformations(this.animations);
 	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
+	this.scene.setActiveShader(this.scene.defaultShader);
 
 	var children = currNode.children;
 	for (var i = 0; i < children.length; i++)
@@ -164,6 +176,18 @@ ObjectGraph.prototype.displayObjects = function(node)
 	}
 	if (this.matStack.length > 0)
 		this.matStack.pop();
+};
+
+ObjectGraph.prototype.applyShader = function(node)
+{
+	if (!node.selectable)
+		return;
+	else
+	{
+		let selected = this.selectableNodes[node.id];
+		if (selected)
+			this.scene.setActiveShader(this.scene.customShader);
+	}
 };
 
 /**

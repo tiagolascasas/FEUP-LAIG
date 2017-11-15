@@ -131,20 +131,22 @@
 		</ANIMATION>
 
 		<!-- Combo animation -->
-		<ANIMATION id="circularCombo" speed="0.003" type="circular"
+		<ANIMATION id="circularCombo" speed="0.006" type="circular"
 					centerx="0" centery="0" centerz="0"
 					radius="5" startang="0" rotang="360"
 		/>
-		<ANIMATION id="bezierCombo" speed="0.003" type="bezier">
+		<ANIMATION id="bezierCombo" speed="0.006" type="bezier">
             <controlpoint xx="3" yy="0" zz="0" />
             <controlpoint xx="3" yy="0" zz="-1" />
-            <controlpoint xx="5" yy="0" zz="-1" />
-            <controlpoint xx="5" yy="0" zz="0" />
+            <controlpoint xx="10" yy="0" zz="-1" />
+            <controlpoint xx="10" yy="0" zz="0" />
 		</ANIMATION>
-		<ANIMATION id="linearCombo" speed="0.003" type="linear">
-            <controlpoint xx="5" yy="0" zz="0" />
+		<ANIMATION id="linearCombo" speed="0.006" type="linear">
+            <controlpoint xx="10" yy="0" zz="0" />
             <controlpoint xx="0" yy="0" zz="5" />
             <controlpoint xx="0" yy="0" zz="0" />
+			<controlpoint xx="5" yy="0" zz="5" />
+			<controlpoint xx="0" yy="0" zz="0" />
 		</ANIMATION>
 		<ANIMATION id="combo1" speed="0.003" type="combo">
             <SPANREF id="circularCombo"/>
@@ -192,7 +194,7 @@
     </NODE>
 
 	<!-- Node with a sphere primitive -->
-    <NODE id="linearTest">
+    <NODE id="linearTest" selectable="true">
       <MATERIAL id="wallMaterial" />
       <TEXTURE id="roofgreen" />
 
@@ -206,7 +208,7 @@
 
     </NODE>
 
-    <NODE id="bezierTest">
+    <NODE id="bezierTest" selectable="true">
       <MATERIAL id="yellowMaterial" />
       <TEXTURE id="null" />
 
@@ -228,7 +230,7 @@
 	  </ANIMATIONREFS>
 
       <DESCENDANTS>
-        <LEAF  type="cylinder" args="1 0.2 0.01 20 20 1 1" />
+        <LEAF  type="sphere" args="0.2 20 20" />
       </DESCENDANTS>
     </NODE>
 

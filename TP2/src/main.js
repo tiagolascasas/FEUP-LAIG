@@ -13,8 +13,8 @@ function getUrlVars() {
 
 serialInclude(['../lib/CGF.js',
 				'XMLscene.js',
-				'SceneGraphParser.js',
 				'MyInterface.js',
+				'SceneGraphParser.js',
 				'ObjectNode.js',
 				'ObjectGraph.js',
 				'ObjectTexture.js',

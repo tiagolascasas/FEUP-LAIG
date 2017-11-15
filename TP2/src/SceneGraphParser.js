@@ -1303,8 +1303,17 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
             if (this.nodes[nodeID] != null )
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
+			let selectable = this.reader.getString(children[i], 'selectable');
+            if (selectable == null )
+                selectable = false;
+			if (selectable !== "true" && selectable !== "false")
+			{
+				this.onXMLMinorError("unknown selectable value " + selectable + ", assuming false");
+				selectable = false;
+			}
+
 			// Creates node
-			var obj = new ObjectNode(nodeID, this.scene, this.objGraph);
+			var obj = new ObjectNode(nodeID, this.scene, this.objGraph, selectable);
             this.log("Processing node "+nodeID);
 
 			//registers the node id to keep track of duplicates
