@@ -5,11 +5,13 @@
   * @constructor
   * @param {string} id - the unique id of the node
   * @param {CGFScene} scene - the scene this node refers to
+  * @param {ObjectGraph} graph - the graph this node belongs to
   */
-function ObjectNode(id, scene)
+function ObjectNode(id, scene, graph)
 {
 	this.id = id;
 	this.scene = scene;
+	this.graph = graph;
 	this.children = [];
 	this.leaves = [];
 	this.animations = [];
@@ -34,6 +36,8 @@ ObjectNode.prototype.addChild = function(id)
   */
 ObjectNode.prototype.addAnimation = function(anim)
 {
+	console.log(this.graph);
+	this.graph.activateAnimation(anim);
     this.animations.push(anim);
 };
 

@@ -8,8 +8,6 @@ function BezierAnimation(v, points)
 
 	this.d = this.calculateDistance();
 	this.t = this.d / v;
-
-	this.stop = false;
 };
 
 BezierAnimation.prototype = Object.create(Animation.prototype);
@@ -117,7 +115,7 @@ BezierAnimation.prototype.calcRotation = function(s)
 
 BezierAnimation.prototype.update = function(time)
 {
-	if (this.stop)
+	if (!this.active)
 		return;
 
 	if (this.baseTime == 0)
@@ -128,7 +126,7 @@ BezierAnimation.prototype.update = function(time)
 	let s = this.time / this.t;
 	if (s >= 1)
 	{
-		this.stop = true;
+		this.active = false;
 		return;
 	}
 

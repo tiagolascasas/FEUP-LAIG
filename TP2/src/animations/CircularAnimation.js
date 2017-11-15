@@ -17,7 +17,7 @@ CircularAnimation.prototype.constructor=CircularAnimation;
 
 CircularAnimation.prototype.update = function(time)
 {
-	if (this.da >= this.rotationAngle + this.initialAngle)
+	if (!this.active)
 		return;
 
 	if (this.baseTime == 0)
@@ -35,9 +35,7 @@ CircularAnimation.prototype.update = function(time)
 	mat4.rotate(matrix, matrix, Math.PI / 2, [0, 1, 0]);
 
 	this.matrix = matrix;
-};
 
-CircularAnimation.prototype.getCurrentMatrix = function ()
-{
-	return this.matrix;
+	if (this.da >= this.rotationAngle + this.initialAngle)
+		this.active = false;
 };

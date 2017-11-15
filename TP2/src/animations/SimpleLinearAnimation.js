@@ -4,7 +4,6 @@ function SimpleLinearAnimation(v, p1, p2)
 
 	this.p1 = p1;
 	this.p2 = p2;
-	this.active = false;
 
 	this.d = this.dist();
 	let cos_a = (p2[2] - p1[2]) / this.d;
@@ -51,9 +50,4 @@ SimpleLinearAnimation.prototype.update = function(time)
 	let dist = Math.sqrt(Math.pow(dx, 2) + Math.pow(dz, 2));
 	if (dist >= this.d)
 		this.active = false;
-};
-
-SimpleLinearAnimation.prototype.setActive = function()
-{
-	this.active = true;
 };

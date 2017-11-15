@@ -20,8 +20,13 @@ LinearAnimation.prototype.constructor=LinearAnimation;
 
 LinearAnimation.prototype.update = function(time)
 {
-	if (this.currentAnimation > this.lastAnimation)
+	if (!this.active)
 		return;
+	else if (this.currentAnimation > this.lastAnimation)
+	{
+		this.active = false;
+		return;
+	}
 	else
 		this.simpleLinears[this.currentAnimation].setActive();
 

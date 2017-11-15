@@ -1018,7 +1018,7 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
     					let reference = this.reader.getString(refs[j], 'id');
                         refsList.push(reference);
     				}
-                    args.push(reference);
+                    args.push(refsList);
                     this.objGraph.addAnimation(type, animID, +speed, args);
                     break;
 			}
@@ -1304,7 +1304,7 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
 			// Creates node
-			var obj = new ObjectNode(nodeID, this.scene);
+			var obj = new ObjectNode(nodeID, this.scene, this.objGraph);
             this.log("Processing node "+nodeID);
 
 			//registers the node id to keep track of duplicates

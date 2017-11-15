@@ -66,8 +66,14 @@ ObjectGraph.prototype.addAnimation = function(type, id, velocity, args)
 			anim = new BezierAnimation(velocity, args[0]);
 			this.animations[id] = anim;
 			this.animationsIndexed.push(anim);
+			break;
 		case 'combo':
-			console.log("Combo anim");
+			let animations = [];
+			for (let i = 0; i < args[0].length; i++)
+				animations.push(this.animations[args[0][i]]);
+			anim = new ComboAnimation(animations);
+			this.animations[id] = anim;
+			this.animationsIndexed.push(anim);
 			break;
 		default:
 			break;
@@ -111,7 +117,12 @@ ObjectGraph.prototype.update = function(currTime)
 {
 	for (let i = 0; i < this.animationsIndexed.length; i++)
 		this.animationsIndexed[i].update(currTime);
-}
+};
+
+ObjectGraph.prototype.activateAnimation = function(animID)
+{
+	this.animations[animID].setActive();
+};
 
 /**
   * Starts the display process of the graph by resetting the
