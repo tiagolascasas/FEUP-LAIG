@@ -11,7 +11,8 @@ function ObjectGraph(scene)
 	this.tex = {};
 	this.animations = {};
 	this.animationsIndexed = [];
-	this.selectableNodes = {};
+	this.selectableNodes = [];
+	this.selectedNode = null;
 	this.matStack = [];
 	this.texStack = [];
 	this.defaultMaterial = null;
@@ -89,7 +90,7 @@ ObjectGraph.prototype.addObject = function(object)
 {
 	if (object.selectable)
 	{
-		this.selectableNodes[object.id] = false;
+		this.selectableNodes.push(object.id);
 	}
 	this.obj.push(object);
 };
@@ -180,14 +181,8 @@ ObjectGraph.prototype.displayObjects = function(node)
 
 ObjectGraph.prototype.applyShader = function(node)
 {
-	if (!node.selectable)
-		return;
-	else
-	{
-		let selected = this.selectableNodes[node.id];
-		if (selected)
-			this.scene.setActiveShader(this.scene.customShader);
-	}
+	if (node.id == this.selectedNode)
+		this.scene.setActiveShader(this.scene.customShader);
 };
 
 /**

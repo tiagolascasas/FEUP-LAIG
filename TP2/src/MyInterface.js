@@ -51,11 +51,20 @@ MyInterface.prototype.addLightsGroup = function(lights) {
  * Adds a folder containing the IDs of the selectable nodes.
  * @param {Array} nodes - an array with the IDs of the selectable nodes
  */
-MyInterface.prototype.addNodesGroup = function(nodes)
+MyInterface.prototype.addNodesGroup = function(graph)
 {
-    var group = this.gui.addFolder("Nodes selectable with a custom shader");
-    group.open();
+    this.objGraph = graph;
+    let nodes = graph.getSelectableNodes();
 
-	for (var key in nodes)
-        group.add(nodes, key);
+    //var group = this.gui.addFolder("Nodes selectable with a custom shader");
+    //group.open();
+
+    let keys = {};
+	for (let i = 0; i < nodes.length; i++)
+    {
+        let id = nodes[i];
+        keys[id] = id;
+    }
+
+    this.gui.add(graph, 'selectedNode', keys).name('Single node');
 };

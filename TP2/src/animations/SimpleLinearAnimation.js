@@ -42,7 +42,7 @@ SimpleLinearAnimation.prototype.update = function(time)
 	let matrix = mat4.create();
 	mat4.identity(matrix);
 	mat4.translate(matrix, matrix, [dx, 0, dz]);
-	mat4.translate(matrix, matrix, [this.p1[0], 0, this.p1[2]]);
+	mat4.translate(matrix, matrix, [this.p1[0], this.p1[1], this.p1[2]]);
 	mat4.rotate(matrix, matrix, this.slope, [0, 1, 0]);
 
 	this.matrix = matrix;

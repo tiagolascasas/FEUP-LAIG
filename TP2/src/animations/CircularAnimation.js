@@ -32,7 +32,7 @@ CircularAnimation.prototype.update = function(time)
 	mat4.translate(matrix, matrix, this.center);
 	mat4.rotate(matrix, matrix, this.da, [0, 1, 0]);
 	mat4.translate(matrix, matrix, [this.radius, 0, 0]);
-	mat4.rotate(matrix, matrix, Math.PI / 2, [0, 1, 0]);
+	//mat4.rotate(matrix, matrix, Math.PI / 2, [0, 1, 0]);
 
 	this.matrix = matrix;
 

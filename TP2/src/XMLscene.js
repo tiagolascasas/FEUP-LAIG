@@ -98,7 +98,7 @@ XMLscene.prototype.onGraphLoaded = function()
 
     // Adds lights and selectable nodes group.
     this.interface.addLightsGroup(this.graph.lights);
-	this.interface.addNodesGroup(this.graph.objGraph.getSelectableNodes());
+	this.interface.addNodesGroup(this.graph.objGraph);
 };
 
 /**
@@ -164,5 +164,8 @@ XMLscene.prototype.update = function(currTime)
     	this.graph.objGraph.update(currTime);
 
 	let factor = Math.cos(currTime / 750);
+    if (factor <= -0.9)
+        factor = -0.9;
+
 	this.customShader.setUniformsValues({timeFactor: factor, component: 1});
 };
