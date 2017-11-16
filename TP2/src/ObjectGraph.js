@@ -159,11 +159,12 @@ ObjectGraph.prototype.displayObjects = function(node)
 
 	this.scene.pushMatrix();
 
-	this.applyShader(currNode);
+	let changedShader = this.applyShader(currNode);
 	this.applyAppearences(currNode);
 	currNode.applyTransformations(this.animations);
 	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
-	this.scene.setActiveShader(this.scene.defaultShader);
+	if (changedShader)
+		this.scene.setActiveShader(this.scene.defaultShader);
 
 	var children = currNode.children;
 	for (var i = 0; i < children.length; i++)
@@ -182,7 +183,12 @@ ObjectGraph.prototype.displayObjects = function(node)
 ObjectGraph.prototype.applyShader = function(node)
 {
 	if (node.id == this.selectedNode)
+	{
 		this.scene.setActiveShader(this.scene.customShader);
+		return true;
+	}
+	else
+		return false;
 };
 
 /**

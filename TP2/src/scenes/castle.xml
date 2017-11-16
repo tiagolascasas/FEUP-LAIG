@@ -324,7 +324,7 @@
     </NODE>
 
     <!-- Node with a sphere primitive -->
-    <NODE id="bushPrimitive">
+    <NODE id="bushPrimitive" selectable="true">
       <MATERIAL id="null" />
       <TEXTURE id="null" />
 
@@ -688,8 +688,8 @@
     </NODE>
 
 	<!-- A flagpole for a conic roof -->
-    <NODE id="flagpole">
-      <MATERIAL id="poleMaterial" />
+    <NODE id="flagpole" selectable="true">
+      <MATERIAL id="poleMaterial"/>
       <TEXTURE id="clear" />
 
       <TRANSLATION x="0" y="0" z="3" />

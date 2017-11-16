@@ -48,16 +48,12 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 }
 
 /**
- * Adds a folder containing the IDs of the selectable nodes.
- * @param {Array} nodes - an array with the IDs of the selectable nodes
+ * Adds a list containing the IDs of the selectable nodes.
+ * @param {Array} graph - the scene graph
  */
 MyInterface.prototype.addNodesGroup = function(graph)
 {
-    this.objGraph = graph;
     let nodes = graph.getSelectableNodes();
-
-    //var group = this.gui.addFolder("Nodes selectable with a custom shader");
-    //group.open();
 
     let keys = {};
 	for (let i = 0; i < nodes.length; i++)
