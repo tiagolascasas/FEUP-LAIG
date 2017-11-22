@@ -132,3 +132,8 @@ BezierAnimation.prototype.calculateMatrix = function(time)
 
 	return matrix;
 };
+
+BezierAnimation.prototype.getEndTime = function()
+{
+	return this.t;
+};

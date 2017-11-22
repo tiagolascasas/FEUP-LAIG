@@ -101,6 +101,14 @@
       <emission r="1" g="0" b="1" a="1" />
     </MATERIAL>
 
+	<MATERIAL id="greenMaterial">
+      <shininess value="50" />
+      <specular r="0" g="1" b="0" a="1" />
+      <diffuse r="0" g="1" b="0" a="1" />
+      <ambient r="0" g="1" b="0" a="1" />
+      <emission r="0" g="1" b="0" a="1" />
+    </MATERIAL>
+
     <!-- A default material -->
     <MATERIAL id="defaultMaterial">
       <shininess value="1" />
@@ -148,11 +156,20 @@
 			<controlpoint xx="5" yy="0" zz="5" />
 			<controlpoint xx="0" yy="0" zz="0" />
 		</ANIMATION>
-<!--		<ANIMATION id="combo1" speed="0.003" type="combo">
+		<ANIMATION id="linearCombo2" speed="0.006" type="linear">
+            <controlpoint xx="0" yy="0" zz="0" />
+            <controlpoint xx="3" yy="0" zz="0" />
+		</ANIMATION>
+		<ANIMATION id="combo1" speed="0.003" type="combo">
             <SPANREF id="circularCombo"/>
 			<SPANREF id="bezierCombo"/>
 			<SPANREF id="linearCombo"/>
-		</ANIMATION>-->
+		</ANIMATION>
+		<ANIMATION id="combo2" speed="0.003" type="combo">
+            <SPANREF id="linearCombo"/>
+			<SPANREF id="linearCombo2"/>
+			<SPANREF id="bezierCombo"/>
+		</ANIMATION>
 
 	</ANIMATIONS>
 
@@ -171,7 +188,8 @@
         <NODEREF id="circularTest" />
         <NODEREF id="bezierTest" />
 		<NODEREF id="linearTest" />
-		<!-- <NODEREF id="comboTest" /> -->
+		<NODEREF id="comboTest" />
+		<NODEREF id="comboTest2" />
       </DESCENDANTS>
 
     </NODE>
@@ -220,7 +238,7 @@
         <LEAF  type="triangle" args="0 0 1 0.3 0 0 -0.3 0 0" />
       </DESCENDANTS>
   	</NODE>
-<!--
+
 	<NODE id="comboTest" selectable="true">
       <MATERIAL id="purpleMaterial" />
       <TEXTURE id="null" />
@@ -232,7 +250,20 @@
       <DESCENDANTS>
         <LEAF  type="sphere" args="0.2 20 20" />
       </DESCENDANTS>
-  </NODE>-->
+  </NODE>
+
+  <NODE id="comboTest2" selectable="true">
+	<MATERIAL id="greenMaterial" />
+	<TEXTURE id="null" />
+
+	<ANIMATIONREFS>
+		<ANIMATIONREF id="combo2"/>
+	</ANIMATIONREFS>
+
+	<DESCENDANTS>
+	  <LEAF  type="cylinder" args="1 0.2 0.2 20 20 1 1" />
+	</DESCENDANTS>
+</NODE>
 
 </NODES>
 

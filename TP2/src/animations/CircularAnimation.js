@@ -27,3 +27,8 @@ CircularAnimation.prototype.calculateMatrix = function(time)
 
 	return matrix;
 };
+
+CircularAnimation.prototype.getEndTime = function()
+{
+	return this.rotationAngle / this.w;
+};

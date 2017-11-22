@@ -4,6 +4,7 @@ function LinearAnimation(v, points)
 
 	this.simpleLinears = [];
 	this.simpleEndTimes = [];
+	
 	for (let i = 0; i < points.length - 1; i++)
 	{
 		let anim = new SimpleLinearAnimation(v, points[i], points[i + 1]);
@@ -12,7 +13,6 @@ function LinearAnimation(v, points)
 		let sumOfPreviousTimes = this.sum();
 		this.simpleEndTimes.push(sumOfPreviousTimes + anim.getEndTime());
 	}
-	console.log(this.simpleEndTimes);
 };
 
 LinearAnimation.prototype = Object.create(Animation.prototype);
@@ -37,4 +37,9 @@ LinearAnimation.prototype.calculateMatrix = function(time)
 		}
 	}
 	return null;
+};
+
+LinearAnimation.prototype.getEndTime = function()
+{
+	return this.simpleEndTimes[this.simpleEndTimes.length - 1];
 };

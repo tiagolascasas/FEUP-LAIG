@@ -2,31 +2,38 @@ function ComboAnimation(animations)
 {
 	Animation.call(this, 0);
 
-	this.animations = animations;
-	this.currentAnimation = 0;
-	this.animations[0].setActive();
-	this.lastAnimation = this.animations.length - 1;
+	this.animations = [];
+	this.animationsEndTimes = [];
+
+	for (let i = 0; i < animations.length; i++)
+	{
+		this.animations.push(animations[i]);
+
+		let sumOfPreviousTimes = this.sum();
+		this.animationsEndTimes.push(sumOfPreviousTimes + animations[i].getEndTime());
+	}
 };
 
 ComboAnimation.prototype = Object.create(Animation.prototype);
 ComboAnimation.prototype.constructor=ComboAnimation;
 
-ComboAnimation.prototype.update = function(time)
+ComboAnimation.prototype.sum = function()
 {
-	if (!this.active)
-		return;
-	else if (this.currentAnimation > this.lastAnimation)
+	let n = 0;
+	for (let i = 0; i < this.animationsEndTimes.length; i++)
+		n += this.animationsEndTimes[i];
+	return n;
+};
+
+ComboAnimation.prototype.calculateMatrix = function(time)
+{
+	for (let i = 0; i < this.animations.length; i++)
 	{
-		this.active = false;
-		return;
+		if (time < this.animationsEndTimes[i])
+		{
+			let delta = i == 0 ? time : time - this.animationsEndTimes[i - 1];
+			return this.animations[i].calculateMatrix(delta);
+		}
 	}
-	else
-		this.animations[this.currentAnimation].setActive();
-
-	let currentAnim = this.animations[this.currentAnimation];
-	currentAnim.update(time);
-	this.matrix = currentAnim.getCurrentMatrix();
-
-	if (!currentAnim.active)
-		this.currentAnimation++;
+	return null;
 };
