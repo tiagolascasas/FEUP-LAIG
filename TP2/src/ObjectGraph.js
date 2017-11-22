@@ -48,9 +48,6 @@ ObjectGraph.prototype.addTexture = function(id, tex)
   */
 ObjectGraph.prototype.addAnimation = function(type, id, velocity, args)
 {
-	console.log("arguments passed to addAnimation: ");
-	console.log(args);
-
 	let anim = null;
 	switch(type)
 	{
@@ -126,13 +123,8 @@ ObjectGraph.prototype.getSelectableNodes = function()
 
 ObjectGraph.prototype.update = function(currTime)
 {
-	for (let i = 0; i < this.animationsIndexed.length; i++)
-		this.animationsIndexed[i].update(currTime);
-};
-
-ObjectGraph.prototype.activateAnimation = function(animID)
-{
-	this.animations[animID].setActive();
+	for (let i = 0; i < this.obj.length; i++)
+		this.obj[i].update(currTime);
 };
 
 /**

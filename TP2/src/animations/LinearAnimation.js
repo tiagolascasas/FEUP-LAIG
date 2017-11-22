@@ -1,39 +1,40 @@
 function LinearAnimation(v, points)
 {
 	Animation.call(this, v);
-	console.log(points);
 
 	this.simpleLinears = [];
+	this.simpleEndTimes = [];
 	for (let i = 0; i < points.length - 1; i++)
 	{
 		let anim = new SimpleLinearAnimation(v, points[i], points[i + 1]);
 		this.simpleLinears.push(anim);
-	}
 
-	this.currentAnimation = 0;
-	this.simpleLinears[0].setActive();
-	this.lastAnimation = this.simpleLinears.length - 1;
+		let sumOfPreviousTimes = this.sum();
+		this.simpleEndTimes.push(sumOfPreviousTimes + anim.getEndTime());
+	}
+	console.log(this.simpleEndTimes);
 };
 
 LinearAnimation.prototype = Object.create(Animation.prototype);
 LinearAnimation.prototype.constructor=LinearAnimation;
 
-LinearAnimation.prototype.update = function(time)
+LinearAnimation.prototype.sum = function()
 {
-	if (!this.active)
-		return;
-	else if (this.currentAnimation > this.lastAnimation)
+	let n = 0;
+	for (let i = 0; i < this.simpleEndTimes.length; i++)
+		n += this.simpleEndTimes[i];
+	return n;
+};
+
+LinearAnimation.prototype.calculateMatrix = function(time)
+{
+	for (let i = 0; i < this.simpleLinears.length; i++)
 	{
-		this.active = false;
-		return;
+		if (time < this.simpleEndTimes[i])
+		{
+			let delta = i == 0 ? time : time - this.simpleEndTimes[i - 1];
+			return this.simpleLinears[i].calculateMatrix(delta);
+		}
 	}
-	else
-		this.simpleLinears[this.currentAnimation].setActive();
-
-	let currentAnim = this.simpleLinears[this.currentAnimation];
-	currentAnim.update(time);
-	this.matrix = currentAnim.getCurrentMatrix();
-
-	if (!currentAnim.active)
-		this.currentAnimation++;
+	return null;
 };

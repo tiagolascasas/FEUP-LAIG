@@ -3,8 +3,6 @@ function BezierAnimation(v, points)
 	Animation.call(this, v);
 
 	this.points = points;
-	this.time = 0;
-	this.baseTime = 0;
 
 	this.d = this.calculateDistance();
 	this.t = this.d / v;
@@ -113,22 +111,11 @@ BezierAnimation.prototype.calcRotation = function(s)
 	return angle;
 };
 
-BezierAnimation.prototype.update = function(time)
+BezierAnimation.prototype.calculateMatrix = function(time)
 {
-	if (!this.active)
-		return;
-
-	if (this.baseTime == 0)
-		this.baseTime = time;
-	else
-		this.time = (time - this.baseTime);
-
-	let s = this.time / this.t;
+	let s = time / this.t;
 	if (s >= 1)
-	{
-		this.active = false;
-		return;
-	}
+		return null;
 
 	let rotationAngle = this.calcRotation(s);
 	let qs = this.qs(s);
@@ -143,5 +130,5 @@ BezierAnimation.prototype.update = function(time)
 	mat4.translate(matrix, matrix, [x, y, z]);
 	mat4.rotate(matrix, matrix, rotationAngle, [0, 1, 0]);
 
-	this.matrix = matrix;
+	return matrix;
 };

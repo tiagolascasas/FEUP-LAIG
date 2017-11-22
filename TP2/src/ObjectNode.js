@@ -17,6 +17,9 @@ function ObjectNode(id, scene, graph, selectable)
 	this.children = [];
 	this.leaves = [];
 	this.animations = [];
+	this.lastAnimMatrices = [];
+	this.baseTime = null;
+	this.time = null;
 	this.material = null;
 	this.texture = null;
 	this.matrix = mat4.create();
@@ -38,9 +41,8 @@ ObjectNode.prototype.addChild = function(id)
   */
 ObjectNode.prototype.addAnimation = function(anim)
 {
-	console.log(this.graph);
-	this.graph.activateAnimation(anim);
     this.animations.push(anim);
+	this.lastAnimMatrices.push(this.matrix);
 };
 
 /**
@@ -70,8 +72,26 @@ ObjectNode.prototype.applyAnimations = function(animations)
 {
 	for (let i = 0; i < this.animations.length; i++)
 	{
-		this.scene.multMatrix(animations[this.animations[i]].getCurrentMatrix());
+		let mat = animations[this.animations[i]].calculateMatrix(this.time);
+
+		if (mat != null)
+			this.lastAnimMatrices[i] = mat;
+		else
+			mat = this.lastAnimMatrices[i];
+			
+		this.scene.multMatrix(mat);
 	}
+};
+
+ObjectNode.prototype.update = function(currTime)
+{
+	if (this.time == null)
+	{
+		this.baseTime = currTime;
+		this.time = 0;
+	}
+	else
+		this.time = currTime - this.baseTime;
 };
 
 /**

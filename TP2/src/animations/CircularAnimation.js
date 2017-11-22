@@ -7,35 +7,23 @@ function CircularAnimation(v, center, radius, initialAngle, rotationAngle)
 	this.initialAngle = initialAngle * DEGREE_TO_RAD;
 	this.rotationAngle = rotationAngle * DEGREE_TO_RAD;
 	this.w = v / radius;
-	this.time = 0;
-	this.baseTime = 0;
-	this.da = 0;
 };
 
 CircularAnimation.prototype = Object.create(Animation.prototype);
 CircularAnimation.prototype.constructor=CircularAnimation;
 
-CircularAnimation.prototype.update = function(time)
+CircularAnimation.prototype.calculateMatrix = function(time)
 {
-	if (!this.active)
-		return;
-
-	if (this.baseTime == 0)
-		this.baseTime = time;
-	else
-		this.time = (time - this.baseTime);
-
-	this.da = this.initialAngle + this.w * this.time;
+	da = this.initialAngle + this.w * time;
+	if (da >= this.rotationAngle + this.initialAngle)
+		return null;
 
 	let matrix = mat4.create();
 	mat4.identity(matrix);
 	mat4.translate(matrix, matrix, this.center);
-	mat4.rotate(matrix, matrix, this.da, [0, 1, 0]);
+	mat4.rotate(matrix, matrix, da, [0, 1, 0]);
 	mat4.translate(matrix, matrix, [this.radius, 0, 0]);
 	//mat4.rotate(matrix, matrix, Math.PI / 2, [0, 1, 0]);
 
-	this.matrix = matrix;
-
-	if (this.da >= this.rotationAngle + this.initialAngle)
-		this.active = false;
+	return matrix;
 };

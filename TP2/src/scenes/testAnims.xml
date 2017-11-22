@@ -148,11 +148,11 @@
 			<controlpoint xx="5" yy="0" zz="5" />
 			<controlpoint xx="0" yy="0" zz="0" />
 		</ANIMATION>
-		<ANIMATION id="combo1" speed="0.003" type="combo">
+<!--		<ANIMATION id="combo1" speed="0.003" type="combo">
             <SPANREF id="circularCombo"/>
 			<SPANREF id="bezierCombo"/>
 			<SPANREF id="linearCombo"/>
-		</ANIMATION>
+		</ANIMATION>-->
 
 	</ANIMATIONS>
 
@@ -171,7 +171,7 @@
         <NODEREF id="circularTest" />
         <NODEREF id="bezierTest" />
 		<NODEREF id="linearTest" />
-		<NODEREF id="comboTest" />
+		<!-- <NODEREF id="comboTest" /> -->
       </DESCENDANTS>
 
     </NODE>
@@ -220,7 +220,7 @@
         <LEAF  type="triangle" args="0 0 1 0.3 0 0 -0.3 0 0" />
       </DESCENDANTS>
   	</NODE>
-
+<!--
 	<NODE id="comboTest" selectable="true">
       <MATERIAL id="purpleMaterial" />
       <TEXTURE id="null" />
@@ -232,7 +232,7 @@
       <DESCENDANTS>
         <LEAF  type="sphere" args="0.2 20 20" />
       </DESCENDANTS>
-    </NODE>
+  </NODE>-->
 
 </NODES>
 
