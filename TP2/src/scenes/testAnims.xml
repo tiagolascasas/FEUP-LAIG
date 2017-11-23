@@ -137,11 +137,33 @@
             <controlpoint xx="3" yy="1" zz="3" />
             <controlpoint xx="1" yy="1" zz="1" />
 		</ANIMATION>
+        <ANIMATION id="linear2" speed="0.003" type="linear">
+            <controlpoint xx="0" yy="0" zz="0" />
+            <controlpoint xx="5" yy="0" zz="0" />
+            <controlpoint xx="5" yy="0" zz="5" />
+            <controlpoint xx="0" yy="0" zz="5" />
+            <controlpoint xx="0" yy="0" zz="0" />
+            <controlpoint xx="3" yy="0" zz="3" />
+            <controlpoint xx="-1" yy="0" zz="-2" />
+		</ANIMATION>
+        <ANIMATION id="linear3" speed="0.003" type="linear">
+            <controlpoint xx="0" yy="0" zz="0" />
+            <controlpoint xx="5" yy="0" zz="3" />
+            <controlpoint xx="-4" yy="0" zz="5" />
+            <controlpoint xx="0" yy="0" zz="-2" />
+            <controlpoint xx="3" yy="0" zz="0" />
+            <controlpoint xx="3" yy="0" zz="3" />
+            <controlpoint xx="-1" yy="0" zz="-2" />
+		</ANIMATION>
 
 		<!-- Combo animation -->
 		<ANIMATION id="circularCombo" speed="0.006" type="circular"
 					centerx="0" centery="0" centerz="0"
 					radius="5" startang="0" rotang="360"
+		/>
+        <ANIMATION id="circularCombo2" speed="0.006" type="circular"
+					centerx="0" centery="0" centerz="0"
+					radius="10" startang="0" rotang="90"
 		/>
 		<ANIMATION id="bezierCombo" speed="0.006" type="bezier">
             <controlpoint xx="3" yy="0" zz="0" />
@@ -156,10 +178,11 @@
 			<controlpoint xx="5" yy="0" zz="5" />
 			<controlpoint xx="0" yy="0" zz="0" />
 		</ANIMATION>
-		<ANIMATION id="linearCombo2" speed="0.006" type="linear">
+        <ANIMATION id="linearCombo2" speed="0.006" type="linear">
             <controlpoint xx="0" yy="0" zz="0" />
             <controlpoint xx="3" yy="0" zz="0" />
 		</ANIMATION>
+
 		<ANIMATION id="combo1" speed="0.003" type="combo">
             <SPANREF id="circularCombo"/>
 			<SPANREF id="bezierCombo"/>
@@ -169,6 +192,7 @@
             <SPANREF id="linearCombo"/>
 			<SPANREF id="linearCombo2"/>
 			<SPANREF id="bezierCombo"/>
+            <SPANREF id="circularCombo2"/>
 		</ANIMATION>
 
 	</ANIMATIONS>
@@ -217,7 +241,7 @@
       <TEXTURE id="roofgreen" />
 
 	  <ANIMATIONREFS>
-		  <ANIMATIONREF id="linear1"/>
+		  <ANIMATIONREF id="linear2"/>
 	  </ANIMATIONREFS>
 
       <DESCENDANTS>
