@@ -19,14 +19,6 @@ function ComboAnimation(animations)
 
 ComboAnimation.prototype = Object.create(Animation.prototype);
 ComboAnimation.prototype.constructor=ComboAnimation;
-/*
-ComboAnimation.prototype.sum = function()
-{
-	let n = 0;
-	for (let i = 0; i < this.animationsEndTimes.length; i++)
-		n += this.animationsEndTimes[i];
-	return n;
-};*/
 
 ComboAnimation.prototype.calculateMatrix = function(time)
 {

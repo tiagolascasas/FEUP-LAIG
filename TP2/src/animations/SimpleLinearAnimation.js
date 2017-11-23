@@ -10,7 +10,7 @@ function SimpleLinearAnimation(v, p1, p2)
 	let sin_a = (p2[0] - p1[0]) / this.d;
 	this.vz = v * cos_a;
 	this.vx = v * sin_a;
-	//this.slope = Math.acos(cos_a);
+
 	let de = (p2[0] - p1[0]) / (p2[2] - p1[2]);
 	this.slope = Math.atan(de);
 	let a = Math.atan(sin_a / cos_a);
@@ -34,8 +34,7 @@ SimpleLinearAnimation.prototype.dist = function()
 
 SimpleLinearAnimation.prototype.getEndTime = function()
 {
-	//return this.d / this.v;
-	return this.dist() / Math.sqrt(Math.pow(this.vx, 2) + Math.pow(this.vz, 2));
+	return this.d / this.v;
 };
 
 SimpleLinearAnimation.prototype.calculateMatrix = function(time)
@@ -47,7 +46,6 @@ SimpleLinearAnimation.prototype.calculateMatrix = function(time)
 	if (dist >= this.d)
 		return null;
 
-	console.log(this.slope * 180 / Math.PI);
 	let matrix = mat4.create();
 	mat4.identity(matrix);
 	mat4.translate(matrix, matrix, [dx, 0, dz]);
