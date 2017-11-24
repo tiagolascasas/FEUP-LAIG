@@ -1,7 +1,6 @@
 attribute vec3 aVertexPosition;
 attribute vec3 aVertexNormal;
 attribute vec2 aTextureCoord;
-//attribute vec4 gl_Color;
 
 uniform mat4 uMVMatrix;
 uniform mat4 uPMatrix;
@@ -19,7 +18,6 @@ uniform materialProperties uFrontMaterial;
 
 uniform float timeFactor;
 varying vec2 vTextureCoord;
-//varying vec4 gl_FrontColor;
 varying vec4 materialColor;
 
 void main()

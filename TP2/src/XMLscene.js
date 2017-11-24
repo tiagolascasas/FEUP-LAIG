@@ -163,7 +163,7 @@ XMLscene.prototype.update = function(currTime)
 	else
     	this.graph.objGraph.update(currTime);
 
-	let factor = Math.cos(currTime / 750) + 0.1;
+	let factor = 0.99*Math.cos(currTime / 750) + 0.01;	//-0.98 <= factor <= 1
 
 	this.customShader.setUniformsValues({timeFactor: factor, component: 1});
 };
