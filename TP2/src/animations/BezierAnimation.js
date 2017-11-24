@@ -3,6 +3,7 @@ function BezierAnimation(v, points)
 	Animation.call(this, v);
 
 	this.points = points;
+	console.log(points);
 
 	this.d = this.calculateDistance();
 	this.t = this.d / v;
@@ -120,14 +121,9 @@ BezierAnimation.prototype.calculateMatrix = function(time)
 	let rotationAngle = this.calcRotation(s);
 	let qs = this.qs(s);
 
-	let p1 = this.points[0];
-	let x = p1[0] + qs[0];
-	let y = p1[1] + qs[1];
-	let z = p1[2] + qs[2];
-
 	let matrix = mat4.create();
 	mat4.identity(matrix);
-	mat4.translate(matrix, matrix, [x, y, z]);
+	mat4.translate(matrix, matrix, qs);
 	mat4.rotate(matrix, matrix, rotationAngle, [0, 1, 0]);
 
 	return matrix;
