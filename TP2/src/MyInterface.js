@@ -61,6 +61,11 @@ MyInterface.prototype.addNodesGroup = function(graph)
         let id = nodes[i];
         keys[id] = id;
     }
+    this.gui.add(graph, 'selectedNode', keys).name('Node with custom shader');
 
-    this.gui.add(graph, 'selectedNode', keys).name('Single node');
+	this.gui.add(this.scene, 'colorComponent', {
+			'Red': 0,
+			'Green': 1,
+			'Blue': 2
+	}).name('Saturated component');
 };

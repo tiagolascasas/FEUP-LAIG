@@ -962,50 +962,104 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 
 			let args = [];
 			let type = this.reader.getString(eachAnim[i], 'type');
+			if (type == null)
+	            return "unable to parse animation type value for animation with ID = " + animID;
             let speed = 0;
 			let points = [];
 			let pointsMat = [];
-			//CHECK VALIDITY HERE
+
 			switch(type)
 			{
 				case 'linear':
                     speed = this.reader.getString(eachAnim[i], 'speed');
+					if (speed == null )
+			            return "unable to parse speed value for animation with ID = " + animID;
                     points = eachAnim[i].children;
                     pointsMat = [];
     				for (let j = 0; j < points.length; j++)
     				{
+						if (points[j].nodeName != "controlpoint")
+							return "invalid inner tag name " + points[j].nodeName + " in animation with id " + animID;
+
     					let x = this.reader.getString(points[j], 'xx');
                         let y = this.reader.getString(points[j], 'yy');
                         let z = this.reader.getString(points[j], 'zz');
+						if (x == null || isNaN(x))
+				            return "unable to parse xx value for animation with ID = " + animID;
+						if (y == null || isNaN(y))
+				            return "unable to parse yy value for animation with ID = " + animID;
+						if (z == null || isNaN(z))
+				            return "unable to parse zz value for animation with ID = " + animID;
                         pointsMat.push([+x, +y, +z]);
     				}
+
+					if (+speed <= 0)
+						return "speed must be bigger than 0 in animation with ID =" + animID;
+
                     args.push(pointsMat);
                     this.objGraph.addAnimation(type, animID, +speed, args);
                     break;
 
 				case 'circular':
 					speed = this.reader.getString(eachAnim[i], 'speed');
+					if (speed == null || isNaN(speed))
+			            return "unable to parse speed value for animation with ID = " + animID;
 					let cx = this.reader.getString(eachAnim[i], 'centerx');
+					if (cx == null || isNaN(cx))
+			            return "unable to parse cx value for animation with ID = " + animID;
 					let cy = this.reader.getString(eachAnim[i], 'centery');
+					if (cy == null || isNaN(cy))
+			            return "unable to parse cy value for animation with ID = " + animID;
 					let cz = this.reader.getString(eachAnim[i], 'centerz');
+					if (cz == null || isNaN(cz))
+			            return "unable to parse cz value for animation with ID = " + animID;
 					let radius = this.reader.getString(eachAnim[i], 'radius');
+					if (radius == null || isNaN(radius))
+			            return "unable to parse radius value for animation with ID = " + animID;
 					let startang = this.reader.getString(eachAnim[i], 'startang');
+					if (startang == null || isNaN(startang))
+			            return "unable to parse startang value for animation with ID = " + animID;
 					let rotang = this.reader.getString(eachAnim[i], 'rotang');
+					if (rotang == null|| isNaN(rotang))
+			            return "unable to parse rotang value for animation with ID = " + animID;
+
+					if (+radius <= 0)
+						return "radius must be bigger than 0 in animation with ID =" + animID;
+					if (+speed <= 0)
+						return "speed must be bigger than 0 in animation with ID =" + animID;
+
 					args.push([+cx, +cy, +cz], +radius, +startang, +rotang);
 					this.objGraph.addAnimation(type, animID, +speed, args);
 					break;
 
                 case 'bezier':
                     speed = this.reader.getString(eachAnim[i], 'speed');
+					if (speed == null)
+			            return "unable to parse speed value for animation with ID = " + animID;
                     points = eachAnim[i].children;
                     pointsMat = [];
     				for (let j = 0; j < points.length; j++)
     				{
+						if (points[j].nodeName != "controlpoint")
+							return "invalid inner tag name " + points[j].nodeName + " in animation with id " + animID;
+
     					let x = this.reader.getString(points[j], 'xx');
                         let y = this.reader.getString(points[j], 'yy');
                         let z = this.reader.getString(points[j], 'zz');
+						if (x == null || isNaN(x))
+				            return "unable to parse xx value for animation with ID = " + animID;
+						if (y == null || isNaN(y))
+				            return "unable to parse yy value for animation with ID = " + animID;
+						if (z == null || isNaN(z))
+				            return "unable to parse zz value for animation with ID = " + animID;
                         pointsMat.push([+x, +y, +z]);
     				}
+
+					if (+speed <= 0)
+						return "speed must be bigger than 0 in animation with ID =" + animID;
+					if (pointsMat.length != 4)
+						return "wrong number of points for bezier animation with ID =" + animID;
+
                     args.push(pointsMat);
                     this.objGraph.addAnimation(type, animID, +speed, args);
                     break;
@@ -1015,7 +1069,13 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
                     let refsList = [];
     				for (let j = 0; j < refs.length; j++)
     				{
+						if (refs[j].nodeName != "SPANREF")
+							return "invalid inner tag name " + refs[j].nodeName + " in combo animation with id " + animID;
     					let reference = this.reader.getString(refs[j], 'id');
+						if (reference == null)
+							return "unable to parse animation reference value for animation with ID = " + animID;
+						if (this.animations[reference] == null)
+			                return "animation reference to non-existing animation in combo animation with ID =" + animID;
                         refsList.push(reference);
     				}
                     args.push(refsList);
@@ -1306,11 +1366,13 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
 			let selectable = this.reader.getString(children[i], 'selectable');
             if (selectable == null )
                 selectable = false;
-			if (selectable !== "true" && selectable !== "false")
+			if (selectable != "true" && selectable != "false")
 			{
 				this.onXMLMinorError("unknown selectable value " + selectable + ", assuming false");
 				selectable = false;
 			}
+			else
+				selectable = (selectable == 'true');
 
 			// Creates node
 			var obj = new ObjectNode(nodeID, this.scene, this.objGraph, selectable);
@@ -1365,7 +1427,11 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
 				let anims = nodeSpecs[animationsIndex].children;
 				for (let i = 0; i < anims.length; i++)
 				{
+					if (anims[i].nodeName != "ANIMATIONREF")
+						return "invalid inner node name " + anims[i].nodeName + " in ANIMATIONREFS of node with id =" + nodeID;
 					let id = this.reader.getString(anims[i], 'id');
+					if (id == null)
+						return "unable to parse animationref ID (node ID = " + nodeID + ")";
 					obj.addAnimation(id);
 					console.log("added animation " + id + " to node " + nodeID);
 				}

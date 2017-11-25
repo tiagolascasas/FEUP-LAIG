@@ -3,7 +3,6 @@ function BezierAnimation(v, points)
 	Animation.call(this, v);
 
 	this.points = points;
-	console.log(points);
 
 	this.d = this.calculateDistance();
 	this.t = this.d / v;

@@ -103,12 +103,12 @@
             <emission r="0.356" g="0.231" b="0.082" a="1" />
         </MATERIAL>
 
-        <MATERIAL id="greenMaterial">
+        <MATERIAL id="yellowMaterial">
             <shininess value="50" />
-            <specular r="0" g="1" b="0" a="1" />
-            <diffuse r="0" g="1" b="0" a="1" />
-            <ambient r="0" g="1" b="0" a="1" />
-            <emission r="0" g="1" b="0" a="1" />
+            <specular r="1" g="1" b="0" a="1" />
+            <diffuse r="1" g="1" b="0" a="1" />
+            <ambient r="1" g="1" b="0" a="1" />
+            <emission r="1" g="1" b="0" a="1" />
         </MATERIAL>
 
         <!-- A default material -->
@@ -187,6 +187,7 @@
                 <NODEREF id="floor" />
                 <NODEREF id="car" />
 				<NODEREF id="rocket" />
+				<NODEREF id="balls" />
             </DESCENDANTS>
         </NODE>
 
@@ -462,6 +463,71 @@
 
             <DESCENDANTS>
                 <LEAF type="cylinder" args="1 0.2 0.2 20 20 1 1" />
+            </DESCENDANTS>
+        </NODE>
+
+		<NODE id="balls">
+            <MATERIAL id="yellowMaterial" />
+            <TEXTURE id="null" />
+
+            <DESCENDANTS>
+				<NODEREF id="ball1" />
+				<NODEREF id="ball2" />
+				<NODEREF id="ball3" />
+				<NODEREF id="ball4" />
+            </DESCENDANTS>
+        </NODE>
+
+		<NODE id="ball1">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+			<TRANSLATION x="3" y="0" z="3" />
+
+            <DESCENDANTS>
+				<NODEREF id="ball" />
+            </DESCENDANTS>
+        </NODE>
+
+		<NODE id="ball2">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+			<TRANSLATION x="6" y="0" z="3" />
+
+            <DESCENDANTS>
+				<NODEREF id="ball" />
+            </DESCENDANTS>
+        </NODE>
+
+		<NODE id="ball3">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+			<TRANSLATION x="3" y="0" z="6" />
+
+            <DESCENDANTS>
+				<NODEREF id="ball" />
+            </DESCENDANTS>
+        </NODE>
+
+		<NODE id="ball4">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+			<TRANSLATION x="6" y="0" z="6" />
+
+            <DESCENDANTS>
+				<NODEREF id="ball" />
+            </DESCENDANTS>
+        </NODE>
+
+		<NODE id="ball" selectable="true">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <DESCENDANTS>
+				<LEAF type="sphere" args="0.4 20 20"/>
             </DESCENDANTS>
         </NODE>
     </NODES>

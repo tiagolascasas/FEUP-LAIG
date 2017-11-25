@@ -11,6 +11,7 @@ function XMLscene(interface) {
 
     this.lightValues = {};
 	this.nodesValues = {};
+	this.colorComponent = 0;
 };
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -165,5 +166,5 @@ XMLscene.prototype.update = function(currTime)
 
 	let factor = 0.99*Math.cos(currTime / 750) + 0.01;	//-0.98 <= factor <= 1
 
-	this.customShader.setUniformsValues({timeFactor: factor, component: 1});
+	this.customShader.setUniformsValues({timeFactor: factor, component: this.colorComponent});
 };
