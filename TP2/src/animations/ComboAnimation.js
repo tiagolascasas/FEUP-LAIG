@@ -1,3 +1,8 @@
+/**
+  * Creates a Combo Animation
+  * @constructor
+  * @param {Array} animations - an array with the animations that make up this animation
+  */
 function ComboAnimation(animations)
 {
 	Animation.call(this, 0);
@@ -20,6 +25,13 @@ function ComboAnimation(animations)
 ComboAnimation.prototype = Object.create(Animation.prototype);
 ComboAnimation.prototype.constructor=ComboAnimation;
 
+/**
+  * Calculates a matrix based on a given time.
+  * @param {Number} time - the time in milliseconds from which to calculate the matrix,
+  * considering that the animation starts at t = 0
+  * @return {Array} the calculated transformation matrix if the time
+  * given is within the animation's range, null otherwise
+  */
 ComboAnimation.prototype.calculateMatrix = function(time)
 {
 	for (let i = 0; i < this.animations.length; i++)
@@ -31,4 +43,14 @@ ComboAnimation.prototype.calculateMatrix = function(time)
 		}
 	}
 	return null;
+};
+
+/**
+  * Gets the time at which the animation ends.
+  * @return {Number} the time at which the animation ends in milliseconds,
+  * considering that the start time is 0.
+  */
+ComboAnimation.prototype.getEndTime = function()
+{
+	return this.animationsEndTimes[this.animationsEndTimes.length - 1];
 };

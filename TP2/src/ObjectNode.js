@@ -3,7 +3,7 @@
   * a transformation matrix, an array of primitives and a texture and materials
   * identifier
   * @constructor
-  * @param {string} id - the unique id of the node
+  * @param {String} id - the unique id of the node
   * @param {CGFScene} scene - the scene this node refers to
   * @param {ObjectGraph} graph - the graph this node belongs to
   * @param {Boolean} selectable - whether the node is selectable for a custom shader or not
@@ -28,7 +28,7 @@ function ObjectNode(id, scene, graph, selectable)
 
 /**
   * Adds a new child to the node
-  * @param {string} id - the unique identifier of the child
+  * @param {String} id - the unique identifier of the child
   */
 ObjectNode.prototype.addChild = function(id)
 {
@@ -37,7 +37,7 @@ ObjectNode.prototype.addChild = function(id)
 
 /**
   * Adds a new animation to the node
-  * @param {string} id - the unique identifier of the animation
+  * @param {String} id - the unique identifier of the animation
   */
 ObjectNode.prototype.addAnimation = function(anim)
 {
@@ -62,12 +62,20 @@ ObjectNode.prototype.displayPrimitives = function(currTex)
 	}
 };
 
+/**
+  * Applies all the geometric transformations of the nodes
+  * @param {Array} animations - an array with the scene's animations
+  */
 ObjectNode.prototype.applyTransformations = function(animations)
 {
 	this.applyAnimations(animations);
 	this.scene.multMatrix(this.matrix);
 };
 
+/**
+  * Applies the transformations related to animations this node refers
+  * @param {Array} animations - an array with the scene's animations
+  */
 ObjectNode.prototype.applyAnimations = function(animations)
 {
 	for (let i = 0; i < this.animations.length; i++)
@@ -78,11 +86,15 @@ ObjectNode.prototype.applyAnimations = function(animations)
 			this.lastAnimMatrices[i] = mat;
 		else
 			mat = this.lastAnimMatrices[i];
-			
+
 		this.scene.multMatrix(mat);
 	}
 };
 
+/**
+  * Updates the node's current time
+  * @param {Number} currTime - the system time in milliseconds
+  */
 ObjectNode.prototype.update = function(currTime)
 {
 	if (this.time == null)
@@ -96,7 +108,7 @@ ObjectNode.prototype.update = function(currTime)
 
 /**
   * Instanciates a new primitive and adds it to the node
-  * @param {string} id - the type of the primitive
+  * @param {String} id - the type of the primitive
   * @param {Array} args - the arguments to provide to that primitive's constructor
   */
 ObjectNode.prototype.addLeaf = function(id, args)

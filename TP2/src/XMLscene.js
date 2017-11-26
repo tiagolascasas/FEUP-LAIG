@@ -4,7 +4,8 @@ var DEGREE_TO_RAD = Math.PI / 180;
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
  */
-function XMLscene(interface) {
+function XMLscene(interface)
+{
     CGFscene.call(this);
 
     this.interface = interface;
@@ -12,6 +13,8 @@ function XMLscene(interface) {
     this.lightValues = {};
 	this.nodesValues = {};
 	this.colorComponent = 0;
+	this.speedOfShader = 1000;
+	this.scaleFactor = 1.0;
 };
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -19,8 +22,10 @@ XMLscene.prototype.constructor = XMLscene;
 
 /**
  * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
+ * @param {CGFapplication} application - the application to which this scene is associated with
  */
-XMLscene.prototype.init = function(application) {
+XMLscene.prototype.init = function(application)
+{
     CGFscene.prototype.init.call(this, application);
 
     this.initCameras();
@@ -42,14 +47,13 @@ XMLscene.prototype.init = function(application) {
 /**
  * Initializes the scene lights with the values read from the LSX file.
  */
-XMLscene.prototype.initLights = function() {
+XMLscene.prototype.initLights = function()
+{
     var i = 0;
-    // Lights index.
 
-    // Reads the lights from the scene graph.
     for (var key in this.graph.lights) {
         if (i >= 8)
-            break;              // Only eight lights allowed by WebGL.
+            break;
 
         if (this.graph.lights.hasOwnProperty(key)) {
             var light = this.graph.lights[key];
@@ -75,7 +79,8 @@ XMLscene.prototype.initLights = function() {
 /**
  * Initializes the scene cameras.
  */
-XMLscene.prototype.initCameras = function() {
+XMLscene.prototype.initCameras = function()
+{
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
 };
 
@@ -97,7 +102,6 @@ XMLscene.prototype.onGraphLoaded = function()
 
     this.initLights();
 
-    // Adds lights and selectable nodes group.
     this.interface.addLightsGroup(this.graph.lights);
 	this.interface.addNodesGroup(this.graph.objGraph);
 };
@@ -105,28 +109,22 @@ XMLscene.prototype.onGraphLoaded = function()
 /**
  * Displays the scene.
  */
-XMLscene.prototype.display = function() {
-    // ---- BEGIN Background, camera and axis setup
-
-    // Clear image and depth buffer everytime we update the scene
+XMLscene.prototype.display = function()
+{
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
-    // Initialize Model-View matrix as identity (no transformation
     this.updateProjectionMatrix();
     this.loadIdentity();
 
-    // Apply transformations corresponding to the camera position relative to the origin
     this.applyViewMatrix();
 
     this.pushMatrix();
 
     if (this.graph.loadedOk)
     {
-        // Applies initial transformations.
         this.multMatrix(this.graph.initialTransforms);
 
-		// Draw axis
 		this.axis.display();
 
         var i = 0;
@@ -145,18 +143,19 @@ XMLscene.prototype.display = function() {
             }
         }
 
-        // Displays the scene.
         this.graph.displayScene();
     }
 	else
 	{
-		// Draw axis
 		this.axis.display();
 	}
     this.popMatrix();
-    // ---- END Background, camera and axis setup
 };
 
+/**
+  * Updates the scene and the shader time timeFactor
+  * @param {Number} currTime - the system time in milliseconds
+  */
 XMLscene.prototype.update = function(currTime)
 {
 	if(!this.graph.loadedOk)
@@ -164,7 +163,6 @@ XMLscene.prototype.update = function(currTime)
 	else
     	this.graph.objGraph.update(currTime);
 
-	let factor = 0.99*Math.cos(currTime / 750) + 0.01;	//-0.98 <= factor <= 1
-
-	this.customShader.setUniformsValues({timeFactor: factor, component: this.colorComponent});
+	let factor = Math.cos(currTime / this.speedOfShader) + 1;	//0 <= factor <= 1
+	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: this.colorComponent});
 };

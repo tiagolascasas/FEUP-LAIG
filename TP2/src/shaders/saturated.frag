@@ -8,10 +8,15 @@ varying vec2 vTextureCoord;
 uniform sampler2D uSampler;
 varying vec4 materialColor;
 
+/*
+ * This shader makes a given component (r, g, b) of the color vary between
+ * its default value and 1.0 (the maximum) by using a timeFactor in order
+ * to calculate that value. It uses the texture color preferably, but if
+ * the fragment has no texture it uses the material color instead.
+ */
 void main()
 {
-
-	float absFactor = abs(timeFactor);
+	//get texture color. If it has no texture, gets the material color instead
     vec4 color = texture2D(uSampler, vTextureCoord);
     if (color.r == 0.0 && color.g == 0.0 && color.b == 0.0)
         color = materialColor;
@@ -19,19 +24,19 @@ void main()
 	if (component == 0)
 	{
 		float d = 1.0 - color.r;
-		float saturatedComponent = d * absFactor;
+		float saturatedComponent = d * timeFactor;
 		gl_FragColor = vec4(color.r + saturatedComponent, color.g, color.b, color.a);
 	}
 	else if (component == 1)
 	{
 		float d = 1.0 - color.g;
-		float saturatedComponent = d * absFactor;
+		float saturatedComponent = d * timeFactor;
 		gl_FragColor = vec4(color.r, color.g + saturatedComponent, color.b, color.a);
 	}
 	else if (component == 2)
 	{
 		float d = 1.0 - color.b;
-		float saturatedComponent = d * absFactor;
+		float saturatedComponent = d * timeFactor;
 		gl_FragColor = vec4(color.r, color.g, color.b + saturatedComponent, color.a);
 	}
 }

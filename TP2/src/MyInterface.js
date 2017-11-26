@@ -2,8 +2,8 @@
  * MyInterface class, creating a GUI interface.
  * @constructor
  */
-function MyInterface() {
-    //call CGFinterface constructor
+function MyInterface()
+{
     CGFinterface.call(this);
 };
 
@@ -14,30 +14,23 @@ MyInterface.prototype.constructor = MyInterface;
  * Initializes the interface.
  * @param {CGFapplication} application
  */
-MyInterface.prototype.init = function(application) {
-    // call CGFinterface init
+MyInterface.prototype.init = function(application)
+{
     CGFinterface.prototype.init.call(this, application);
 
-    // init GUI. For more information on the methods, check:
-    //  http://workshop.chromeexperiments.com/examples/gui
-
     this.gui = new dat.GUI();
-
-    // add a group of controls (and open/expand by defult)
 
     return true;
 };
 
 /**
  * Adds a folder containing the IDs of the lights passed as parameter.
+ * @param {Array} lights - an associative array with the lights
  */
-MyInterface.prototype.addLightsGroup = function(lights) {
-
+MyInterface.prototype.addLightsGroup = function(lights)
+{
     var group = this.gui.addFolder("Lights");
     group.open();
-
-    // add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
-    // e.g. this.option1=true; this.option2=false;
 
     for (var key in lights) {
         if (lights.hasOwnProperty(key)) {
@@ -48,7 +41,8 @@ MyInterface.prototype.addLightsGroup = function(lights) {
 }
 
 /**
- * Adds a list containing the IDs of the selectable nodes.
+ * Adds a list containing the IDs of the selectable nodes
+ * and options to change the selected color, speed and size of shader animation
  * @param {Array} graph - the scene graph
  */
 MyInterface.prototype.addNodesGroup = function(graph)
@@ -68,4 +62,8 @@ MyInterface.prototype.addNodesGroup = function(graph)
 			'Green': 1,
 			'Blue': 2
 	}).name('Saturated component');
+
+	this.gui.add(this.scene, 'speedOfShader', 1, 2000).name("Slowness of shape and color resize");
+
+	this.gui.add(this.scene, 'scaleFactor', 0.1, 3.0).name("Scale of expansion");
 };

@@ -943,7 +943,9 @@ SceneGraphParser.prototype.parseTextures = function(texturesNode) {
 }
 
 /**
- * Parses the <ANIMATIONS> block.
+ * Parses the <ANIMATIONS> block, instatiating each animations and
+ * adding it to the graph, and checks if the arguments and XML synthax
+ * are valid as well.
  */
 SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 {

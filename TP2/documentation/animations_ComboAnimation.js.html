@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: ObjectTexture.js</title>
+    <title>JSDoc: Source: animations/ComboAnimation.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: ObjectTexture.js</h1>
+    <h1 class="page-title">Source: animations/ComboAnimation.js</h1>
 
     
 
@@ -27,17 +27,60 @@
     <section>
         <article>
             <pre class="prettyprint source linenums"><code>/**
-  * Represents a texture and its amplification factors
+  * Creates a Combo Animation
   * @constructor
-  * @param {CGFTexture} tex - the texture
-  * @param {int} ampS - the amplification factor in the S dimension
-  * @param {int} ampT - the amplification factor in the T dimension
+  * @param {Array} animations - an array with the animations that make up this animation
   */
-function ObjectTexture(tex, ampS, ampT)
+function ComboAnimation(animations)
 {
-	this.tex = tex;
-	this.ampS = ampS;
-	this.ampT = ampT;
+	Animation.call(this, 0);
+
+	this.animations = [];
+	this.animationsEndTimes = [];
+
+	for (let i = 0; i &lt; animations.length; i++)
+	{
+		this.animations.push(animations[i]);
+
+		let sumOfPreviousTimes = 0;
+		if (this.animationsEndTimes.length > 0)
+			sumOfPreviousTimes = this.animationsEndTimes[this.animationsEndTimes.length - 1];
+
+		this.animationsEndTimes.push(sumOfPreviousTimes + animations[i].getEndTime());
+	}
+};
+
+ComboAnimation.prototype = Object.create(Animation.prototype);
+ComboAnimation.prototype.constructor=ComboAnimation;
+
+/**
+  * Calculates a matrix based on a given time.
+  * @param {Number} time - the time in milliseconds from which to calculate the matrix,
+  * considering that the animation starts at t = 0
+  * @return {Array} the calculated transformation matrix if the time
+  * given is within the animation's range, null otherwise
+  */
+ComboAnimation.prototype.calculateMatrix = function(time)
+{
+	for (let i = 0; i &lt; this.animations.length; i++)
+	{
+		if (time &lt; this.animationsEndTimes[i])
+		{
+			let delta = (i == 0 ? time : time - this.animationsEndTimes[i - 1]);
+			return this.animations[i].calculateMatrix(delta);
+		}
+	}
+	return null;
+};
+
+/**
+  * Gets the time at which the animation ends.
+  * @return {Number} the time at which the animation ends in milliseconds,
+  * considering that the start time is 0.
+  */
+ComboAnimation.prototype.getEndTime = function()
+{
+	return this.animationsEndTimes[this.animationsEndTimes.length - 1];
 };
 </code></pre>
         </article>

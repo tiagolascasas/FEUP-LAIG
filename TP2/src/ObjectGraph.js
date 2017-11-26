@@ -48,7 +48,7 @@ ObjectGraph.prototype.addTexture = function(id, tex)
   */
 ObjectGraph.prototype.addAnimation = function(type, id, velocity, args)
 {
-	let anim = null;
+	let anim;
 	switch(type)
 	{
 		case 'linear':
@@ -116,11 +116,20 @@ ObjectGraph.prototype.getNodeByID = function(id)
 	return null;
 };
 
+/**
+  * Gets all nodes marked as selectable and their current active status
+  * @return {Array} an associative array with the id of selectable nodes
+  * and whether they are active or not
+  */
 ObjectGraph.prototype.getSelectableNodes = function()
 {
 	return this.selectableNodes;
 };
 
+/**
+  * Updates the current time of all nodes
+  * @param {number} currTime - the system time in milliseconds
+  */
 ObjectGraph.prototype.update = function(currTime)
 {
 	for (let i = 0; i < this.obj.length; i++)
@@ -172,6 +181,11 @@ ObjectGraph.prototype.displayObjects = function(node)
 		this.matStack.pop();
 };
 
+/**
+  * Applies a custom shader to the scene if a node is the current selected nodes
+  * @param {ObjectNode} node - the node to check
+  * @return true if it was the current active selected node, false otherwise
+  */
 ObjectGraph.prototype.applyShader = function(node)
 {
 	if (node.id == this.selectedNode)

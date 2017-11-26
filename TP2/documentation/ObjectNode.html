@@ -28,7 +28,7 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>ObjectNode<span class="signature">(id, scene)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>ObjectNode<span class="signature">(id, scene, graph, selectable)</span><span class="type-signature"></span></h2>
         
     
 </header>
@@ -41,7 +41,7 @@
     
 
     
-    <h4 class="name" id="ObjectNode"><span class="type-signature"></span>new ObjectNode<span class="signature">(id, scene)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="ObjectNode"><span class="type-signature"></span>new ObjectNode<span class="signature">(id, scene, graph, selectable)</span><span class="type-signature"></span></h4>
     
 
     
@@ -91,7 +91,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -125,6 +125,52 @@
             
 
             <td class="description last">the scene this node refers to</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>graph</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="ObjectGraph.html">ObjectGraph</a></span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the graph this node belongs to</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>selectable</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">whether the node is selectable for a custom shader or not</td>
         </tr>
 
     
@@ -165,7 +211,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line9">line 9</a>
+        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line11">line 11</a>
     </li></ul></dd>
     
 
@@ -212,6 +258,141 @@
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="addAnimation"><span class="type-signature"></span>addAnimation<span class="signature">(id)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Adds a new animation to the node
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>id</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the unique identifier of the animation</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line42">line 42</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         
             
@@ -269,7 +450,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -320,7 +501,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line25">line 25</a>
+        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line33">line 33</a>
     </li></ul></dd>
     
 
@@ -404,7 +585,7 @@
             <td class="type">
             
                 
-<span class="param-type">string</span>
+<span class="param-type">String</span>
 
 
             
@@ -478,7 +659,277 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line52">line 52</a>
+        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line114">line 114</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="applyAnimations"><span class="type-signature"></span>applyAnimations<span class="signature">(animations)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Applies the transformations related to animations this node refers
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>animations</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">an array with the scene's animations</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line79">line 79</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="applyTransformations"><span class="type-signature"></span>applyTransformations<span class="signature">(animations)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Applies all the geometric transformations of the nodes
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>animations</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Array</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">an array with the scene's animations</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line69">line 69</a>
     </li></ul></dd>
     
 
@@ -613,7 +1064,142 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line35">line 35</a>
+        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line53">line 53</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="update"><span class="type-signature"></span>update<span class="signature">(currTime)</span><span class="type-signature"></span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Updates the node's current time
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>currTime</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">the system time in milliseconds</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="ObjectNode.js.html">ObjectNode.js</a>, <a href="ObjectNode.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -657,13 +1243,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="MyInterface.html">MyInterface</a></li><li><a href="ObjectGraph.html">ObjectGraph</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="ObjectTexture.html">ObjectTexture</a></li><li><a href="PrimitiveCylinder.html">PrimitiveCylinder</a></li><li><a href="PrimitiveNURBS.html">PrimitiveNURBS</a></li><li><a href="PrimitiveRectangle.html">PrimitiveRectangle</a></li><li><a href="PrimitiveSphere.html">PrimitiveSphere</a></li><li><a href="PrimitiveTriangle.html">PrimitiveTriangle</a></li><li><a href="SceneGraphParser.html">SceneGraphParser</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Animation.html">Animation</a></li><li><a href="BezierAnimation.html">BezierAnimation</a></li><li><a href="CircularAnimation.html">CircularAnimation</a></li><li><a href="ComboAnimation.html">ComboAnimation</a></li><li><a href="LinearAnimation.html">LinearAnimation</a></li><li><a href="MyInterface.html">MyInterface</a></li><li><a href="ObjectGraph.html">ObjectGraph</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="ObjectTexture.html">ObjectTexture</a></li><li><a href="PrimitiveCylinder.html">PrimitiveCylinder</a></li><li><a href="PrimitiveNURBS.html">PrimitiveNURBS</a></li><li><a href="PrimitiveRectangle.html">PrimitiveRectangle</a></li><li><a href="PrimitiveSphere.html">PrimitiveSphere</a></li><li><a href="PrimitiveTriangle.html">PrimitiveTriangle</a></li><li><a href="SceneGraphParser.html">SceneGraphParser</a></li><li><a href="SimpleLinearAnimation.html">SimpleLinearAnimation</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat Oct 21 2017 17:27:44 GMT+0100 (GMT Summer Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Nov 26 2017 16:25:01 GMT+0000 (GMT Standard Time)
 </footer>
 
 <script> prettyPrint(); </script>

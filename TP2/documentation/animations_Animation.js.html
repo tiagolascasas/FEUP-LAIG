@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: animations/Animation.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,51 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: animations/Animation.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+  * Abstract class to represent an animation
+  * @constructor
+  * @param {Number} v - the velocity of the animation
+  */
+function Animation(v)
+{
+	this.v = v;
+};
 
+Animation.prototype.constructor = Animation;
 
-    <h3> </h3>
+/**
+  * Calculates an animation matrix based on a given time.
+  * Should be overriden by child classes for animation-specific logic.
+  * @param {Number} time - the time from which to calculate the matrix
+  * @return {Array} the calculated transformation matrix
+  */
+Animation.prototype.calculateMatrix = function(time)
+{
+	return mat4.identity(mat4.create());
+};
 
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+/**
+  * Gets the time at which the animation ends.
+  * Should be overriden by child classes for animation-specific conditions.
+  * @return {Number} the time at which the animation ends in milliseconds,
+  * considering that the start time is 0.
+  */
+Animation.prototype.getEndTime = function()
+{
+	return 0;
+};
+</code></pre>
+        </article>
+    </section>
 
 
 
