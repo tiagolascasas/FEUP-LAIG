@@ -11,8 +11,9 @@ varying vec4 materialColor;
 /*
  * This shader makes a given component (r, g, b) of the color vary between
  * its default value and 1.0 (the maximum) by using a timeFactor in order
- * to calculate that value. It uses the texture color preferably, but if
- * the fragment has no texture it uses the material color instead.
+ * to calculate that value, all the while diminuing the other components.
+ * It uses the texture color preferably, but if  the fragment has no texture
+ * it uses the material color instead.
  */
 void main()
 {
@@ -25,18 +26,18 @@ void main()
 	{
 		float d = 1.0 - color.r;
 		float saturatedComponent = d * timeFactor;
-		gl_FragColor = vec4(color.r + saturatedComponent, color.g, color.b, color.a);
+		gl_FragColor = vec4(color.r + saturatedComponent, color.g - color.g * timeFactor, color.b - color.b * timeFactor, color.a);
 	}
 	else if (component == 1)
 	{
 		float d = 1.0 - color.g;
 		float saturatedComponent = d * timeFactor;
-		gl_FragColor = vec4(color.r, color.g + saturatedComponent, color.b, color.a);
+		gl_FragColor = vec4(color.r - color.r * timeFactor, color.g + saturatedComponent, color.b - color.b * timeFactor, color.a);
 	}
 	else if (component == 2)
 	{
 		float d = 1.0 - color.b;
 		float saturatedComponent = d * timeFactor;
-		gl_FragColor = vec4(color.r, color.g, color.b + saturatedComponent, color.a);
+		gl_FragColor = vec4(color.r - color.r * timeFactor, color.g - color.g * timeFactor, color.b + saturatedComponent, color.a);
 	}
 }
