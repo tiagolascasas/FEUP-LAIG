@@ -978,6 +978,9 @@ SceneGraphParser.prototype.parseAnimations = function(animationsNode)
 			            return "unable to parse speed value for animation with ID = " + animID;
                     points = eachAnim[i].children;
                     pointsMat = [];
+					if (points.length < 2)
+						return "at least two points must be specified for linear animation with ID = " + animID;
+
     				for (let j = 0; j < points.length; j++)
     				{
 						if (points[j].nodeName != "controlpoint")
@@ -1365,16 +1368,16 @@ SceneGraphParser.prototype.parseNodes = function(nodesNode) {
             if (this.nodes[nodeID] != null )
                 return "node ID must be unique (conflict: ID = " + nodeID + ")";
 
-			let selectable = this.reader.getString(children[i], 'selectable');
+			let selectable = this.reader.getString(children[i], 'selectable', false);
             if (selectable == null )
-                selectable = false;
+                selectable = "false";
 			if (selectable != "true" && selectable != "false")
 			{
 				this.onXMLMinorError("unknown selectable value " + selectable + ", assuming false");
 				selectable = false;
 			}
 			else
-				selectable = (selectable == 'true');
+				selectable = (selectable == 'true');	//cast to boolean
 
 			// Creates node
 			var obj = new ObjectNode(nodeID, this.scene, this.objGraph, selectable);

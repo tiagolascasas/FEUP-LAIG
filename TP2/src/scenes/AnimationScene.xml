@@ -207,15 +207,14 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-			<ANIMATIONREFS>
-                <ANIMATIONREF id="car"/>
-            </ANIMATIONREFS>
-
 			<TRANSLATION x="-0.5" y="0.25" z="1" />
 			<ROTATION axis="y" angle="90" />
 			<SCALE sx="0.5" sy="0.5" sz="0.5" />
 
             <!--animations-->
+			<ANIMATIONREFS>
+                <ANIMATIONREF id="car"/>
+            </ANIMATIONREFS>
 
             <DESCENDANTS>
                 <NODEREF id="rect1"/>
@@ -433,6 +432,8 @@
 		<NODE id="rocket">
 			<MATERIAL id="defaultMaterial" />
             <TEXTURE id="null" />
+
+			<TRANSLATION x="0" y="3" z="0" />
 
 			<ANIMATIONREFS>
                 <ANIMATIONREF id="rocket"/>

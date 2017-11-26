@@ -78,7 +78,7 @@ ObjectNode.prototype.applyTransformations = function(animations)
   */
 ObjectNode.prototype.applyAnimations = function(animations)
 {
-	for (let i = 0; i < this.animations.length; i++)
+	for (let i = this.animations.length - 1; i >= 0; i--)
 	{
 		let mat = animations[this.animations[i]].calculateMatrix(this.time);
 

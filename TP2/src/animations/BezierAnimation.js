@@ -167,6 +167,7 @@ BezierAnimation.prototype.dqs_i = function(i, s)
 BezierAnimation.prototype.calcRotation = function(s)
 {
 	let angle = Math.atan(this.dqs_i(0, s) / this.dqs_i(2, s));
+
 	return angle;
 };
 
