@@ -1,0 +1,278 @@
+<SCENE>
+
+    <!-- Initial values -->
+    <INITIALS>
+        <frustum near="0.1" far="500"/>
+        <translation x="0" y="0" z="0" />
+        <rotation axis="x" angle="0" />
+        <rotation axis="y" angle="45" />
+        <rotation axis="z" angle="0" />
+        <scale sx="3" sy="3" sz="3" />
+        <reference length="5" />
+    </INITIALS>
+
+    <!-- Illumination and clear colour -->
+    <ILLUMINATION>
+        <ambient r="0.25" g="0.25" b="0.25" a="1" />
+    <!-- <background r="0.9" g="0.9" b="0.9" a="1" /> -->
+        <background r="0.77" g="0.89" b="0.976" a="1" />
+    </ILLUMINATION>
+
+      <!-- Lights -->
+    <LIGHTS>
+        <LIGHT id="Light 1">
+            <enable value ="1" />
+            <position x="9.0" y="1.0" z="-0.5" w="1.0" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </LIGHT>
+
+        <LIGHT id="Light 2">
+            <enable value ="1" />
+            <position x="9.5" y="1.0" z="8.0" w="1.0" />
+            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </LIGHT>
+
+        <LIGHT id="Light 3">
+            <enable value ="1" />
+            <position x="-1.0" y="1.0" z="7.5" w="1" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </LIGHT>
+
+        <LIGHT id="Light 4">
+            <enable value ="0" />
+            <position x="1.0" y="5.0" z="1.0" w="1" />
+            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+        </LIGHT>
+    </LIGHTS>
+
+    <!-- Textures -->
+    <TEXTURES>
+        <TEXTURE id="wood">
+            <file path="textures/wood.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+        <TEXTURE id="wood1">
+            <file path="textures/wood.jpg" />
+            <amplif_factor s="0.1" t="10" />
+        </TEXTURE>
+    </TEXTURES>
+
+    <MATERIALS>
+        <!-- A default material -->
+        <MATERIAL id="defaultMaterial">
+            <shininess value="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+        </MATERIAL>
+    </MATERIALS>
+
+	<ANIMATIONS>
+
+	</ANIMATIONS>
+
+    <!-- The nodes -->
+    <NODES>
+        <!-- id of root node -->
+        <ROOT id="root" />
+
+        <!-- The root node -->
+        <NODE id="root">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="null" />
+
+            <DESCENDANTS>
+                <NODEREF id="table" />
+                <!--<NODEREF id="walls" />-->
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="table">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="null" />
+
+            <SCALE sx="4" sy="0.5" sz="4" />
+
+            <DESCENDANTS>
+                <NODEREF id="topOfTable"/>
+                <NODEREF id="legs"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="topOfTable">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="null" />
+
+            <DESCENDANTS>
+                <NODEREF id="top"/>
+                <NODEREF id="bottom"/>
+                <NODEREF id="side1"/>
+                <NODEREF id="side2"/>
+                <NODEREF id="side3"/>
+                <NODEREF id="side4"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="top">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="wood" />
+
+            <ROTATION axis="x" angle="-90" />
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveRectangle"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="bottom">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="wood" />
+
+            <TRANSLATION x="0" y="-0.2" z="0"/>
+            <ROTATION axis="x" angle="90" />
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveRectangle"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="side1">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="wood1" />
+
+            <TRANSLATION x="0" y="-0.1" z="0.5"/>
+            <SCALE sx="1" sy="0.2" sz="1"/>
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveRectangle"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="side2">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="wood1" />
+
+            <ROTATION axis="y" angle="180"/>
+            <TRANSLATION x="0" y="-0.1" z="0.5"/>
+            <SCALE sx="1" sy="0.2" sz="1"/>
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveRectangle"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="side3">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="wood1" />
+
+            <ROTATION axis="y" angle="90"/>
+            <TRANSLATION x="0" y="-0.1" z="0.5"/>
+            <SCALE sx="1" sy="0.2" sz="1"/>
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveRectangle"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="side4">
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="wood1" />
+
+            <ROTATION axis="y" angle="270"/>
+            <TRANSLATION x="0" y="-0.1" z="0.5"/>
+            <SCALE sx="1" sy="0.2" sz="1"/>
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveRectangle"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="primitiveRectangle" selectable="true">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <DESCENDANTS>
+                <LEAF type="rectangle" args="-0.5 0.5 0.5 -0.5"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="legs">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <DESCENDANTS>
+                <NODEREF id="leg1"/>
+                <NODEREF id="leg2"/>
+                <NODEREF id="leg3"/>
+                <NODEREF id="leg4"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="leg1">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="-0.4" y="0" z="0.4"/>
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveCylinder"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="leg2">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="-0.4" y="0" z="-0.4"/>
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveCylinder"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="leg3">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0.4" y="0" z="-0.4"/>
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveCylinder"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="leg4">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0.4" y="0" z="0.4"/>
+
+            <DESCENDANTS>
+                <NODEREF id="primitiveCylinder"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="primitiveCylinder" selectable="true">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0" y="-0.1" z="0"/>
+            <ROTATION axis="x" angle="90" />
+
+            <DESCENDANTS>
+                <LEAF type="cylinder" args="4 0.05 0.05 20 20 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+    </NODES>
+
+</SCENE>

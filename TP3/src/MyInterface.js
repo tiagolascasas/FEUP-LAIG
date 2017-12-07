@@ -46,7 +46,7 @@ MyInterface.prototype.addLightsGroup = function(lights)
  * @param {Array} graph - the scene graph
  */
 MyInterface.prototype.addNodesGroup = function(graph)
-{
+{/*
     let nodes = graph.getSelectableNodes();
 
     let keys = {};
@@ -65,5 +65,5 @@ MyInterface.prototype.addNodesGroup = function(graph)
 
 	this.gui.add(this.scene, 'speedOfShader', 1, 2000).name("Slowness of shape and color resize");
 
-	this.gui.add(this.scene, 'scaleFactor', 0.1, 3.0).name("Scale of expansion");
+	this.gui.add(this.scene, 'scaleFactor', 0.1, 3.0).name("Scale of expansion");*/
 };

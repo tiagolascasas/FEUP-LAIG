@@ -241,12 +241,8 @@ validPosition(_, stop).
 move(Table, Position) :-currentPiece(Piece),				%gets current piece (black or green)
 						retract(pos(Table, Position, _)),	%clear new position for piece
 						assert(pos(Table, Position, Piece)),%moves piece to new position
-						assert(newPosition(Table, Position)),
-						checkSpecialMove,%check if special moves apply (can use waiter pos to find table)
-						(waiterSwitched -> retract(waiterSwitched);
-						 retract(waiterPos(_, _)),                        %removes current waiter pos
-						 assert(waiterPos(Position, Table))),	%moves waiter to new pos
-						retract(newPosition(_, _)),
+						retract(waiterPos(_, _)),                        %removes current waiter pos
+						assert(waiterPos(Position, Table))),	%moves waiter to new pos
 						flipCurrentPiece.				%changes the current piece
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -296,7 +292,7 @@ play :-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-
+% Requests
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 request_init :- initPositions.
 
@@ -306,7 +302,7 @@ request_start_AIvsAI :- start_AIvsAI.
 request_AI_easy :- setAIdifficulty('easy').
 request_AI_hard :- setAIdifficulty('hard').
 
-request_board(B) :- makeListOfPositions(B).
+request_board(B) :- findall(T-P-Pc, pos(T, P, Pc), B).
 
 request_victory('black') :- checkVictoryPlayer('b').
 request_victory('green') :- checkVictoryPlayer('g').
@@ -314,8 +310,11 @@ request_victory('none').
 
 request_reset :- reset.
 
-request_move_human(P, Valid) :- waiterPos(T, _), move(T, P).
-request_move_human(P, Invalid).
+request_move_human(P, valid) :- waiterPos(T, _), move(T, P).
+request_move_human(_, invalid).
+
 request_move_AI :- getMoveAI(T, P), move(T, P).
 
 request_waiter_pos(T, P) :- waiterPos(T, P).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

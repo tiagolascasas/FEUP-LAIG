@@ -121,6 +121,6 @@ parse_input(request_AI_hard, 'AI set to hard') :- request_AI_hard.
 parse_input(request_board, B) :- request_board(B).
 parse_input(request_victory, P) :- request_victory(P).
 parse_input(request_reset, 'Game reset') :- request_reset.
-parse_input(request_move_human(P), Valid) :- request_move_human(P, Valid).
+parse_input(request_move_human(P), V) :- request_move_human(P, V).
 parse_input(request_move_AI, 'AI moved') :- request_move_AI.
 parse_input(request_waiter_pos, [T, P]) :- request_waiter_pos(T, P).
