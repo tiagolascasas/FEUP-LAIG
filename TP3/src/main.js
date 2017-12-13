@@ -18,6 +18,7 @@ serialInclude(['../lib/CGF.js',
 				'ObjectNode.js',
 				'ObjectGraph.js',
 				'ObjectTexture.js',
+                'Oolong.js',
 
 				'primitives/PrimitiveRectangle.js',
 				'primitives/PrimitiveCylinder.js',

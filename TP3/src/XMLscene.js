@@ -90,6 +90,7 @@ XMLscene.prototype.initCameras = function()
 XMLscene.prototype.onGraphLoaded = function()
 {
 	this.objGraph = this.graph.objGraph;
+    this.oolong = new Oolong(this);
 
     this.camera.near = this.graph.near;
     this.camera.far = this.graph.far;
@@ -143,7 +144,13 @@ XMLscene.prototype.display = function()
             }
         }
 
+        this.pushMatrix();
         this.graph.displayScene();
+        this.popMatrix();
+
+        this.pushMatrix();
+        this.oolong.display();
+        this.popMatrix();
     }
 	else
 	{
