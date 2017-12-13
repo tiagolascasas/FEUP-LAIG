@@ -140,12 +140,14 @@ ObjectGraph.prototype.update = function(currTime)
   * Starts the display process of the graph by resetting the
   * textures and materials stacks and by initiating a recursive
   * depth-first search through the graph from the root node
+  * @param {String} [rootNode] - the node to start from. Uses default root node if not specified
   */
-ObjectGraph.prototype.display = function()
+ObjectGraph.prototype.display = function(rootNode)
 {
+    rootNode = (typeof rootNode === 'undefined') ? this.rootID : rootNode;
 	this.texStack.length = 0;
 	this.matStack.length = 0;
-	this.displayObjects(this.rootID);
+	this.displayObjects(rootNode);
 };
 
 /**
