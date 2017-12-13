@@ -4,7 +4,35 @@ function Oolong(scene)
     this.graph = scene.objGraph;
     this.greenPiece = this.graph.getNodeByID("greenPiece");
     this.blackPiece = this.graph.getNodeByID("blackPiece");
+    this.running = false;
+
+    //insert game state here
 }
+
+Oolong.prototype.init = function(mode)
+{
+    //reset game state here
+    console.clear();
+
+    this.request("init");
+    //this.waitForAnswer("Game initialized");
+    switch (mode)
+    {
+        case "1vs1":
+            this.request("start_1vs1");
+            //this.waitForAnswer("1vs1 started");
+            break;
+        case "1vsAI":
+            this.request("start_1vsAI");
+            //this.waitForAnswer("1vsAI started");
+            break;
+        case "AIvsAI":
+            this.request("start_AIvsAI");
+            //this.waitForAnswer("AIvsAI started");
+            break;
+    }
+    this.running = true;
+};
 
 Oolong.prototype.request = function(request)
 {
@@ -25,7 +53,8 @@ Oolong.prototype.sendRequest = function(requestString, onSuccess, onError, port)
 
 Oolong.prototype.getAnswer = function(data)
 {
-    console.log(data.target.response);
+    this.answer = data.target.response;
+    console.log(this.answer);
 };
 
 Oolong.prototype.display = function()

@@ -15,6 +15,7 @@ function XMLscene(interface)
 	this.colorComponent = 0;
 	this.speedOfShader = 1000;
 	this.scaleFactor = 1.0;
+    this.mode = "1vs1";
 };
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -104,7 +105,7 @@ XMLscene.prototype.onGraphLoaded = function()
     this.initLights();
 
     this.interface.addLightsGroup(this.graph.lights);
-	this.interface.addNodesGroup(this.graph.objGraph);
+    this.interface.addGameOptions();
 };
 
 /**

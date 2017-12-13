@@ -40,30 +40,15 @@ MyInterface.prototype.addLightsGroup = function(lights)
     }
 }
 
-/**
- * Adds a list containing the IDs of the selectable nodes
- * and options to change the selected color, speed and size of shader animation
- * @param {Array} graph - the scene graph
- */
-MyInterface.prototype.addNodesGroup = function(graph)
-{/*
-    let nodes = graph.getSelectableNodes();
+MyInterface.prototype.addGameOptions = function()
+{
+    this.gui.add(this.scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
 
-    let keys = {};
-	for (let i = 0; i < nodes.length; i++)
-    {
-        let id = nodes[i];
-        keys[id] = id;
-    }
-    this.gui.add(graph, 'selectedNode', keys).name('Node with custom shader');
+    let scene = this.scene;
+    let listener = { "init":function()
+                            {
+                                scene.oolong.init(scene.mode);
+                            }};
 
-	this.gui.add(this.scene, 'colorComponent', {
-			'Red': 0,
-			'Green': 1,
-			'Blue': 2
-	}).name('Saturated component');
-
-	this.gui.add(this.scene, 'speedOfShader', 1, 2000).name("Slowness of shape and color resize");
-
-	this.gui.add(this.scene, 'scaleFactor', 0.1, 3.0).name("Scale of expansion");*/
+    this.gui.add(listener, "init").name("Start/reset game");
 };
