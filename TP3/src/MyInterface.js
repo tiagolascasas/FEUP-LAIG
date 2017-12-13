@@ -44,10 +44,12 @@ MyInterface.prototype.addGameOptions = function()
 {
     this.gui.add(this.scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
 
+    this.gui.add(this.scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
+
     let scene = this.scene;
     let listener = { "init":function()
                             {
-                                scene.oolong.init(scene.mode);
+                                scene.oolong.init(scene.mode, scene.difficulty);
                             }};
 
     this.gui.add(listener, "init").name("Start/reset game");

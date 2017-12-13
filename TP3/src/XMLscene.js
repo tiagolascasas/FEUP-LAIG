@@ -16,6 +16,7 @@ function XMLscene(interface)
 	this.speedOfShader = 1000;
 	this.scaleFactor = 1.0;
     this.mode = "1vs1";
+    this.difficulty = "Easy";
 };
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
@@ -127,7 +128,7 @@ XMLscene.prototype.display = function()
     {
         this.multMatrix(this.graph.initialTransforms);
 
-		this.axis.display();
+		//this.axis.display();
 
         var i = 0;
         for (var key in this.lightValues) {
