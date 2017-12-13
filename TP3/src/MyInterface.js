@@ -28,7 +28,7 @@ MyInterface.prototype.init = function(application)
  * @param {Array} lights - an associative array with the lights
  */
 MyInterface.prototype.addLightsGroup = function(lights)
-{
+{/*
     var group = this.gui.addFolder("Lights");
     group.open();
 
@@ -37,20 +37,29 @@ MyInterface.prototype.addLightsGroup = function(lights)
             this.scene.lightValues[key] = lights[key][0];
             group.add(this.scene.lightValues, key);
         }
-    }
+    }*/
 }
 
 MyInterface.prototype.addGameOptions = function()
 {
-    this.gui.add(this.scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
+    var group = this.gui.addFolder("Game settings");
+    group.open();
 
-    this.gui.add(this.scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
+    group.add(this.scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
+    group.add(this.scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
 
     let scene = this.scene;
-    let listener = { "init":function()
-                            {
-                                scene.oolong.init(scene.mode, scene.difficulty);
-                            }};
+    let oolong = this.scene.oolong;
 
-    this.gui.add(listener, "init").name("Start/reset game");
+    let listeners = {   "init": function()
+                        {
+                            oolong.init(scene.mode, scene.difficulty);
+                        },
+                        "undo": function()
+                        {
+                            oolong.undo();
+                        }};
+
+    group.add(listeners, "undo").name("Undo last move");
+    group.add(listeners, "init").name("Start/reset game");
 };

@@ -48,6 +48,7 @@ Oolong.prototype.init = function(mode, difficulty)
             //this.waitForAnswer("1vsAI started");
             break;
     }
+    this.request("board");
     this.running = true;
 };
 
@@ -170,3 +171,15 @@ Oolong.prototype.display = function()
         this.scene.popMatrix();
     }
 };
+
+Oolong.prototype.undo = function()
+{
+    console.log("Undo");
+};
+
+Oolong.prototype.updateStateFromBoard = function(board)
+{
+    let positions = board.split(",");
+    for (let i = 0; i < positions.length; i++)
+        positions[i] = positions[i].split("-");
+}
