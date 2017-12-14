@@ -50,13 +50,17 @@ ObjectNode.prototype.addAnimation = function(anim)
   * texture coordinates based on the current texture's properties
   * @param {ObjectTexture} currTex - the current texture object
   */
-ObjectNode.prototype.displayPrimitives = function(currTex)
+ObjectNode.prototype.displayPrimitives = function(currTex, pickID)
 {
     for (var i = 0; i < this.leaves.length; i++)
 	{
 		if (currTex != null)
 			this.leaves[i].setTexCoords(currTex.ampS, currTex.ampT);
 		this.scene.pushMatrix();
+		if (pickID != -1)
+		{
+			this.scene.registerForPick(pickID, this.leaves[i]);
+		}
 		this.leaves[i].display();
 		this.scene.popMatrix();
 	}

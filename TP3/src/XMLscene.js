@@ -11,10 +11,10 @@ function XMLscene(interface)
     this.interface = interface;
 
     this.lightValues = {};
-	this.nodesValues = {};
-	this.colorComponent = 0;
-	this.speedOfShader = 1000;
-	this.scaleFactor = 1.0;
+    this.nodesValues = {};
+    this.colorComponent = 0;
+    this.speedOfShader = 1000;
+    this.scaleFactor = 1.0;
     this.mode = "1vs1";
     this.difficulty = "Easy";
 };
@@ -93,6 +93,7 @@ XMLscene.prototype.onGraphLoaded = function()
 {
 	this.objGraph = this.graph.objGraph;
     this.oolong = new Oolong(this);
+    this.setPickEnabled(true);
 
     this.camera.near = this.graph.near;
     this.camera.far = this.graph.far;
@@ -114,6 +115,9 @@ XMLscene.prototype.onGraphLoaded = function()
  */
 XMLscene.prototype.display = function()
 {
+    this.logPicking();
+	this.clearPickRegistration();
+
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
     this.gl.clear(this.gl.COLOR_BUFFER_BIT | this.gl.DEPTH_BUFFER_BIT);
 
@@ -175,3 +179,20 @@ XMLscene.prototype.update = function(currTime)
 	let factor = 0.5*Math.cos(currTime / this.speedOfShader) + 0.51;	//0.01 <= factor <= 1.01
 	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: this.colorComponent});
 };
+
+XMLscene.prototype.logPicking = function ()
+{
+	if (this.pickMode == false) {
+		if (this.pickResults != null && this.pickResults.length > 0) {
+			for (var i=0; i< this.pickResults.length; i++) {
+				var obj = this.pickResults[i][0];
+				if (obj)
+				{
+					var customId = this.pickResults[i][1];
+					console.log("Picked object: " + obj + ", with pick id " + customId);
+				}
+			}
+			this.pickResults.splice(0,this.pickResults.length);
+		}
+	}
+}

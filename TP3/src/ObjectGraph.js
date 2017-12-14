@@ -142,12 +142,13 @@ ObjectGraph.prototype.update = function(currTime)
   * depth-first search through the graph from the root node
   * @param {String} [rootNode] - the node to start from. Uses default root node if not specified
   */
-ObjectGraph.prototype.display = function(rootNode)
+ObjectGraph.prototype.display = function(rootNode, pickID)
 {
     rootNode = (typeof rootNode === 'undefined') ? this.rootID : rootNode;
+	pickID = (typeof pickID === 'undefined') ? -1 : pickID;
 	this.texStack.length = 0;
 	this.matStack.length = 0;
-	this.displayObjects(rootNode);
+	this.displayObjects(rootNode, pickID);
 };
 
 /**
@@ -156,22 +157,21 @@ ObjectGraph.prototype.display = function(rootNode)
   * textures and materials accordingly
   * @param {ObjectNode} node - the current node
   */
-ObjectGraph.prototype.displayObjects = function(node)
+ObjectGraph.prototype.displayObjects = function(node, pickID)
 {
 	var currNode = this.getNodeByID(node);
-
 	this.scene.pushMatrix();
 
 	let changedShader = this.applyShader(currNode);
 	this.applyAppearences(currNode);
 	currNode.applyTransformations(this.animations);
-	currNode.displayPrimitives(this.texStack[this.texStack.length - 1]);
+	currNode.displayPrimitives(this.texStack[this.texStack.length - 1], pickID);
 	if (changedShader)
 		this.scene.setActiveShader(this.scene.defaultShader);
 
 	var children = currNode.children;
 	for (var i = 0; i < children.length; i++)
-		this.displayObjects(children[i]);
+		this.displayObjects(children[i], pickID);
 
 	this.scene.popMatrix();
 

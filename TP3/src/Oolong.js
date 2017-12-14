@@ -149,16 +149,21 @@ Oolong.prototype.display = function()
         this.scene.popMatrix();
     }
 
+    let pickID = 0;
     for (let table in this.dishes)
     {
+        let i = 0;
         for (let pos in this.dishes[table])
         {
             coord = this.dishes[table][pos];
             this.scene.pushMatrix();
+            let id = pickID + i;
             this.scene.translate(coord.x, coord.y, coord.z);
-            this.graph.display("dish");
+            this.graph.display("dish", id);
             this.scene.popMatrix();
+            i++;
         }
+        pickID += 10;
     }
 
     for (let i = 0; i < this.pieces.length; i++)
@@ -166,8 +171,9 @@ Oolong.prototype.display = function()
         coord = this.pieces[i].coord;
         piece = this.pieces[i].color == 'g' ? "greenPiece" : "blackPiece";
         this.scene.pushMatrix();
+        let pickID = 100 + i;
         this.scene.translate(coord.x, coord.y, coord.z);
-        this.graph.display(piece);
+        this.graph.display(piece, pickID);
         this.scene.popMatrix();
     }
 };
