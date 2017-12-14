@@ -6,9 +6,12 @@ function Oolong(scene)
     this.blackPiece = this.graph.getNodeByID("blackPiece");
     this.table = this.graph.getNodeByID("roundTable");
     this.dish = this.graph.getNodeByID("dish");
-    this.running = false;
+    this.currentPickedPiece = 0;
+    this.currentPickedDish = 0;
+    this.newPick = false;
 
     this.initPositions();
+    this.running = false;
 }
 
 Oolong.prototype.init = function(mode, difficulty)
@@ -73,7 +76,13 @@ Oolong.prototype.initPositions = function()
     {
         this.dishes[cardinals[i]] = {};
         for (let j = 0; j < cardinals.length; j++)
-            this.dishes[cardinals[i]][j] = this.calculateCoord(cardinals[i], cardinals[j]);
+        {
+            let table = cardinals[i];
+            let pos = cardinals[j];
+            let coord = this.calculateCoord(table, pos);
+            let pickID = i;
+            this.dishes[table][pos] = new Dish(coord, pickID, table, pos);
+        }
     }
 
     this.pieces = [];
@@ -82,9 +91,33 @@ Oolong.prototype.initPositions = function()
         let x = 1.55 + (~~(i / 10)) * 0.1;
         let y = 0;
         let z = -0.4 + (i % 10) * 0.1;
-        let green = new Piece(new Coord(x, y, z), 'g');
-        let black = new Piece(new Coord(-x, y, z), 'b');
+        let green = new Piece(new Coord(x, y, z), 'g', 100 + i);
+        let black = new Piece(new Coord(-x, y, z), 'b', 200 + i);
         this.pieces.push(green, black);
+    }
+
+    this.waiter = {"table":"c", "pos":"c"};
+};
+
+Oolong.prototype.updatePickedElements = function(pickID)
+{
+    if (pickID > 0 && pickID < 100)
+    {
+        if (this.currentPickedDish != pickID)
+        {
+            this.currentPickedDish = pickID;
+            console.log("Current Picked dish: " + this.currentPickedDish);
+            this.newPick = true;
+        }
+    }
+    else if (pickID >= 100 && pickID < 180)
+    {
+        if (this.currentPickedPiece != pickID)
+        {
+            this.currentPickedPiece = pickID;
+            console.log("Current Picked piece: " + this.currentPickedPiece);
+            this.newPick = true;
+        }
     }
 };
 
@@ -155,7 +188,7 @@ Oolong.prototype.display = function()
         let i = 0;
         for (let pos in this.dishes[table])
         {
-            coord = this.dishes[table][pos];
+            coord = this.dishes[table][pos].coord;
             this.scene.pushMatrix();
             let id = pickID + i;
             this.scene.translate(coord.x, coord.y, coord.z);
@@ -178,6 +211,14 @@ Oolong.prototype.display = function()
     }
 };
 
+Oolong.prototype.update = function(time)
+{
+    if (currentPickedDish != 0 && currentPickedPiece != 0 && this.newPick)
+    {
+        let dish = this.getPickedDish();
+    }
+};
+
 Oolong.prototype.undo = function()
 {
     console.log("Undo");
@@ -188,4 +229,16 @@ Oolong.prototype.updateStateFromBoard = function(board)
     let positions = board.split(",");
     for (let i = 0; i < positions.length; i++)
         positions[i] = positions[i].split("-");
-}
+};
+
+Oolong.prototype.getPickedDish = function()
+{
+    for (let table in this.dishes)
+    {
+        for (let pos in this.dishes[table])
+        {
+            if (this.dishes[table][pos].pickID == this.currentPickedDish)
+                return this.dishes[table][pos];
+        }
+    }
+};

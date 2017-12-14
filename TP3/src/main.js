@@ -21,6 +21,7 @@ serialInclude(['../lib/CGF.js',
                 'Oolong.js',
                 'Coord.js',
                 'Piece.js',
+                'Dish.js',
 
 				'primitives/PrimitiveRectangle.js',
 				'primitives/PrimitiveCylinder.js',

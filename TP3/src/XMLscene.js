@@ -115,7 +115,7 @@ XMLscene.prototype.onGraphLoaded = function()
  */
 XMLscene.prototype.display = function()
 {
-    this.logPicking();
+    this.processPicking();
 	this.clearPickRegistration();
 
     this.gl.viewport(0, 0, this.gl.canvas.width, this.gl.canvas.height);
@@ -180,19 +180,19 @@ XMLscene.prototype.update = function(currTime)
 	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: this.colorComponent});
 };
 
-XMLscene.prototype.logPicking = function ()
+XMLscene.prototype.processPicking = function ()
 {
 	if (this.pickMode == false) {
 		if (this.pickResults != null && this.pickResults.length > 0) {
-			for (var i=0; i< this.pickResults.length; i++) {
+			for (let i=0; i< this.pickResults.length; i++) {
 				var obj = this.pickResults[i][0];
 				if (obj)
 				{
-					var customId = this.pickResults[i][1];
-					console.log("Picked object: " + obj + ", with pick id " + customId);
+					let pickID = this.pickResults[i][1];
+                    this.oolong.updatePickedElements(pickID);
 				}
 			}
 			this.pickResults.splice(0,this.pickResults.length);
 		}
 	}
-}
+};

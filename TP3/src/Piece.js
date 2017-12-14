@@ -1,7 +1,8 @@
-function Piece(coord, color)
+function Piece(coord, color, pickID)
 {
     this.coord = coord;
     this.color = color;
+    this.pickID = pickID;
     this.table = null;
     this.pos = null;
 }
