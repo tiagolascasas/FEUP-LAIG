@@ -11,4 +11,4 @@ Piece.prototype.place = function(table, pos)
 {
     this.table = table;
     this.pos = pos;
-}
+};

@@ -102,6 +102,14 @@
             <ambient r="1.0" g="1.0" b="1.0" a="1" />
             <emission r="1.0" g="1.0" b="1.0" a="1" />
         </MATERIAL>
+
+        <MATERIAL id="red">
+            <shininess value="1" />
+            <specular r="1.0" g="0.0" b="0.0" a="1" />
+            <diffuse r="1.0" g="0.0" b="0.0" a="1" />
+            <ambient r="1.0" g="0.0" b="0.0" a="1" />
+            <emission r="1.0" g="0.0" b="0.0" a="1" />
+        </MATERIAL>
     </MATERIALS>
 
 	<ANIMATIONS>
@@ -352,6 +360,17 @@
 
             <DESCENDANTS>
                 <LEAF type="cylinder" args="0.01 0.3 0.3 50 50 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="waiter">
+            <MATERIAL id="red" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0" y="0.1" z="0"/>
+
+            <DESCENDANTS>
+                <LEAF type="sphere" args="0.01 20 20"/>
             </DESCENDANTS>
         </NODE>
 

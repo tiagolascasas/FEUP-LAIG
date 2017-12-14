@@ -6,6 +6,7 @@ function Oolong(scene)
     this.blackPiece = this.graph.getNodeByID("blackPiece");
     this.table = this.graph.getNodeByID("roundTable");
     this.dish = this.graph.getNodeByID("dish");
+    this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
     this.currentPickedPiece = 0;
     this.currentPickedDish = 0;
     this.newPick = false;
@@ -60,7 +61,6 @@ Oolong.prototype.init = function(mode, difficulty)
 Oolong.prototype.initPositions = function()
 {
     let mid = Math.cos(Math.PI / 4);
-    let cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
 
     this.tables = {};
     this.tables['c'] = new Coord(0, 0, 0);
@@ -74,15 +74,15 @@ Oolong.prototype.initPositions = function()
     this.tables['se'] = new Coord(1.1*mid, 0, 1.1*mid);
 
     this.dishes = {};
-    for (let i = 0; i < cardinals.length; i++)
+    for (let i = 0; i < this.cardinals.length; i++)
     {
-        this.dishes[cardinals[i]] = {};
-        for (let j = 0; j < cardinals.length; j++)
+        this.dishes[this.cardinals[i]] = {};
+        for (let j = 0; j < this.cardinals.length; j++)
         {
-            let table = cardinals[i];
-            let pos = cardinals[j];
+            let table = this.cardinals[i];
+            let pos = this.cardinals[j];
+            let pickID = i*10 + j;
             let coord = this.calculateCoord(table, pos);
-            let pickID = i;
             this.dishes[table][pos] = new Dish(coord, pickID, table, pos);
         }
     }
@@ -98,7 +98,7 @@ Oolong.prototype.initPositions = function()
         this.pieces.push(green, black);
     }
 
-    this.waiter = {"table":"c", "pos":"c"};
+    this.waiter = {"table":'c', "pos":'c'};
 };
 
 Oolong.prototype.updatePickedElements = function(pickID)
@@ -196,33 +196,37 @@ Oolong.prototype.display = function()
         this.scene.popMatrix();
     }
 
-    let pickID = 0;
-    for (let table in this.dishes)
+    for (let i = 0; i < this.cardinals.length; i++)
     {
-        let i = 0;
-        for (let pos in this.dishes[table])
+        for (let j = 0; j < this.cardinals.length; j++)
         {
-            coord = this.dishes[table][pos].coord;
+            let table = this.cardinals[i];
+            let pos = this.cardinals[j];
+            let coord = this.dishes[table][pos].coord;
+            let id = this.dishes[table][pos].pickID;
             this.scene.pushMatrix();
-            let id = pickID + i;
             this.scene.translate(coord.x, coord.y, coord.z);
             this.graph.display("dish", id);
             this.scene.popMatrix();
-            i++;
         }
-        pickID += 10;
     }
 
     for (let i = 0; i < this.pieces.length; i++)
     {
-        coord = this.pieces[i].coord;
-        piece = this.pieces[i].color == 'g' ? "greenPiece" : "blackPiece";
+        let coord = this.pieces[i].coord;
+        let piece = this.pieces[i].color == 'g' ? "greenPiece" : "blackPiece";
+        let id = this.pieces[i].pickID;
         this.scene.pushMatrix();
-        let pickID = 100 + i;
         this.scene.translate(coord.x, coord.y, coord.z);
-        this.graph.display(piece, pickID);
+        this.graph.display(piece, id);
         this.scene.popMatrix();
     }
+
+    this.scene.pushMatrix();
+    let coord = this.dishes[this.waiter.table][this.waiter.pos].coord;
+    this.scene.translate(coord.x, coord.y, coord.z);
+    this.graph.display("waiter");
+    this.scene.popMatrix();
 };
 
 Oolong.prototype.update = function(time)
@@ -232,6 +236,7 @@ Oolong.prototype.update = function(time)
         this.newPick)
     {
         let dish = this.getPickedDish();
+        console.log(dish);
 
         if (!this.requestedMove)
         {
