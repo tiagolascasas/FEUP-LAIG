@@ -63,6 +63,10 @@
             <file path="textures/wood.jpg" />
             <amplif_factor s="0.1" t="10" />
         </TEXTURE>
+        <TEXTURE id="porcelain">
+            <file path="textures/porcelain.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
     </TEXTURES>
 
     <MATERIALS>
@@ -124,6 +128,7 @@
             <MATERIAL id="defaultMaterial" />
             <TEXTURE id="null" />
 
+            <TRANSLATION x="0" y="-0.01" z="0" />
             <SCALE sx="4" sy="0.5" sz="4" />
 
             <DESCENDANTS>
@@ -327,9 +332,10 @@
         </NODE>
 
         <NODE id="dish">
-            <MATERIAL id="white" />
-            <TEXTURE id="null" />
+            <MATERIAL id="defaultMaterial" />
+            <TEXTURE id="porcelain" />
 
+            <TRANSLATION x="0" y="0.015" z="0"/>
             <SCALE sx="0.1" sy="0.2" sz="0.1" />
             <ROTATION axis="x" angle="-90" />
 
@@ -339,7 +345,7 @@
         </NODE>
 
         <NODE id="roundTable">
-            <MATERIAL id="defaultMaterial" />
+            <MATERIAL id="white" />
             <TEXTURE id="null" />
 
             <ROTATION axis="x" angle="-90" />

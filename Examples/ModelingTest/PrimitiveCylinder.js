@@ -106,13 +106,13 @@ PrimitiveCylinder.prototype.display = function()
     if (this.topcap)
     {
         this.scene.pushMatrix();
-		this.scene.translate(0, 0, this.height);
+		this.scene.translate(0, 0, 1);
         this.scene.scale(this.topR, this.topR, 1);
         this.cap.display();
         this.scene.popMatrix();
 
 		this.scene.pushMatrix();
-		this.scene.translate(0, 0, this.height);
+		this.scene.translate(0, 0, 1);
 		this.scene.rotate(Math.PI, 0, 1, 0);
         this.scene.scale(this.topR, this.topR, 1);
         this.cap.display();

@@ -9,6 +9,8 @@ function Oolong(scene)
     this.currentPickedPiece = 0;
     this.currentPickedDish = 0;
     this.newPick = false;
+    this.moveIsValid = false;
+    this.requestedMove = false;
 
     this.initPositions();
     this.running = false;
@@ -101,7 +103,7 @@ Oolong.prototype.initPositions = function()
 
 Oolong.prototype.updatePickedElements = function(pickID)
 {
-    if (pickID > 0 && pickID < 100)
+    if (pickID > 0 && pickID < 100 && !this.requestedMove)
     {
         if (this.currentPickedDish != pickID)
         {
@@ -110,7 +112,7 @@ Oolong.prototype.updatePickedElements = function(pickID)
             this.newPick = true;
         }
     }
-    else if (pickID >= 100 && pickID < 180)
+    else if (pickID >= 100 && pickID < 180 && !this.requestedMove)
     {
         if (this.currentPickedPiece != pickID)
         {
@@ -169,6 +171,18 @@ Oolong.prototype.getAnswer = function(data)
 {
     this.answer = data.target.response;
     console.log(this.answer);
+    switch (this.answer)
+    {
+        case "valid":
+            this.moveIsValid = true;
+            this.requestedMove = false;
+            break;
+        case "invalid":
+            this.moveIsValid = false;
+            this.requestedMove = false;
+            break;
+    }
+
 };
 
 Oolong.prototype.display = function()
@@ -213,9 +227,21 @@ Oolong.prototype.display = function()
 
 Oolong.prototype.update = function(time)
 {
-    if (currentPickedDish != 0 && currentPickedPiece != 0 && this.newPick)
+    if (this.currentPickedDish != 0 &&
+        this.currentPickedPiece != 0 &&
+        this.newPick)
     {
         let dish = this.getPickedDish();
+
+        if (!this.requestedMove)
+        {
+            this.request("move_human(" + dish.pos + ")");
+            this.requestedMove = true;
+        }
+        if (this.moveIsValid)
+        {
+            this.makeMove();
+        }
     }
 };
 
@@ -224,11 +250,12 @@ Oolong.prototype.undo = function()
     console.log("Undo");
 };
 
-Oolong.prototype.updateStateFromBoard = function(board)
+Oolong.prototype.processBoardState = function(board)
 {
     let positions = board.split(",");
     for (let i = 0; i < positions.length; i++)
         positions[i] = positions[i].split("-");
+    this.states.addState(positions);
 };
 
 Oolong.prototype.getPickedDish = function()

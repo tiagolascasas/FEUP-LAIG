@@ -174,7 +174,10 @@ XMLscene.prototype.update = function(currTime)
 	if(!this.graph.loadedOk)
 		return;
 	else
+    {
     	this.graph.objGraph.update(currTime);
+        this.oolong.update(currTime);
+    }
 
 	let factor = 0.5*Math.cos(currTime / this.speedOfShader) + 0.51;	//0.01 <= factor <= 1.01
 	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: this.colorComponent});
