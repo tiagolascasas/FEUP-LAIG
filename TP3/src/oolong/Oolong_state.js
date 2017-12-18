@@ -25,7 +25,7 @@ Oolong.prototype.resetState = function()
     this.requestedWinner = false;
 };
 
-Oolong.prototype.stateTurn()
+Oolong.prototype.stateTurn = function()
 {
     console.log("IN TURN");
     if (!this.requestedPlayerType)
@@ -41,7 +41,7 @@ Oolong.prototype.stateTurn()
     }
 };
 
-Oolong.prototype.stateChoice()
+Oolong.prototype.stateChoice = function()
 {
     //if current player is human, get position from him
     if (this.currentPlayerType == "human")
@@ -71,12 +71,12 @@ Oolong.prototype.stateChoice()
     this.readyForChoice = false;
 };
 
-Oolong.prototype.stateMove()
+Oolong.prototype.stateMove = function(time)
 {
     console.log("IN MOVE");
 };
 
-Oolong.prototype.stateVictory()
+Oolong.prototype.stateVictory = function()
 {
     console.log("IN WINNER");
     this.readyForVictory = false;
@@ -84,7 +84,7 @@ Oolong.prototype.stateVictory()
     this.requestedWinner = true;
 };
 
-Oolong.prototype.stateUpdate()
+Oolong.prototype.stateUpdate = function()
 {
     console.log("IN UPDATE");
 };
@@ -109,7 +109,7 @@ Oolong.prototype.update = function(time)
     //move the piece
     if (this.readyForMove)
     {
-        this.stateMove();
+        this.stateMove(time);
     }
 
     //check for victory
