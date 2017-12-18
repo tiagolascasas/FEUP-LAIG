@@ -44,6 +44,7 @@ serialInclude([ '../lib/CGF.js',
 				'scenegraph/ObjectTexture.js',
 
                 'oolong/Oolong.js',
+                'oolong/Oolong_state.js',
                 'oolong/Coord.js',
                 'oolong/Piece.js',
                 'oolong/Dish.js',

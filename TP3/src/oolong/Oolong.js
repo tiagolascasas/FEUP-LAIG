@@ -19,14 +19,8 @@ Oolong.prototype.init = function(mode, difficulty)
     this.mode = mode;
     this.difficulty = difficulty;
 
-    //altered during the match
-    this.running = false;
-    this.currentPickedPiece = 0;
-    this.currentPickedDish = 0;
-    this.newPick = false;
-    this.moveIsValid = false;
-    this.requestedMove = false;
-    this.readyForTurn = false;
+    //(re)set mutable state machine flags to default values
+    this.resetState();
 
     console.clear();
     console.log("Starting " + this.mode + " match with " + this.difficulty + " difficulty");
@@ -64,7 +58,7 @@ Oolong.prototype.init = function(mode, difficulty)
 
 Oolong.prototype.initPositions = function()
 {
-    let mid = Math.cos(Math.PI / 4);
+    const mid = Math.cos(Math.PI / 4);
 
     this.tables = {};
     this.tables['c'] = new Coord(0, 0, 0);
@@ -179,22 +173,22 @@ Oolong.prototype.request = function(answer)
             case "b":
                 parent.currentPlayer = "black";
                 parent.requestedPlayer = false;
+                parent.readyForChoice = true;
                 break;
             case "g":
                 parent.currentPlayer = "green";
                 parent.requestedPlayer = false;
+                parent.readyForChoice = true;
                 break;
             case "human":
                 parent.currentPlayerType = "human";
                 parent.requestedPlayerType = false;
                 parent.readyForTurn = false;
-                parent.readyForChoice = true;
                 break;
             case "ai":
                 parent.currentPlayerType = "ai";
                 parent.requestedPlayerType = false;
                 parent.readyForTurn = false;
-                parent.readyForChoice = true;
                 break;
             case "victory_black":
                 parent.winner = "black";
@@ -270,90 +264,6 @@ Oolong.prototype.display = function()
     this.scene.translate(coord.x, coord.y, coord.z);
     this.graph.display("waiter");
     this.scene.popMatrix();
-};
-
-Oolong.prototype.update = function(time)
-{
-    if (!this.running)
-        return;
-
-    //get current player and its type
-    if (this.readyForTurn)
-    {
-        console.log("IN TURN");
-        if (!this.requestedPlayerType)
-        {
-            this.request("current_player_type");
-            this.requestedPlayerType = true;
-        }
-
-        if (!this.requestedPlayer)
-        {
-            this.request("current_player");
-            this.requestedPlayer = true;
-        }
-    }
-
-    //current player chooses a piece and a position
-    if (this.readyForChoice == true)
-    {
-        console.log("IN CHOICE");
-        //if current player is human, get position from him
-        if (this.currentPlayerType == "human")
-        {
-            if (this.currentPickedDish != 0 &&
-                this.currentPickedPiece != 0 &&
-                this.newPick)
-            {
-                let dish = this.getPickedDish();
-
-                if (!this.requestedMove)
-                {
-                    this.request("move_human(" + dish.pos + ")");
-                    this.requestedMove = true;
-                }
-                if (this.moveIsValid)
-                {
-                    this.makeMove();
-                }
-            }
-        }
-        //if current player is AI, ask the logic to generate a move
-        if (this.currentPlayerType == "ai")
-        {
-
-        }
-        this.readyForChoice = false;
-    }
-
-    //move the piece
-    if (this.readyForMove)
-    {
-        console.log("IN MOVE");
-    }
-
-    //check for victory
-    if (!this.requestedWinner && this.readyForVictory)
-    {
-        console.log("IN WINNER");
-        this.readyForVictory = false;
-        this.request("victory");
-        this.requestedWinner = true;
-    }
-    if (this.winnerIsSet)
-    {
-        if (this.winner == "black" || this.winner == "green")
-        {
-            console.log(this.winner + " player wins!");
-            this.running = false;
-        }
-    }
-
-    //update board
-    if (this.readyForUpdate)
-    {
-        console.log("IN UPDATE");
-    }
 };
 
 Oolong.prototype.undo = function()
