@@ -304,9 +304,9 @@ request_AI_hard :- setAIdifficulty('hard').
 
 request_board(B) :- findall(T-P-Pc, pos(T, P, Pc), B).
 
-request_victory('black') :- checkVictoryPlayer('b').
-request_victory('green') :- checkVictoryPlayer('g').
-request_victory('none').
+request_victory('victory_black') :- checkVictoryPlayer('b').
+request_victory('victory_green') :- checkVictoryPlayer('g').
+request_victory('victory_none').
 
 request_reset :- reset.
 

@@ -188,11 +188,31 @@ Oolong.prototype.request = function(answer)
                 parent.currentPlayerType = "human";
                 parent.requestedPlayerType = false;
                 parent.readyForTurn = false;
+                parent.readyForChoice = true;
                 break;
             case "ai":
                 parent.currentPlayerType = "ai";
                 parent.requestedPlayerType = false;
                 parent.readyForTurn = false;
+                parent.readyForChoice = true;
+                break;
+            case "victory_black":
+                parent.winner = "black";
+                parent.winnerIsSet = true;
+                parent.requestedWinner = false;
+                parent.readyForUpdate = true;
+                break;
+            case "victory_green":
+                parent.winner = "green";
+                parent.winnerIsSet = true;
+                parent.requestedWinner = false;
+                parent.readyForUpdate = true;
+                break;
+            case "victory_none":
+                parent.winner = "none";
+                parent.winnerIsSet = true;
+                parent.requestedWinner = false;
+                parent.readyForUpdate = true;
                 break;
         }
     };
@@ -258,48 +278,82 @@ Oolong.prototype.update = function(time)
         return;
 
     //get current player and its type
-    if (!this.requestedPlayerType && this.readyForTurn)
+    if (this.readyForTurn)
     {
-        this.request("current_player_type");
-        this.requestedPlayerType = true;
-    }
-
-    if (!this.requestedPlayer && this.readyForTurn)
-    {
-        this.request("current_player");
-        this.requestedPlayer = true;
-    }
-
-    //if current player is human, get position from him
-    if (this.currentPlayerType = "human")
-    {
-        if (this.currentPickedDish != 0 &&
-            this.currentPickedPiece != 0 &&
-            this.newPick)
+        console.log("IN TURN");
+        if (!this.requestedPlayerType)
         {
-            let dish = this.getPickedDish();
+            this.request("current_player_type");
+            this.requestedPlayerType = true;
+        }
 
-            if (!this.requestedMove)
-            {
-                this.request("move_human(" + dish.pos + ")");
-                this.requestedMove = true;
-            }
-            if (this.moveIsValid)
-            {
-                this.makeMove();
-            }
+        if (!this.requestedPlayer)
+        {
+            this.request("current_player");
+            this.requestedPlayer = true;
         }
     }
 
-    //if current player is AI, ask the logic to generate a move
-    if (this.currentPlayerType == "ai")
+    //current player chooses a piece and a position
+    if (this.readyForChoice == true)
     {
+        console.log("IN CHOICE");
+        //if current player is human, get position from him
+        if (this.currentPlayerType == "human")
+        {
+            if (this.currentPickedDish != 0 &&
+                this.currentPickedPiece != 0 &&
+                this.newPick)
+            {
+                let dish = this.getPickedDish();
 
+                if (!this.requestedMove)
+                {
+                    this.request("move_human(" + dish.pos + ")");
+                    this.requestedMove = true;
+                }
+                if (this.moveIsValid)
+                {
+                    this.makeMove();
+                }
+            }
+        }
+        //if current player is AI, ask the logic to generate a move
+        if (this.currentPlayerType == "ai")
+        {
+
+        }
+        this.readyForChoice = false;
     }
 
     //move the piece
+    if (this.readyForMove)
+    {
+        console.log("IN MOVE");
+    }
 
-    //finally, check for victory
+    //check for victory
+    if (!this.requestedWinner && this.readyForVictory)
+    {
+        console.log("IN WINNER");
+        this.readyForVictory = false;
+        this.request("victory");
+        this.requestedWinner = true;
+    }
+    if (this.winnerIsSet)
+    {
+        if (this.winner == "black" || this.winner == "green")
+        {
+            console.log(this.winner + " player wins!");
+            this.running = false;
+        }
+    }
+
+    //update board
+    if (this.readyForUpdate)
+    {
+        console.log("IN UPDATE");
+    }
 };
 
 Oolong.prototype.undo = function()
