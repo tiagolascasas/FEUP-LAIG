@@ -1,3 +1,5 @@
+"use strict";
+
 function Oolong(scene)
 {
     this.scene = scene;

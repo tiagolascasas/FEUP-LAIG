@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Primitive that represents a sphere
  * @constructor

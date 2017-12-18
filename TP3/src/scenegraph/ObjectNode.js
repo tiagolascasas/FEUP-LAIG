@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   * Represents a node in a graph, holding a unique id, an array of children,
   * a transformation matrix, an array of primitives and a texture and materials

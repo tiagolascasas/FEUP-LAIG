@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Primitive that represents a triangle defined by its 3 points
  * @constructor

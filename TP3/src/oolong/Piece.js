@@ -1,3 +1,5 @@
+"use strict";
+
 function Piece(coord, color, pickID)
 {
     this.coord = coord;

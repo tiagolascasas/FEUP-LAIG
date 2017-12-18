@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   * Creates a Linear Animation
   * @constructor

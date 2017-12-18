@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   * Creates a Bezier Animation
   * @constructor

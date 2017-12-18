@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * PrimitivePolygon
  * @param gl {WebGLRenderingContext}

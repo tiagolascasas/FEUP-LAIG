@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   * Represents a scene graph, holding information about its nodes, textures and materials
   * @constructor

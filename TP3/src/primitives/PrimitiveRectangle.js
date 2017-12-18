@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Primitive that represents a rectangle in the x0y plane
  * @constructor

@@ -1,3 +1,5 @@
+"use strict";
+
  /**
  * Interface class, creating a GUI interface.
  * @constructor

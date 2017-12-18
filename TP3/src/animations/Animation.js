@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   * Abstract class to represent an animation
   * @constructor

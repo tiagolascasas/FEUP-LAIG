@@ -1,3 +1,5 @@
+"use strict";
+
 const DEGREE_TO_RAD = Math.PI / 180;
 
 /**

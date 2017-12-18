@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   * Represents a texture and its amplification factors
   * @constructor

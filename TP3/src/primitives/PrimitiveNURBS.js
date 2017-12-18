@@ -1,3 +1,5 @@
+"use strict";
+
 /**
  * Primitive that represents a NURBS surface
  * @constructor

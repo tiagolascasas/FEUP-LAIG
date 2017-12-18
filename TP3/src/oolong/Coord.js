@@ -1,3 +1,5 @@
+"use strict";
+
 function Coord(x, y, z)
 {
     this.x = x;

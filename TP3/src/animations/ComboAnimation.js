@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   * Creates a Combo Animation
   * @constructor

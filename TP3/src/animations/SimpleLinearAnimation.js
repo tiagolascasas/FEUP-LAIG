@@ -1,3 +1,5 @@
+"use strict";
+
 /**
   * Creates a simple Linear Animation with only two points, which is used
   * to make up a LinearAnimation

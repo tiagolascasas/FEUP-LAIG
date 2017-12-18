@@ -1,3 +1,5 @@
+"use strict";
+
 function Dish(coord, pickID, table, pos)
 {
     this.coord = coord;

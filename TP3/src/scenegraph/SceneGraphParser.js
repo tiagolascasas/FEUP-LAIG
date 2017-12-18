@@ -1,3 +1,5 @@
+"use strict";
+
 // Order of the groups in the XML document.
 let INITIALS_INDEX = 0;
 let ILLUMINATION_INDEX = 1;

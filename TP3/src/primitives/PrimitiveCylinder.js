@@ -1,3 +1,5 @@
+"use strict";
+
 /**
 * Primitive that represents a cylinder with configurable dimensions
 * and whose base is on the x0y plan
