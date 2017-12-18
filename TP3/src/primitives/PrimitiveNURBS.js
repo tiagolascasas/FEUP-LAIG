@@ -10,12 +10,12 @@ function PrimitiveNURBS(scene, div1, div2, controlvertexes)
 {
 	this.scene = scene;
 
-	var degree1 = controlvertexes.length - 1;
-	var degree2 = controlvertexes[0].length - 1;
-	var knots1 = this.makeKnots(degree1);
-	var knots2 = this.makeKnots(degree2);
+	let degree1 = controlvertexes.length - 1;
+	let degree2 = controlvertexes[0].length - 1;
+	let knots1 = this.makeKnots(degree1);
+	let knots2 = this.makeKnots(degree2);
 
-	var nurbsSurface = new CGFnurbsSurface(degree1, degree2, knots1, knots2, controlvertexes);
+	let nurbsSurface = new CGFnurbsSurface(degree1, degree2, knots1, knots2, controlvertexes);
 	getSurfacePoint = function(u, v)
 	{
 		return nurbsSurface.getPoint(u, v);
@@ -33,10 +33,10 @@ PrimitiveNURBS.prototype.constructor=PrimitiveNURBS;
  */
 PrimitiveNURBS.prototype.makeKnots = function(degree)
 {
-	var knots = [];
-	for (var i = 0; i <= degree; i++)
+	let knots = [];
+	for (let i = 0; i <= degree; i++)
 		knots.push(0);
-	for (var i = 0; i <= degree; i++)
+	for (let i = 0; i <= degree; i++)
 		knots.push(1);
 	return knots;
 };

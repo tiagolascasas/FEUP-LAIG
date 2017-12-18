@@ -105,7 +105,7 @@ Oolong.prototype.updatePickedElements = function(pickID)
 {
     if (pickID > 0 && pickID < 100 && !this.requestedMove)
     {
-        if (this.currentPickedDish != pickID)
+        if (this.currentPickedDish != pickID && this.running)
         {
             this.currentPickedDish = pickID;
             console.log("Current Picked dish: " + this.currentPickedDish);
@@ -114,7 +114,7 @@ Oolong.prototype.updatePickedElements = function(pickID)
     }
     else if (pickID >= 100 && pickID < 180 && !this.requestedMove)
     {
-        if (this.currentPickedPiece != pickID)
+        if (this.currentPickedPiece != pickID && this.running)
         {
             this.currentPickedPiece = pickID;
             console.log("Current Picked piece: " + this.currentPickedPiece);
@@ -236,7 +236,6 @@ Oolong.prototype.update = function(time)
         this.newPick)
     {
         let dish = this.getPickedDish();
-        console.log(dish);
 
         if (!this.requestedMove)
         {

@@ -30,13 +30,13 @@ PrimitiveTriangle.prototype.constructor=PrimitiveTriangle;
   */
 PrimitiveTriangle.prototype.initBuffers = function (x1, y1, z1, x2, y2, z2, x3, y3, z3)
 {
-	var vertex_A = vec3.fromValues(x1,y1,z1);
-	var vertex_B = vec3.fromValues(x2,y2,z2);
-	var vertex_C = vec3.fromValues(x3,y3,z3);
+	let vertex_A = vec3.fromValues(x1,y1,z1);
+	let vertex_B = vec3.fromValues(x2,y2,z2);
+	let vertex_C = vec3.fromValues(x3,y3,z3);
 
-	var AB = vec3.create();
+	let AB = vec3.create();
 	vec3.sub(AB,vertex_B,vertex_A);
-	var AC = vec3.create();
+	let AC = vec3.create();
 	vec3.sub(AC,vertex_C,vertex_A);
 
 	this.vertices = [
@@ -50,7 +50,7 @@ PrimitiveTriangle.prototype.initBuffers = function (x1, y1, z1, x2, y2, z2, x3, 
 	];
 
 	// Normals
-	var N = vec3.create();
+	let N = vec3.create();
 	vec3.cross(N,AB,AC);
 	vec3.normalize(N,N);
 
@@ -61,10 +61,10 @@ PrimitiveTriangle.prototype.initBuffers = function (x1, y1, z1, x2, y2, z2, x3, 
 	];
 
 	//Dot Product to get the angle
-	var beta = Math.acos(vec3.dot(AB,AC)/(vec3.len(AB)*vec3.len(AC)));
+	let beta = Math.acos(vec3.dot(AB,AC)/(vec3.len(AB)*vec3.len(AC)));
 
 	//TexCoords of the top vertex, C
-	var C = [Math.cos(beta) * vec3.len(AC), Math.sin(beta) * vec3.len(AC)];
+	let C = [Math.cos(beta) * vec3.len(AC), Math.sin(beta) * vec3.len(AC)];
 
 	this.texCoords = [
 		0, 0,
@@ -89,7 +89,7 @@ PrimitiveTriangle.prototype.setTexCoords = function (ampS, ampT)
 	this.ampS = ampS;
 	this.ampT = ampT;
 
-	for (var i = 0; i < this.texCoords.length; i+=2) {
+	for (let i = 0; i < this.texCoords.length; i+=2) {
 		this.texCoords[i] = this.texCoords[i]/this.ampS;
 		this.texCoords[i+1] = this.texCoords[i+1]/this.ampT;
 	}

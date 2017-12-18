@@ -370,7 +370,7 @@
             <TRANSLATION x="0" y="0.1" z="0"/>
 
             <DESCENDANTS>
-                <LEAF type="sphere" args="0.01 20 20"/>
+                <LEAF type="sphere" args="0.03 20 20"/>
             </DESCENDANTS>
         </NODE>
 

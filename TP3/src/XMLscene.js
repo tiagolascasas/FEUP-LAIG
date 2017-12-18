@@ -1,14 +1,14 @@
-var DEGREE_TO_RAD = Math.PI / 180;
+const DEGREE_TO_RAD = Math.PI / 180;
 
 /**
  * XMLscene class, representing the scene that is to be rendered.
  * @constructor
  */
-function XMLscene(interface)
+function XMLscene(gui)
 {
     CGFscene.call(this);
 
-    this.interface = interface;
+    this.interface = gui;
 
     this.lightValues = {};
     this.nodesValues = {};
@@ -43,7 +43,9 @@ XMLscene.prototype.init = function(application)
 
 	this.setUpdatePeriod(10);
 
-	this.customShader = new CGFshader(this.gl, "shaders/dimension.vert", "shaders/saturated.frag");
+	this.customShader = new CGFshader(this.gl,
+                                    "../lib/CGF/shaders/Phong/phong-vertex.glsl",
+                                    "../lib/CGF/shaders/Phong/phong-fragment.glsl");
 };
 
 /**
@@ -51,14 +53,16 @@ XMLscene.prototype.init = function(application)
  */
 XMLscene.prototype.initLights = function()
 {
-    var i = 0;
+    let i = 0;
 
-    for (var key in this.graph.lights) {
+    for (let key in this.graph.lights)
+    {
         if (i >= 8)
             break;
 
-        if (this.graph.lights.hasOwnProperty(key)) {
-            var light = this.graph.lights[key];
+        if (this.graph.lights.hasOwnProperty(key))
+        {
+            let light = this.graph.lights[key];
 
             this.lights[i].setPosition(light[1][0], light[1][1], light[1][2], light[1][3]);
             this.lights[i].setAmbient(light[2][0], light[2][1], light[2][2], light[2][3]);
@@ -134,14 +138,18 @@ XMLscene.prototype.display = function()
 
 		//this.axis.display();
 
-        var i = 0;
-        for (var key in this.lightValues) {
-            if (this.lightValues.hasOwnProperty(key)) {
-                if (this.lightValues[key]) {
+        let i = 0;
+        for (let key in this.lightValues)
+        {
+            if (this.lightValues.hasOwnProperty(key))
+            {
+                if (this.lightValues[key])
+                {
                     this.lights[i].setVisible(true);
                     this.lights[i].enable();
                 }
-                else {
+                else
+                {
                     this.lights[i].setVisible(false);
                     this.lights[i].disable();
                 }
@@ -185,10 +193,13 @@ XMLscene.prototype.update = function(currTime)
 
 XMLscene.prototype.processPicking = function ()
 {
-	if (this.pickMode == false) {
-		if (this.pickResults != null && this.pickResults.length > 0) {
-			for (let i=0; i< this.pickResults.length; i++) {
-				var obj = this.pickResults[i][0];
+	if (this.pickMode == false)
+    {
+		if (this.pickResults != null && this.pickResults.length > 0)
+        {
+			for (let i=0; i< this.pickResults.length; i++)
+            {
+				let obj = this.pickResults[i][0];
 				if (obj)
 				{
 					let pickID = this.pickResults[i][1];

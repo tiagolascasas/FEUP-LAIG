@@ -75,7 +75,7 @@ PrimitiveRectangle.prototype.setTexCoords = function(ampS, ampT)
 	this.ampS = ampS;
 	this.ampT = ampT;
 
-	for (var i = 0; i < this.texCoords.length; i+=2) {
+	for (let i = 0; i < this.texCoords.length; i+=2) {
         this.texCoords[i] = this.regTexCoords[i]/this.ampS;
         this.texCoords[i+1] = this.regTexCoords[i+1]/this.ampT;
     }

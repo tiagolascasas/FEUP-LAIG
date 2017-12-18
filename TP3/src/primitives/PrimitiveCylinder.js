@@ -46,14 +46,16 @@ PrimitiveCylinder.prototype.initBuffers = function()
 
 	this.texCoords = [];
 
-    angle = 2*Math.PI / this.slices;
-    ds = 1.0 / this.slices;
-    dt = 1.0 / this.stacks;
-    dr = this.diff / this.stacks;
-    dh = this.height / this.stacks;
+    let angle = 2*Math.PI / this.slices;
+    let ds = 1.0 / this.slices;
+    let dt = 1.0 / this.stacks;
+    let dr = this.diff / this.stacks;
+    let dh = this.height / this.stacks;
 
+    let i, j, s;
     for (i = 0, j = 0, s = 0.0; i < this.slices; i++, s += ds)
     {
+        let k, t, r;
     	for (k = 0.0, t = 1.0, r = this.bottomR; k < this.height; k += dh, j += 4, t -= dt, r += dr)
     	{
     		this.vertices.push(Math.cos(i*angle)*r, Math.sin(i*angle)*r, k);
@@ -76,24 +78,6 @@ PrimitiveCylinder.prototype.initBuffers = function()
     		this.indices.push(j + 2, j + 3, j);
     		this.indices.push(j + 3, j, j + 1);
     		this.indices.push(j, j + 3, j + 2);
-    /*
-    		if (k == 0 && this.botcap == 1)
-    		{
-    			this.vertices.push(0, 0, 0);
-    			this.normals.push(0, 0, -1);
-    			this.texCoords.push(0, 0);
-    			this.indices.push(j + 4, j + 2, j);
-    			j++;
-    		}
-
-    		if (k + dh >= this.height && this.topcap == 1)
-    		{
-    			this.vertices.push(0, 0, this.height);
-    			this.normals.push(0, 0, 1);
-    			this.texCoords.push(0, 0);
-    			this.indices.push(j + 1, j + 3, j + 4);
-    			j++;
-    		}*/
     	}
     }
 

@@ -52,7 +52,7 @@ ObjectNode.prototype.addAnimation = function(anim)
   */
 ObjectNode.prototype.displayPrimitives = function(currTex, pickID)
 {
-    for (var i = 0; i < this.leaves.length; i++)
+    for (let i = 0; i < this.leaves.length; i++)
 	{
 		if (currTex != null)
 			this.leaves[i].setTexCoords(currTex.ampS, currTex.ampT);
@@ -120,23 +120,23 @@ ObjectNode.prototype.addLeaf = function(id, args)
 	switch (id)
 	{
 		case 'rectangle':
-			var rect = new PrimitiveRectangle(this.scene, args[0], args[1], args[2], args[3]);
+			let rect = new PrimitiveRectangle(this.scene, args[0], args[1], args[2], args[3]);
 			this.leaves.push(rect);
 			break;
 		case 'cylinder':
-			var cyl = new PrimitiveCylinder(this.scene, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+			let cyl = new PrimitiveCylinder(this.scene, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
 			this.leaves.push(cyl);
 			break;
 		case 'sphere':
-			var sp = new PrimitiveSphere(this.scene, args[0], args[1], args[2]);
+			let sp = new PrimitiveSphere(this.scene, args[0], args[1], args[2]);
 			this.leaves.push(sp);
 			break;
 		case 'triangle':
-			var tr = new PrimitiveTriangle(this.scene, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
+			let tr = new PrimitiveTriangle(this.scene, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
 			this.leaves.push(tr);
 			break;
 		case 'patch':
-			var pat = new PrimitiveNURBS(this.scene, args[0], args[1], args[2]);
+			let pat = new PrimitiveNURBS(this.scene, args[0], args[1], args[2]);
 			this.leaves.push(pat);
 			break;
 	}

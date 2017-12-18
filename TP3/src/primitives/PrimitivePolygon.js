@@ -5,7 +5,7 @@
  */
 function PrimitivePolygon(scene, edges)
 {
-	CGFobject.call(this,scene);
+	CGFobject.call(this, scene);
 
 	if (edges != null)
 		this.edges = edges;
@@ -34,7 +34,7 @@ PrimitivePolygon.prototype.initBuffers = function ()
 
 	this.indices = [];
 
-	for (var i = 0; i < this.edges; i++)
+	for (let i = 0; i < this.edges; i++)
 	{
 		this.vertices.push(Math.cos(i*2*Math.PI/this.edges));
 		this.vertices.push(Math.sin(i*2*Math.PI/this.edges));
@@ -48,8 +48,8 @@ PrimitivePolygon.prototype.initBuffers = function ()
 		this.normals.push(1);
 	}
 
-	var i = 0;
-	for (; i < this.edges - 1; i++)
+    let i;
+	for (i = 0; i < this.edges - 1; i++)
 	{
 		this.indices.push(0);
 		this.indices.push(i + 1);

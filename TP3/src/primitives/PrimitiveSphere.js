@@ -32,14 +32,16 @@ PrimitiveSphere.prototype.initBuffers = function()
  	this.normals = [];
 	this.texCoords = [];
 
-	dfi = (2 * Math.PI) / this.slices;
-	dtheta = Math.PI / this.stacks;
-	ds = 1 / this.slices;
-	dt = 1 / this.stacks;
-	r = this.radius
+	let dfi = (2 * Math.PI) / this.slices;
+	let dtheta = Math.PI / this.stacks;
+	let ds = 1 / this.slices;
+	let dt = 1 / this.stacks;
+	let r = this.radius
 
+    let i, fi, s;
 	for (i = 0, fi = 0, s = 1.0; i <= this.slices; i++, fi += dfi, s -= ds)
 	{
+        let j, theta, t;
 		for (j = 0, theta = 0, t = 0; j <= this.stacks; j++, theta += dtheta, t += dt)
 		{
 			this.vertices.push(	Math.sin(theta)*r * Math.cos(fi),
@@ -52,9 +54,10 @@ PrimitiveSphere.prototype.initBuffers = function()
 		}
 	}
 
+    let j;
 	for (i = 0, j = 1; i < this.slices; i++, j++)
 	{
-		for (k = 0; k < this.stacks; k++, j++)
+		for (let k = 0; k < this.stacks; k++, j++)
 		{
 			this.indices.push(j, j + this.stacks, j + this.stacks + 1);
 			this.indices.push(j + this.stacks, j, j - 1);

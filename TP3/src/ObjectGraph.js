@@ -108,7 +108,7 @@ ObjectGraph.prototype.setRootID = function(id)
   */
 ObjectGraph.prototype.getNodeByID = function(id)
 {
-	for (var i = 0; i < this.obj.length; i++)
+	for (let i = 0; i < this.obj.length; i++)
 	{
 		if (this.obj[i].id == id)
 			return this.obj[i];
@@ -159,7 +159,7 @@ ObjectGraph.prototype.display = function(rootNode, pickID)
   */
 ObjectGraph.prototype.displayObjects = function(node, pickID)
 {
-	var currNode = this.getNodeByID(node);
+	let currNode = this.getNodeByID(node);
 	this.scene.pushMatrix();
 
 	let changedShader = this.applyShader(currNode);
@@ -169,8 +169,8 @@ ObjectGraph.prototype.displayObjects = function(node, pickID)
 	if (changedShader)
 		this.scene.setActiveShader(this.scene.defaultShader);
 
-	var children = currNode.children;
-	for (var i = 0; i < children.length; i++)
+	let children = currNode.children;
+	for (let i = 0; i < children.length; i++)
 		this.displayObjects(children[i], pickID);
 
 	this.scene.popMatrix();
@@ -207,7 +207,7 @@ ObjectGraph.prototype.applyShader = function(node)
   */
 ObjectGraph.prototype.applyAppearences = function(node)
 {
-	var lastMat = this.matStack[this.matStack.length - 1];
+	let lastMat = this.matStack[this.matStack.length - 1];
 	switch(node.material)
 	{
 		case "null":
@@ -222,7 +222,7 @@ ObjectGraph.prototype.applyAppearences = function(node)
 			break;
 	}
 
-	var lastTex = this.texStack[this.texStack.length - 1];
+	let lastTex = this.texStack[this.texStack.length - 1];
 	switch(node.texture)
 	{
 		case "null":
