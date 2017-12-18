@@ -242,7 +242,7 @@ move(Table, Position) :-currentPiece(Piece),				%gets current piece (black or gr
 						retract(pos(Table, Position, _)),	%clear new position for piece
 						assert(pos(Table, Position, Piece)),%moves piece to new position
 						retract(waiterPos(_, _)),                        %removes current waiter pos
-						assert(waiterPos(Position, Table))),	%moves waiter to new pos
+						assert(waiterPos(Position, Table)),	%moves waiter to new pos
 						flipCurrentPiece.				%changes the current piece
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -317,4 +317,8 @@ request_move_AI :- getMoveAI(T, P), move(T, P).
 
 request_waiter_pos(T, P) :- waiterPos(T, P).
 
+request_current_player_type(human) :- gameType('1vs1').
+request_current_player_type(human) :- gameType('1vsAI'), currentPiece(b).
+request_current_player_type(ai) :- gameType('1vsAI'), currentPiece(g).
+request_current_player_type(ai) :- gameType('AIvsAI').
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -9,39 +9,37 @@ function Oolong(scene)
     this.table = this.graph.getNodeByID("roundTable");
     this.dish = this.graph.getNodeByID("dish");
     this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
+
+    this.initPositions();
+}
+
+Oolong.prototype.init = function(mode, difficulty)
+{
     this.currentPickedPiece = 0;
     this.currentPickedDish = 0;
     this.newPick = false;
     this.moveIsValid = false;
     this.requestedMove = false;
-
-    this.initPositions();
     this.running = false;
-}
-
-Oolong.prototype.init = function(mode, difficulty)
-{
-    //reset game state here
-    console.clear();
     this.mode = mode;
     this.difficulty = difficulty;
 
+    console.clear();
+    console.log("Starting " + this.mode + " match with " + this.difficulty + " difficulty");
+
     this.request("reset");
     this.request("init");
-    //this.waitForAnswer("Game initialized");
+
     switch (mode)
     {
         case "1vs1":
             this.request("start_1vs1");
-            //this.waitForAnswer("1vs1 started");
             break;
         case "1vsAI":
             this.request("start_1vsAI");
-            //this.waitForAnswer("1vsAI started");
             break;
         case "AIvsAI":
             this.request("start_AIvsAI");
-            //this.waitForAnswer("AIvsAI started");
             break;
     }
 
@@ -49,11 +47,9 @@ Oolong.prototype.init = function(mode, difficulty)
     {
         case "Easy":
             this.request("AI_easy");
-            //this.waitForAnswer("1vs1 started");
             break;
         case "Hard":
             this.request("AI_hard");
-            //this.waitForAnswer("1vsAI started");
             break;
     }
     this.request("board");
@@ -213,6 +209,9 @@ Oolong.prototype.display = function()
         }
     }
 
+    if (!this.running)
+        return;
+
     for (let i = 0; i < this.pieces.length; i++)
     {
         let coord = this.pieces[i].coord;
@@ -233,6 +232,9 @@ Oolong.prototype.display = function()
 
 Oolong.prototype.update = function(time)
 {
+    if (!this.running)
+        return;
+
     if (this.currentPickedDish != 0 &&
         this.currentPickedPiece != 0 &&
         this.newPick)
@@ -256,7 +258,7 @@ Oolong.prototype.undo = function()
     console.log("Undo");
 };
 
-Oolong.prototype.processBoardState = function(board)
+Oolong.prototype.parseBoardState = function(board)
 {
     let positions = board.split(",");
     for (let i = 0; i < positions.length; i++)
