@@ -15,14 +15,18 @@ function Oolong(scene)
 
 Oolong.prototype.init = function(mode, difficulty)
 {
+    //immutable during the match
+    this.mode = mode;
+    this.difficulty = difficulty;
+
+    //altered during the match
+    this.running = false;
     this.currentPickedPiece = 0;
     this.currentPickedDish = 0;
     this.newPick = false;
     this.moveIsValid = false;
     this.requestedMove = false;
-    this.running = false;
-    this.mode = mode;
-    this.difficulty = difficulty;
+
 
     console.clear();
     console.log("Starting " + this.mode + " match with " + this.difficulty + " difficulty");
@@ -148,39 +152,37 @@ Oolong.prototype.calculateCoord = function(table, pos)
     }
 };
 
-Oolong.prototype.request = function(request)
+Oolong.prototype.request = function(answer)
 {
-    request = "request_" + request;
-    this.sendRequest(request, this.getAnswer);
-};
+    answer = "request_" + answer;
+    let requestPort = 8081;
+    let request = new XMLHttpRequest();
+    let parent = this;
 
-Oolong.prototype.sendRequest = function(requestString, onSuccess, onError, port)
-{
-    var requestPort = port || 8081
-    var request = new XMLHttpRequest();
-    request.open('GET', 'http://localhost:' + requestPort + '/' + requestString, true);
-    request.onload = onSuccess || function(data){console.log("Request successful. Reply: " + data.target.response);};
-    request.onerror = onError || function(){console.log("Error waiting for response");};
+    request.open('GET', 'http://localhost:' + requestPort + '/' + answer, true);
+    request.onload = function(data)
+    {
+        this.answer = data.target.response;
+        console.log(this.answer);
+        switch (this.answer)
+        {
+            case "valid":
+                parent.moveIsValid = true;
+                parent.requestedMove = false;
+                break;
+            case "invalid":
+                parent.moveIsValid = false;
+                parent.requestedMove = false;
+                break;
+        }
+    };
+    request.onerror = function(data)
+    {
+        console.log("Unable to get server response");
+        parent.running = false;
+    };
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     request.send();
-};
-
-Oolong.prototype.getAnswer = function(data)
-{
-    this.answer = data.target.response;
-    console.log(this.answer);
-    switch (this.answer)
-    {
-        case "valid":
-            this.moveIsValid = true;
-            this.requestedMove = false;
-            break;
-        case "invalid":
-            this.moveIsValid = false;
-            this.requestedMove = false;
-            break;
-    }
-
 };
 
 Oolong.prototype.display = function()
