@@ -1,20 +1,20 @@
  /**
- * MyInterface class, creating a GUI interface.
+ * Interface class, creating a GUI interface.
  * @constructor
  */
-function MyInterface()
+function Interface()
 {
     CGFinterface.call(this);
-};
+}
 
-MyInterface.prototype = Object.create(CGFinterface.prototype);
-MyInterface.prototype.constructor = MyInterface;
+Interface.prototype = Object.create(CGFinterface.prototype);
+Interface.prototype.constructor = Interface;
 
 /**
  * Initializes the interface.
  * @param {CGFapplication} application
  */
-MyInterface.prototype.init = function(application)
+Interface.prototype.init = function(application)
 {
     CGFinterface.prototype.init.call(this, application);
 
@@ -27,7 +27,7 @@ MyInterface.prototype.init = function(application)
  * Adds a folder containing the IDs of the lights passed as parameter.
  * @param {Array} lights - an associative array with the lights
  */
-MyInterface.prototype.addLightsGroup = function(lights)
+Interface.prototype.addLightsGroup = function(lights)
 {/*
     var group = this.gui.addFolder("Lights");
     group.open();
@@ -40,7 +40,7 @@ MyInterface.prototype.addLightsGroup = function(lights)
     }*/
 }
 
-MyInterface.prototype.addGameOptions = function()
+Interface.prototype.addGameOptions = function()
 {
     var group = this.gui.addFolder("Game settings");
     group.open();

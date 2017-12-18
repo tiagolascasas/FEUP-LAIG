@@ -18,8 +18,8 @@ function getUrlVars()
 let main = function()
 {
     let app = new CGFapplication(document.body);
-    let gui = new MyInterface();
-    let scene = new XMLscene(gui);
+    let gui = new Interface();
+    let scene = new Scene(gui);
 
     app.init();
 
@@ -36,17 +36,19 @@ let main = function()
 };
 
 serialInclude([ '../lib/CGF.js',
-				'XMLscene.js',
-				'MyInterface.js',
-				'SceneGraphParser.js',
-				'ObjectNode.js',
-				'ObjectGraph.js',
-				'ObjectTexture.js',
-                'Oolong.js',
-                'Coord.js',
-                'Piece.js',
-                'Dish.js',
-                'StateList.js',
+				'Scene.js',
+				'Interface.js',
+
+				'scenegraph/SceneGraphParser.js',
+				'scenegraph/ObjectNode.js',
+				'scenegraph/ObjectGraph.js',
+				'scenegraph/ObjectTexture.js',
+
+                'oolong/Oolong.js',
+                'oolong/Coord.js',
+                'oolong/Piece.js',
+                'oolong/Dish.js',
+                'oolong/StateList.js',
 
 				'primitives/PrimitiveRectangle.js',
 				'primitives/PrimitiveCylinder.js',

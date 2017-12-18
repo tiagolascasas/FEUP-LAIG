@@ -1,10 +1,10 @@
 const DEGREE_TO_RAD = Math.PI / 180;
 
 /**
- * XMLscene class, representing the scene that is to be rendered.
+ * Scene class, representing the scene that is to be rendered.
  * @constructor
  */
-function XMLscene(gui)
+function Scene(gui)
 {
     CGFscene.call(this);
 
@@ -19,14 +19,14 @@ function XMLscene(gui)
     this.difficulty = "Easy";
 };
 
-XMLscene.prototype = Object.create(CGFscene.prototype);
-XMLscene.prototype.constructor = XMLscene;
+Scene.prototype = Object.create(CGFscene.prototype);
+Scene.prototype.constructor = Scene;
 
 /**
  * Initializes the scene, setting some WebGL defaults, initializing the camera and the axis.
  * @param {CGFapplication} application - the application to which this scene is associated with
  */
-XMLscene.prototype.init = function(application)
+Scene.prototype.init = function(application)
 {
     CGFscene.prototype.init.call(this, application);
 
@@ -51,7 +51,7 @@ XMLscene.prototype.init = function(application)
 /**
  * Initializes the scene lights with the values read from the LSX file.
  */
-XMLscene.prototype.initLights = function()
+Scene.prototype.initLights = function()
 {
     let i = 0;
 
@@ -85,7 +85,7 @@ XMLscene.prototype.initLights = function()
 /**
  * Initializes the scene cameras.
  */
-XMLscene.prototype.initCameras = function()
+Scene.prototype.initCameras = function()
 {
     this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
 };
@@ -93,7 +93,7 @@ XMLscene.prototype.initCameras = function()
 /* Handler called when the graph is finally loaded.
  * As loading is asynchronous, this may be called already after the application has started the run loop
  */
-XMLscene.prototype.onGraphLoaded = function()
+Scene.prototype.onGraphLoaded = function()
 {
 	this.objGraph = this.graph.objGraph;
     this.oolong = new Oolong(this);
@@ -117,7 +117,7 @@ XMLscene.prototype.onGraphLoaded = function()
 /**
  * Displays the scene.
  */
-XMLscene.prototype.display = function()
+Scene.prototype.display = function()
 {
     this.processPicking();
 	this.clearPickRegistration();
@@ -177,7 +177,7 @@ XMLscene.prototype.display = function()
   * Updates the scene and the shader time timeFactor
   * @param {Number} currTime - the system time in milliseconds
   */
-XMLscene.prototype.update = function(currTime)
+Scene.prototype.update = function(currTime)
 {
 	if(!this.graph.loadedOk)
 		return;
@@ -191,7 +191,7 @@ XMLscene.prototype.update = function(currTime)
 	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: this.colorComponent});
 };
 
-XMLscene.prototype.processPicking = function ()
+Scene.prototype.processPicking = function ()
 {
 	if (this.pickMode == false)
     {
