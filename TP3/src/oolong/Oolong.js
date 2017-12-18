@@ -26,7 +26,7 @@ Oolong.prototype.init = function(mode, difficulty)
     this.newPick = false;
     this.moveIsValid = false;
     this.requestedMove = false;
-
+    this.readyForTurn = false;
 
     console.clear();
     console.log("Starting " + this.mode + " match with " + this.difficulty + " difficulty");
@@ -57,7 +57,9 @@ Oolong.prototype.init = function(mode, difficulty)
             break;
     }
     this.request("board");
+
     this.running = true;
+    this.readyForTurn = true;
 };
 
 Oolong.prototype.initPositions = function()
@@ -174,6 +176,24 @@ Oolong.prototype.request = function(answer)
                 parent.moveIsValid = false;
                 parent.requestedMove = false;
                 break;
+            case "b":
+                parent.currentPlayer = "black";
+                parent.requestedPlayer = false;
+                break;
+            case "g":
+                parent.currentPlayer = "green";
+                parent.requestedPlayer = false;
+                break;
+            case "human":
+                parent.currentPlayerType = "human";
+                parent.requestedPlayerType = false;
+                parent.readyForTurn = false;
+                break;
+            case "ai":
+                parent.currentPlayerType = "ai";
+                parent.requestedPlayerType = false;
+                parent.readyForTurn = false;
+                break;
         }
     };
     request.onerror = function(data)
@@ -237,22 +257,49 @@ Oolong.prototype.update = function(time)
     if (!this.running)
         return;
 
-    if (this.currentPickedDish != 0 &&
-        this.currentPickedPiece != 0 &&
-        this.newPick)
+    //get current player and its type
+    if (!this.requestedPlayerType && this.readyForTurn)
     {
-        let dish = this.getPickedDish();
+        this.request("current_player_type");
+        this.requestedPlayerType = true;
+    }
 
-        if (!this.requestedMove)
+    if (!this.requestedPlayer && this.readyForTurn)
+    {
+        this.request("current_player");
+        this.requestedPlayer = true;
+    }
+
+    //if current player is human, get position from him
+    if (this.currentPlayerType = "human")
+    {
+        if (this.currentPickedDish != 0 &&
+            this.currentPickedPiece != 0 &&
+            this.newPick)
         {
-            this.request("move_human(" + dish.pos + ")");
-            this.requestedMove = true;
-        }
-        if (this.moveIsValid)
-        {
-            this.makeMove();
+            let dish = this.getPickedDish();
+
+            if (!this.requestedMove)
+            {
+                this.request("move_human(" + dish.pos + ")");
+                this.requestedMove = true;
+            }
+            if (this.moveIsValid)
+            {
+                this.makeMove();
+            }
         }
     }
+
+    //if current player is AI, ask the logic to generate a move
+    if (this.currentPlayerType == "ai")
+    {
+
+    }
+
+    //move the piece
+
+    //finally, check for victory
 };
 
 Oolong.prototype.undo = function()
