@@ -9,6 +9,8 @@ Oolong.prototype.resetState = function()
     this.currentPlayerType = false;
     this.winner = "none";
     this.winnerIsSet = false;
+    this.aiMove = null;
+    this.aiMoveReady = false;
 
     //state machine breakpoints
     this.running = false;
@@ -46,6 +48,7 @@ Oolong.prototype.stateChoice = function()
     //if current player is human, get position from him
     if (this.currentPlayerType == "human")
     {
+        console.log("In Human");
         if (this.currentPickedDish != 0 &&
             this.currentPickedPiece != 0 &&
             this.newPick)
@@ -66,9 +69,22 @@ Oolong.prototype.stateChoice = function()
     //if current player is AI, ask the logic to generate a move
     if (this.currentPlayerType == "ai")
     {
+        this.currentPickedDish = -1;
+        this.currentPickedPiece = -1;
+        this.newPick = false;
+
+        if (!this.requestedMove)
+        {
+            this.request("move_AI");
+            this.requestedMove = true;
+        }
+        if (this.aiMoveReady == true)
+        {
+            console.log("Making AI move " + this.aiMove);
+        }
 
     }
-    this.readyForChoice = false;
+    //this.readyForChoice = false;
 };
 
 Oolong.prototype.stateMove = function(time)

@@ -209,6 +209,12 @@ Oolong.prototype.request = function(answer)
                 parent.readyForUpdate = true;
                 break;
         }
+        let pattern = /ai-[a-z]?[a-z]/;
+        if (pattern.test(this.answer))
+        {
+            parent.aiMoveReady = true;
+            parent.aiMove = this.answer.split('-')[1];
+        }
     };
     request.onerror = function(data)
     {

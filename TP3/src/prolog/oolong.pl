@@ -313,7 +313,7 @@ request_reset :- reset.
 request_move_human(P, valid) :- waiterPos(T, _), move(T, P).
 request_move_human(_, invalid).
 
-request_move_AI :- getMoveAI(T, P), move(T, P).
+request_move_AI(P) :- getMoveAI(T, P).
 
 request_waiter_pos(T, P) :- waiterPos(T, P).
 
