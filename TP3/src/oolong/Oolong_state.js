@@ -81,15 +81,22 @@ Oolong.prototype.stateChoice = function()
         if (this.aiMoveReady == true)
         {
             console.log("Making AI move " + this.aiMove);
+            //set dishe
+            //set piece
+            //this.readyForChoice = false;
         }
 
     }
-    //this.readyForChoice = false;
+
 };
 
 Oolong.prototype.stateMove = function(time)
 {
     console.log("IN MOVE");
+    //get coords of piece
+    //get coords of dish
+    //calculate bezier
+    //move piece using bezier
 };
 
 Oolong.prototype.stateVictory = function()
@@ -103,6 +110,10 @@ Oolong.prototype.stateVictory = function()
 Oolong.prototype.stateUpdate = function()
 {
     console.log("IN UPDATE");
+    //request board
+    //update board based on request
+    //reset all flags
+    //back at beginning
 };
 
 Oolong.prototype.update = function(time)
