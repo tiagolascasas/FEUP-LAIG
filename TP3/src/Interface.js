@@ -65,7 +65,7 @@ Interface.prototype.addGameOptions = function()
                         }
                     };
 
-    this.gui.width = 300;
+    this.gui.width = 340;
 
     var groupA = this.gui.addFolder("Global settings");
     groupA.close();

@@ -120,7 +120,7 @@ Oolong.prototype.stateMove = function(time)
         let p1 = [origin.x, origin.y, origin.z];
         let p2 = [origin.x, origin.y + 1, origin.z];
         let p3 = [dest.x, dest.y + 1, dest.z];
-        let p4 = [dest.x, dest.y, dest.z];
+        let p4 = [dest.x, dest.y + 0.1, dest.z];
 
         this.bezier = new BezierAnimation(0.002, [p1, p2, p3, p4]);
         this.time = 0;
@@ -135,6 +135,7 @@ Oolong.prototype.stateMove = function(time)
             this.matrix = mat;
         else
         {
+            this.readyForAnimation = false;
             this.matrix = mat4.identity(mat4.create());
             this.readyForMove = false;
             this.readyForVictory = true;

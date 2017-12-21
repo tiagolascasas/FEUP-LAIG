@@ -277,7 +277,7 @@ Oolong.prototype.display = function()
         let id = this.pieces[i].pickID;
         this.scene.pushMatrix();
 
-        if (this.currentPickedPiece.pickID == id)
+        if (this.currentPickedPiece.pickID == id && this.readyForAnimation)
             this.scene.multMatrix(this.matrix);
         else
             this.scene.translate(coord.x, coord.y, coord.z);
