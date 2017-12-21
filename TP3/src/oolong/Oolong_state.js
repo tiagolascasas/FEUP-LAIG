@@ -11,6 +11,9 @@ Oolong.prototype.resetState = function()
     this.winnerIsSet = false;
     this.aiMove = null;
     this.aiMoveReady = false;
+    this.waiterPos = null;
+    this.waiterTable = null;
+    this.startedMoving = false;
 
     //state machine breakpoints
     this.running = false;
@@ -25,6 +28,7 @@ Oolong.prototype.resetState = function()
     this.requestedPlayer = false;
     this.requestedPlayerType = false;
     this.requestedWinner = false;
+    this.requestedWaiterTable = false;
 };
 
 Oolong.prototype.stateTurn = function()
@@ -40,6 +44,12 @@ Oolong.prototype.stateTurn = function()
     {
         this.request("current_player");
         this.requestedPlayer = true;
+    }
+
+    if (!this.requestedWaiterTable)
+    {
+        this.request("waiter_pos");
+        this.requestedWaiterTable = true;
     }
 };
 
@@ -80,23 +90,51 @@ Oolong.prototype.stateChoice = function()
         }
         if (this.aiMoveReady == true)
         {
+            this.aiMoveReady = false;
             console.log("Making AI move " + this.aiMove);
-            //set dishe
-            //set piece
-            //this.readyForChoice = false;
+            this.currentPickedDish = this.dishes[this.waiterTable][this.aiMove];
+            this.currentPickedPiece = this.getRandomPiece();
+            this.readyForChoice = false;
+            this.readyForMove = true;
         }
-
     }
-
 };
 
 Oolong.prototype.stateMove = function(time)
 {
     console.log("IN MOVE");
-    //get coords of piece
-    //get coords of dish
-    //calculate bezier
-    //move piece using bezier
+    if (!this.startedMoving)
+    {
+        let origin = this.currentPickedPiece.coord;
+        let dest = this.currentPickedDish.coord;
+
+        let p1 = [origin.x, origin.y, origin.z];
+        let p2 = [origin.x, origin.y + 1, origin.z];
+        let p3 = [dest.x, dest.y + 1, dest.z];
+        let p4 = [dest.x, dest.y, dest.z];
+
+        this.bezier = new BezierAnimation(0.001, [p1, p2, p3, p4]);
+        this.time = 0;
+        this.baseTime = time;
+        this.startedMoving = true;
+    }
+    if (this.startedMoving)
+    {
+        this.time = time - this.baseTime;
+        let mat = this.bezier.calculateMatrix(this.time);
+        if (mat != null)
+            this.matrix = mat;
+        else
+        {
+            this.matrix = mat4.identity(mat4.create());
+            this.readyForMove = false;
+            this.readyForVictory = true;
+            let pos = this.currentPickedDish.pos;
+            let table = this.currentPickedDish.table;
+            let coord = this.calculateCoord(table, pos);
+            this.currentPickedPiece.place(table, pos, coord);
+        }
+    }
 };
 
 Oolong.prototype.stateVictory = function()

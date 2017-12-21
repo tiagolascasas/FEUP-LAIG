@@ -123,6 +123,6 @@ parse_input(request_victory, P) :- request_victory(P).
 parse_input(request_reset, 'Game reset') :- request_reset.
 parse_input(request_move_human(P), V) :- request_move_human(P, V).
 parse_input(request_move_AI, ai-P) :- request_move_AI(P).
-parse_input(request_waiter_pos, [T, P]) :- request_waiter_pos(T, P).
+parse_input(request_waiter_pos, waiter-T-P) :- request_waiter_pos(T, P).
 parse_input(request_current_player_type, T) :- request_current_player_type(T).
 parse_input(request_current_player, P) :- currentPiece(P).

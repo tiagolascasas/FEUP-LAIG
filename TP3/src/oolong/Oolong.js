@@ -9,6 +9,7 @@ function Oolong(scene)
     this.table = this.graph.getNodeByID("roundTable");
     this.dish = this.graph.getNodeByID("dish");
     this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
+    this.matrix = mat4.identity(mat4.create());
 
     this.initPositions();
 }
@@ -173,12 +174,12 @@ Oolong.prototype.request = function(answer)
             case "b":
                 parent.currentPlayer = "black";
                 parent.requestedPlayer = false;
-                parent.readyForChoice = true;
+                //parent.readyForChoice = true;
                 break;
             case "g":
                 parent.currentPlayer = "green";
                 parent.requestedPlayer = false;
-                parent.readyForChoice = true;
+                //parent.readyForChoice = true;
                 break;
             case "human":
                 parent.currentPlayerType = "human";
@@ -214,6 +215,14 @@ Oolong.prototype.request = function(answer)
         {
             parent.aiMoveReady = true;
             parent.aiMove = this.answer.split('-')[1];
+        }
+        pattern = /waiter-[a-z]?[a-z]-[a-z]?[a-z]/;
+        if (pattern.test(this.answer))
+        {
+            parent.readyForChoice = true;
+            parent.waiterTable = this.answer.split('-')[1];
+            parent.waiterPos = this.answer.split('-')[2];
+            console.log("Waiter at pos " + parent.waiterTable + "-" + parent.waiterPos);
         }
     };
     request.onerror = function(data)
@@ -260,7 +269,12 @@ Oolong.prototype.display = function()
         let piece = this.pieces[i].color == 'g' ? "greenPiece" : "blackPiece";
         let id = this.pieces[i].pickID;
         this.scene.pushMatrix();
-        this.scene.translate(coord.x, coord.y, coord.z);
+
+        if (this.currentPickedPiece.pickID == id)
+            this.scene.multMatrix(this.matrix);
+        else
+            this.scene.translate(coord.x, coord.y, coord.z);
+            
         this.graph.display(piece, id);
         this.scene.popMatrix();
     }
@@ -293,6 +307,22 @@ Oolong.prototype.getPickedDish = function()
         {
             if (this.dishes[table][pos].pickID == this.currentPickedDish)
                 return this.dishes[table][pos];
+        }
+    }
+};
+
+Oolong.prototype.getRandomPiece = function()
+{
+    let currPlayer = this.currentPlayer;
+
+    for (let i = 0; i < this.pieces.length; i++)
+    {
+        if (!this.pieces[i].placed)
+        {
+            if (currPlayer == "black" && this.pieces[i].pickID % 2 == 0)
+                return this.pieces[i];
+            else if (currPlayer == "green" && this.pieces[i].pickID % 2 == 1)
+                return this.pieces[i];
         }
     }
 };
