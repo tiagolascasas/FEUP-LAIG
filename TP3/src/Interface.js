@@ -44,12 +44,6 @@ Interface.prototype.addLightsGroup = function(lights)
 
 Interface.prototype.addGameOptions = function()
 {
-    var group = this.gui.addFolder("Game settings");
-    group.open();
-
-    group.add(this.scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
-    group.add(this.scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
-
     let scene = this.scene;
     let oolong = this.scene.oolong;
 
@@ -60,8 +54,28 @@ Interface.prototype.addGameOptions = function()
                         "undo": function()
                         {
                             oolong.undo();
-                        }};
+                        },
+                        "abort": function()
+                        {
+                            oolong.request("quit");
+                        },
+                        "stop": function()
+                        {
+                            oolong.running = false;
+                        }
+                    };
 
-    group.add(listeners, "undo").name("Undo last move");
-    group.add(listeners, "init").name("Start/reset game");
+    this.gui.width = 300;
+
+    var groupA = this.gui.addFolder("Global settings");
+    groupA.close();
+    groupA.add(listeners, "abort").name("Shutdown SICStus server");
+    groupA.add(listeners, "stop").name("Abort current match");
+
+    var groupB = this.gui.addFolder("Game settings");
+    groupB.open();
+    groupB.add(this.scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
+    groupB.add(this.scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
+    groupB.add(listeners, "undo").name("Undo last move");
+    groupB.add(listeners, "init").name("Start/reset game");
 };

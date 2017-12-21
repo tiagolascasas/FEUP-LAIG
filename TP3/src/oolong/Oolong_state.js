@@ -11,21 +11,22 @@ Oolong.prototype.resetState = function()
     this.winnerIsSet = false;
     this.aiMove = null;
     this.aiMoveReady = false;
-    this.waiterPos = null;
-    this.waiterTable = null;
     this.startedMoving = false;
     this.board = null;
     this.doneUpdating = false;
+    this.move = null;
 
     //state machine breakpoints
     this.readyForTurn = false;
     this.readyForChoice = false;
     this.readyForMove = false;
+    this.readyForAnimation = false;
     this.readyForVictory = false;
     this.readyForUpdate = false;
 
     //server request flags
     this.requestedMove = false;
+    this.requestedMovePiece = false;
     this.requestedPlayer = false;
     this.requestedPlayerType = false;
     this.requestedWinner = false;
@@ -35,7 +36,6 @@ Oolong.prototype.resetState = function()
 
 Oolong.prototype.stateTurn = function()
 {
-    console.log("IN TURN");
     if (!this.requestedPlayerType)
     {
         this.request("current_player_type");
@@ -74,7 +74,8 @@ Oolong.prototype.stateChoice = function()
             }
             if (this.moveIsValid)
             {
-                this.makeMove();
+                //this.makeMove();
+                console.log("valid human move");
             }
         }
     }
@@ -94,18 +95,24 @@ Oolong.prototype.stateChoice = function()
         {
             this.aiMoveReady = false;
             console.log("Making AI move " + this.aiMove);
-            this.currentPickedDish = this.dishes[this.waiterTable][this.aiMove];
+            this.currentPickedDish = this.dishes[this.waiter.table][this.aiMove];
             this.currentPickedPiece = this.getRandomPiece();
             this.readyForChoice = false;
             this.readyForMove = true;
+            this.move = this.aiMove;
         }
     }
 };
 
 Oolong.prototype.stateMove = function(time)
 {
-    console.log("IN MOVE");
-    if (!this.startedMoving)
+    if (!this.requestedMovePiece)
+    {
+        this.request("move(" + this.move + ")");
+        this.requestedMovePiece = true;
+    }
+
+    if (!this.startedMoving && this.readyForAnimation)
     {
         let origin = this.currentPickedPiece.coord;
         let dest = this.currentPickedDish.coord;
@@ -120,7 +127,7 @@ Oolong.prototype.stateMove = function(time)
         this.baseTime = time;
         this.startedMoving = true;
     }
-    if (this.startedMoving)
+    if (this.startedMoving && this.readyForAnimation)
     {
         this.time = time - this.baseTime;
         let mat = this.bezier.calculateMatrix(this.time);
@@ -141,7 +148,6 @@ Oolong.prototype.stateMove = function(time)
 
 Oolong.prototype.stateVictory = function()
 {
-    console.log("IN WINNER");
     this.readyForVictory = false;
     this.request("victory");
     this.requestedWinner = true;
@@ -149,7 +155,6 @@ Oolong.prototype.stateVictory = function()
 
 Oolong.prototype.stateUpdate = function()
 {
-    console.log("IN UPDATE");
     //request board
     if (!this.requestedBoard)
     {
@@ -192,7 +197,7 @@ Oolong.prototype.update = function(time)
     //check for victory
     if (!this.requestedWinner && this.readyForVictory)
         this.stateVictory();
-
+/*
     //end game if one of the players wins
     if (this.winnerIsSet)
     {
@@ -201,7 +206,7 @@ Oolong.prototype.update = function(time)
             console.log(this.winner + " player wins!");
             this.running = false;
         }
-    }
+    }*/
 
     //update board
     if (this.readyForUpdate)

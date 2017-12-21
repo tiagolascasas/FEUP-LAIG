@@ -190,6 +190,9 @@ Oolong.prototype.request = function(answer)
                 parent.requestedPlayerType = false;
                 parent.readyForTurn = false;
                 break;
+            case "moved":
+                parent.readyForAnimation = true;
+                break;
             case "victory_black":
                 parent.winner = "black";
                 parent.winnerIsSet = true;
@@ -219,9 +222,9 @@ Oolong.prototype.request = function(answer)
         if (pattern.test(this.answer))
         {
             parent.readyForChoice = true;
-            parent.waiterTable = this.answer.split('-')[1];
-            parent.waiterPos = this.answer.split('-')[2];
-            console.log("Waiter at pos " + parent.waiterTable + "-" + parent.waiterPos);
+            parent.waiter.table = this.answer.split('-')[1];
+            parent.waiter.pos = this.answer.split('-')[2];
+            console.log("Waiter at pos " + parent.waiter.table + "-" + parent.waiter.pos);
         }
         pattern = /\[.*/;
         if (pattern.test(this.answer))
@@ -284,7 +287,7 @@ Oolong.prototype.display = function()
     }
 
     this.scene.pushMatrix();
-    let coord = this.dishes[this.waiter.table][this.waiter.pos].coord;
+    let coord = this.calculateCoord(this.waiter.table, this.waiter.pos);
     this.scene.translate(coord.x, coord.y, coord.z);
     this.graph.display("waiter");
     this.scene.popMatrix();
