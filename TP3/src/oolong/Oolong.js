@@ -51,7 +51,6 @@ Oolong.prototype.init = function(mode, difficulty)
             this.request("AI_hard");
             break;
     }
-    this.request("board");
 
     this.running = true;
     this.readyForTurn = true;
@@ -224,6 +223,11 @@ Oolong.prototype.request = function(answer)
             parent.waiterPos = this.answer.split('-')[2];
             console.log("Waiter at pos " + parent.waiterTable + "-" + parent.waiterPos);
         }
+        pattern = /\[.*/;
+        if (pattern.test(this.answer))
+        {
+            parent.board = this.answer;
+        }
     };
     request.onerror = function(data)
     {
@@ -274,7 +278,7 @@ Oolong.prototype.display = function()
             this.scene.multMatrix(this.matrix);
         else
             this.scene.translate(coord.x, coord.y, coord.z);
-            
+
         this.graph.display(piece, id);
         this.scene.popMatrix();
     }
@@ -295,8 +299,18 @@ Oolong.prototype.parseBoardState = function(board)
 {
     let positions = board.split(",");
     for (let i = 0; i < positions.length; i++)
+    {
         positions[i] = positions[i].split("-");
-    this.states.addState(positions);
+        positions[i][0] = positions[i][0].replace("[", "");
+        positions[i][1] = positions[i][1].replace("[", "");
+        positions[i][2] = positions[i][2].replace("[", "");
+        positions[i][0] = positions[i][0].replace("]", "");
+        positions[i][1] = positions[i][1].replace("]", "");
+        positions[i][2] = positions[i][2].replace("]", "");
+    }
+    //this.states.addState(positions);
+    console.log(positions);
+    return positions;
 };
 
 Oolong.prototype.getPickedDish = function()
@@ -325,4 +339,5 @@ Oolong.prototype.getRandomPiece = function()
                 return this.pieces[i];
         }
     }
+    this.running = false;
 };

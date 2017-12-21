@@ -14,9 +14,10 @@ Oolong.prototype.resetState = function()
     this.waiterPos = null;
     this.waiterTable = null;
     this.startedMoving = false;
+    this.board = null;
+    this.doneUpdating = false;
 
     //state machine breakpoints
-    this.running = false;
     this.readyForTurn = false;
     this.readyForChoice = false;
     this.readyForMove = false;
@@ -29,6 +30,7 @@ Oolong.prototype.resetState = function()
     this.requestedPlayerType = false;
     this.requestedWinner = false;
     this.requestedWaiterTable = false;
+    this.requestedBoard = false;
 };
 
 Oolong.prototype.stateTurn = function()
@@ -113,7 +115,7 @@ Oolong.prototype.stateMove = function(time)
         let p3 = [dest.x, dest.y + 1, dest.z];
         let p4 = [dest.x, dest.y, dest.z];
 
-        this.bezier = new BezierAnimation(0.001, [p1, p2, p3, p4]);
+        this.bezier = new BezierAnimation(0.002, [p1, p2, p3, p4]);
         this.time = 0;
         this.baseTime = time;
         this.startedMoving = true;
@@ -149,9 +151,25 @@ Oolong.prototype.stateUpdate = function()
 {
     console.log("IN UPDATE");
     //request board
-    //update board based on request
-    //reset all flags
-    //back at beginning
+    if (!this.requestedBoard)
+    {
+        this.request("board");
+        this.requestedBoard = true;
+    }
+
+    if (this.board != null)
+    {
+        console.log("updating board...");
+        let board = this.parseBoardState(this.board);
+        this.doneUpdating = true;
+    }
+
+    if (this.doneUpdating)
+    {
+        this.resetState();
+        //back at beginning
+        this.readyForTurn = true;
+    }
 };
 
 Oolong.prototype.update = function(time)
@@ -161,28 +179,21 @@ Oolong.prototype.update = function(time)
 
     //get current player and its type
     if (this.readyForTurn)
-    {
         this.stateTurn();
-    }
 
     //current player chooses a piece and a position
     if (this.readyForChoice)
-    {
         this.stateChoice();
-    }
 
     //move the piece
     if (this.readyForMove)
-    {
         this.stateMove(time);
-    }
 
     //check for victory
     if (!this.requestedWinner && this.readyForVictory)
-    {
         this.stateVictory();
-    }
 
+    //end game if one of the players wins
     if (this.winnerIsSet)
     {
         if (this.winner == "black" || this.winner == "green")
@@ -194,7 +205,5 @@ Oolong.prototype.update = function(time)
 
     //update board
     if (this.readyForUpdate)
-    {
         this.stateUpdate();
-    }
 };
