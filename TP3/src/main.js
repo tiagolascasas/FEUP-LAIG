@@ -22,11 +22,8 @@ let main = function()
     let scene = new Scene(gui);
 
     app.init();
-
     app.setScene(scene);
     app.setInterface(gui);
-
-    gui.setActiveCamera(scene.camera);
 
 	let filename = getUrlVars()['file'] || "oolong.xml";
 	let graph = new SceneGraphParser(filename, scene);

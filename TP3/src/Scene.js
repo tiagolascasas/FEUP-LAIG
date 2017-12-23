@@ -19,6 +19,7 @@ function Scene(gui)
     this.scaleFactor = 1.0;
     this.mode = "1vs1";
     this.difficulty = "Easy";
+    this.cameraID = "Dynamic";
 };
 
 Scene.prototype = Object.create(CGFscene.prototype);
@@ -89,7 +90,9 @@ Scene.prototype.initLights = function()
  */
 Scene.prototype.initCameras = function()
 {
-    this.camera = new CGFcamera(0.4,0.1,500,vec3.fromValues(15, 15, 15),vec3.fromValues(0, 0, 0));
+    this.cameraDynamic = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    this.cameraStatic = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(1, 30, 1), vec3.fromValues(0, 0, 0));
+    this.camera = this.cameraDynamic;
 };
 
 /* Handler called when the graph is finally loaded.
@@ -101,9 +104,11 @@ Scene.prototype.onGraphLoaded = function()
     this.oolong = new Oolong(this);
     this.setPickEnabled(true);
 
-    this.camera.near = this.graph.near;
-    this.camera.far = this.graph.far;
-    this.axis = new CGFaxis(this,this.graph.referenceLength);
+    this.cameraDynamic.near = this.graph.near;
+    this.cameraDynamic.far = this.graph.far;
+    this.cameraStatic.near = this.graph.near;
+    this.cameraStatic.far = this.graph.far;
+    this.axis = new CGFaxis(this, this.graph.referenceLength);
 
     this.setGlobalAmbientLight(this.graph.ambientIllumination[0], this.graph.ambientIllumination[1],
     this.graph.ambientIllumination[2], this.graph.ambientIllumination[3]);
@@ -187,6 +192,11 @@ Scene.prototype.update = function(currTime)
     {
     	this.graph.objGraph.update(currTime);
         this.oolong.update(currTime);
+
+        if (this.cameraID == "Dynamic")
+            this.camera = this.cameraDynamic;
+        else if (this.cameraID == "Static")
+            this.camera = this.cameraStatic;
     }
 
 	let factor = 0.5*Math.cos(currTime / this.speedOfShader) + 0.51;	//0.01 <= factor <= 1.01

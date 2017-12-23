@@ -74,6 +74,7 @@ Interface.prototype.addGameOptions = function()
 
     var groupB = this.gui.addFolder("Game settings");
     groupB.open();
+    groupB.add(this.scene, 'cameraID', ['Dynamic', 'Static']).name("Camera");
     groupB.add(this.scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
     groupB.add(this.scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
     groupB.add(listeners, "undo").name("Undo last move");
