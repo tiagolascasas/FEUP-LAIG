@@ -95,6 +95,7 @@ Oolong.prototype.initPositions = function()
         let black = new Piece(new Coord(-x, y, z), 'b', 200 + i);
         this.pieces.push(green, black);
     }
+    console.log(this.pieces);
 
     this.waiter = {"table":'c', "pos":'c'};
 };
@@ -330,17 +331,13 @@ Oolong.prototype.getPickedDish = function()
 
 Oolong.prototype.getRandomPiece = function()
 {
-    let currPlayer = this.currentPlayer;
+    let currPlayer = this.currentPlayer[0];
 
     for (let i = 0; i < this.pieces.length; i++)
     {
-        if (!this.pieces[i].placed)
-        {
-            if (currPlayer == "black" && this.pieces[i].pickID % 2 == 0)
-                return this.pieces[i];
-            else if (currPlayer == "green" && this.pieces[i].pickID % 2 == 1)
-                return this.pieces[i];
-        }
+        if (!this.pieces[i].placed && this.pieces[i].color == currPlayer)
+            return this.pieces[i];
+
     }
     this.running = false;
 };
