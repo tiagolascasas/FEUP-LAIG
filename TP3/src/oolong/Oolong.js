@@ -11,7 +11,7 @@ function Oolong(scene)
     this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
     this.matrix = mat4.identity(mat4.create());
 
-    //this.initPositions();
+    this.initPositions();
 }
 
 Oolong.prototype.init = function(mode, difficulty)
