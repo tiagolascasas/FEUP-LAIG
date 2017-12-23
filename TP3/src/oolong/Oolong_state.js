@@ -1,11 +1,11 @@
 Oolong.prototype.resetState = function()
 {
     //altered during the match
-    this.currentPickedPiece = 0;
-    this.currentPickedDish = 0;
+    this.currentPickedPiece = -1;
+    this.currentPickedDish = -1;
     this.newPick = false;
     this.moveIsValid = false;
-    this.currentPlayer = false;
+    this.currentPlayer = "none";
     this.currentPlayerType = false;
     this.winner = "none";
     this.winnerIsSet = false;
@@ -15,6 +15,7 @@ Oolong.prototype.resetState = function()
     this.board = null;
     this.doneUpdating = false;
     this.move = null;
+    this.retry = false;
 
     //state machine breakpoints
     this.readyForTurn = false;
@@ -61,22 +62,29 @@ Oolong.prototype.stateChoice = function()
     if (this.currentPlayerType == "human")
     {
         console.log("In Human");
-        if (this.currentPickedDish != 0 &&
-            this.currentPickedPiece != 0 &&
-            this.newPick)
-        {
-            let dish = this.getPickedDish();
 
-            if (!this.requestedMove)
-            {
-                this.request("move_human(" + dish.pos + ")");
-                this.requestedMove = true;
-            }
-            if (this.moveIsValid)
-            {
-                //this.makeMove();
-                console.log("valid human move");
-            }
+        let piece = this.getPickedPiece();
+        let dish = this.getPickedDish();
+
+        if (piece == null || dish == null)
+            return;
+
+        if (dish.table != this.waiter.table)
+            return;
+
+        if (!this.requestedMove)
+        {
+            this.request("move_human(" + dish.pos + ")");
+            this.requestedMove = true;
+        }
+        if (this.moveIsValid)
+        {
+            console.log("valid human move");
+            this.currentPickedDish = dish;
+            this.currentPickedPiece = piece;
+            this.readyForChoice = false;
+            this.readyForMove = true;
+            this.move = dish.pos;
         }
     }
     //if current player is AI, ask the logic to generate a move

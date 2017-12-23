@@ -11,7 +11,7 @@ function Oolong(scene)
     this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
     this.matrix = mat4.identity(mat4.create());
 
-    this.initPositions();
+    //this.initPositions();
 }
 
 Oolong.prototype.init = function(mode, difficulty)
@@ -22,6 +22,9 @@ Oolong.prototype.init = function(mode, difficulty)
 
     //(re)set mutable state machine flags to default values
     this.resetState();
+
+    //instantiate the dishes and pieces objects
+    this.initPositions();
 
     console.clear();
     console.log("Starting " + this.mode + " match with " + this.difficulty + " difficulty");
@@ -102,7 +105,7 @@ Oolong.prototype.initPositions = function()
 
 Oolong.prototype.updatePickedElements = function(pickID)
 {
-    if (pickID > 0 && pickID < 100 && !this.requestedMove)
+    if (pickID > 0 && pickID < 100)
     {
         if (this.currentPickedDish != pickID && this.running)
         {
@@ -111,7 +114,7 @@ Oolong.prototype.updatePickedElements = function(pickID)
             this.newPick = true;
         }
     }
-    else if (pickID >= 100 && pickID < 180 && !this.requestedMove)
+    else if (pickID >= 100)
     {
         if (this.currentPickedPiece != pickID && this.running)
         {
@@ -165,10 +168,11 @@ Oolong.prototype.request = function(answer)
         {
             case "valid":
                 parent.moveIsValid = true;
-                parent.requestedMove = false;
+                //parent.requestedMove = false;
                 break;
             case "invalid":
                 parent.moveIsValid = false;
+                //parent.retry = true;
                 parent.requestedMove = false;
                 break;
             case "b":
@@ -327,6 +331,22 @@ Oolong.prototype.getPickedDish = function()
                 return this.dishes[table][pos];
         }
     }
+    return null;
+};
+
+Oolong.prototype.getPickedPiece = function()
+{
+    let currPlayer = this.currentPlayer[0];
+    let id = this.currentPickedPiece;
+
+    for (let i = 0; i < this.pieces.length; i++)
+    {
+        if (this.pieces[i].pickID == id &&
+            !this.pieces[i].placed &&
+            this.pieces[i].color == currPlayer)
+            return this.pieces[i];
+    }
+    return null;
 };
 
 Oolong.prototype.getRandomPiece = function()
