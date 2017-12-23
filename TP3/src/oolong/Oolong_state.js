@@ -198,7 +198,7 @@ Oolong.prototype.update = function(time)
     //check for victory
     if (!this.requestedWinner && this.readyForVictory)
         this.stateVictory();
-/*
+
     //end game if one of the players wins
     if (this.winnerIsSet)
     {
@@ -207,7 +207,7 @@ Oolong.prototype.update = function(time)
             console.log(this.winner + " player wins!");
             this.running = false;
         }
-    }*/
+    }
 
     //update board
     if (this.readyForUpdate)

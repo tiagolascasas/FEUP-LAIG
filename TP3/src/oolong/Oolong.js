@@ -208,7 +208,7 @@ Oolong.prototype.request = function(answer)
                 break;
             case "victory_none":
                 parent.winner = "none";
-                parent.winnerIsSet = true;
+                parent.winnerIsSet = false;
                 parent.requestedWinner = false;
                 parent.readyForUpdate = true;
                 break;
