@@ -16,6 +16,8 @@ Oolong.prototype.resetState = function()
     this.doneUpdating = false;
     this.move = null;
     this.retry = false;
+    this.startCamera = false;
+    this.cameraPanning = false;
 
     //state machine breakpoints
     this.readyForTurn = false;
@@ -35,7 +37,7 @@ Oolong.prototype.resetState = function()
     this.requestedBoard = false;
 };
 
-Oolong.prototype.stateTurn = function()
+Oolong.prototype.stateTurn = function(time)
 {
     if (!this.requestedPlayerType)
     {
@@ -54,6 +56,43 @@ Oolong.prototype.stateTurn = function()
         this.request("waiter_pos");
         this.requestedWaiterTable = true;
     }
+
+    if (this.startCamera)
+    {
+        let startTable = this.previousWaiter.table;
+        let endTable = this.waiter.table;
+
+        if (startTable == endTable)
+        {
+            this.readyForTurn = false;
+            this.readyForChoice = true;
+            return;
+        }
+        let startCoord = this.calculateCoord(startTable, 'c');
+        let endCoord = this.calculateCoord(endTable, 'c');
+
+        startCoord.multiply(1.2);
+        endCoord.multiply(1.2);
+
+        this.cameraPan = new SimpleLinearAnimation(0.005, startCoord.point, endCoord.point);
+        this.baseTime = time;
+        this.cameraPanning = true;
+        this.startCamera = false;
+    }
+
+    if (this.cameraPanning)
+    {
+        time -=  this.baseTime;
+        let mat = this.cameraPan.calculateMatrix(time);
+
+        if (mat != null)
+            this.cameraMatrix = mat;
+        else
+        {
+            this.readyForTurn = false;
+            this.readyForChoice = true;
+        }
+    }
 };
 
 Oolong.prototype.stateChoice = function()
@@ -68,9 +107,6 @@ Oolong.prototype.stateChoice = function()
 
         if (piece == null || dish == null)
             return;
-/*
-        if (dish.table != this.waiter.table)
-            return;*/
 
         if (!this.requestedMove)
         {
@@ -131,14 +167,13 @@ Oolong.prototype.stateMove = function(time)
         let p4 = [dest.x, dest.y + 0.1, dest.z];
 
         this.bezier = new BezierAnimation(0.002, [p1, p2, p3, p4]);
-        this.time = 0;
         this.baseTime = time;
         this.startedMoving = true;
     }
     if (this.startedMoving && this.readyForAnimation)
     {
-        this.time = time - this.baseTime;
-        let mat = this.bezier.calculateMatrix(this.time);
+        time -= this.baseTime;
+        let mat = this.bezier.calculateMatrix(time);
         if (mat != null)
             this.matrix = mat;
         else
@@ -193,7 +228,7 @@ Oolong.prototype.update = function(time)
 
     //get current player and its type
     if (this.readyForTurn)
-        this.stateTurn();
+        this.stateTurn(time);
 
     //current player chooses a piece and a position
     if (this.readyForChoice)

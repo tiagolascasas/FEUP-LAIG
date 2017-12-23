@@ -194,7 +194,16 @@ Scene.prototype.update = function(currTime)
         this.oolong.update(currTime);
 
         if (this.cameraID == "Dynamic")
-            this.camera = this.cameraDynamic;
+        {
+            this.camera = this.cameraDynamic;/*
+            if (this.oolong.cameraMatrix != null)
+            {
+                let x = this.oolong.cameraMatrix[0][0];
+                let y = this.oolong.cameraMatrix[1][1];
+                let z = this.oolong.cameraMatrix[2][2];
+                this.camera.setPosition([x, y, z]);
+            }*/
+        }
         else if (this.cameraID == "Static")
             this.camera = this.cameraStatic;
     }

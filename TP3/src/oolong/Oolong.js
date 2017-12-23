@@ -101,6 +101,7 @@ Oolong.prototype.initPositions = function()
     console.log(this.pieces);
 
     this.waiter = {"table":'c', "pos":'c'};
+    this.previousWaiter = {"table":'c', "pos":'c'};
 };
 
 Oolong.prototype.updatePickedElements = function(pickID)
@@ -188,12 +189,12 @@ Oolong.prototype.request = function(answer)
             case "human":
                 parent.currentPlayerType = "human";
                 parent.requestedPlayerType = false;
-                parent.readyForTurn = false;
+                //parent.readyForTurn = false;
                 break;
             case "ai":
                 parent.currentPlayerType = "ai";
                 parent.requestedPlayerType = false;
-                parent.readyForTurn = false;
+                //parent.readyForTurn = false;
                 break;
             case "moved":
                 parent.readyForAnimation = true;
@@ -226,10 +227,14 @@ Oolong.prototype.request = function(answer)
         pattern = /waiter-[a-z]?[a-z]-[a-z]?[a-z]/;
         if (pattern.test(this.answer))
         {
-            parent.readyForChoice = true;
+            parent.previousWaiter.table = parent.waiter.table;
+            parent.previousWaiter.pos = parent.waiter.pos;
+
             parent.waiter.table = this.answer.split('-')[1];
             parent.waiter.pos = this.answer.split('-')[2];
             console.log("Waiter at pos " + parent.waiter.table + "-" + parent.waiter.pos);
+
+            parent.startCamera = true;
         }
         pattern = /\[.*/;
         if (pattern.test(this.answer))
