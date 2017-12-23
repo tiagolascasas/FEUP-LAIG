@@ -58,6 +58,7 @@ Interface.prototype.addGameOptions = function()
                         "abort": function()
                         {
                             oolong.request("quit");
+                            oolong.running = false;
                         },
                         "stop": function()
                         {

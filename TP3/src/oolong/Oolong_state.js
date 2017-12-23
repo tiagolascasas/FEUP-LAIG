@@ -68,13 +68,13 @@ Oolong.prototype.stateChoice = function()
 
         if (piece == null || dish == null)
             return;
-
+/*
         if (dish.table != this.waiter.table)
-            return;
+            return;*/
 
         if (!this.requestedMove)
         {
-            this.request("move_human(" + dish.pos + ")");
+            this.request("move_human(" + dish.table + "-" + dish.pos + ")");
             this.requestedMove = true;
         }
         if (this.moveIsValid)
