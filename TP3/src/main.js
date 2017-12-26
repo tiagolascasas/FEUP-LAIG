@@ -46,6 +46,7 @@ serialInclude([ '../lib/CGF.js',
                 'oolong/Piece.js',
                 'oolong/Dish.js',
                 'oolong/StateList.js',
+                'oolong/CameraOrbiter.js',
 
 				'primitives/PrimitiveRectangle.js',
 				'primitives/PrimitiveCylinder.js',

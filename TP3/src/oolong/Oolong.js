@@ -10,6 +10,7 @@ function Oolong(scene)
     this.dish = this.graph.getNodeByID("dish");
     this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
     this.matrix = mat4.identity(mat4.create());
+    this.cameraAngle = 0;
 
     this.initPositions();
 }

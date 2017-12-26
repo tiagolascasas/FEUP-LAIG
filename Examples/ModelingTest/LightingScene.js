@@ -24,6 +24,7 @@ LightingScene.prototype.init = function (application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
 	this.axis=new CGFaxis(this);
+    this.setUpdatePeriod(10);
 
 	this.appearance = new CGFappearance(this);
 	this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
@@ -39,6 +40,7 @@ LightingScene.prototype.init = function (application) {
 	];
 
     this.cyl = new PrimitiveCylinder(this, 1, 0.3, 0.7, 20, 20, 1, 1);
+    this.x = 0;
 };
 
 LightingScene.prototype.initLights = function () {
@@ -52,7 +54,7 @@ LightingScene.prototype.initLights = function () {
 
 
 LightingScene.prototype.initCameras = function () {
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 14, 13), vec3.fromValues(0, 0, 0));
+    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 14, 13), vec3.fromValues(0, 0, 0));
 };
 
 
@@ -81,4 +83,10 @@ LightingScene.prototype.display = function ()
 	this.appearance.apply();
 
     this.cyl.display();
-}
+};
+
+LightingScene.prototype.update = function(currTime)
+{
+    //console.log(this.camera);
+    this.camera.orbit(CGFcameraAxis.Y, this.x += 0.00001);
+};

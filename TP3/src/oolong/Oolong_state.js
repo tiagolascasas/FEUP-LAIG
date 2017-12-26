@@ -68,13 +68,8 @@ Oolong.prototype.stateTurn = function(time)
             this.readyForChoice = true;
             return;
         }
-        let startCoord = this.calculateCoord(startTable, 'c');
-        let endCoord = this.calculateCoord(endTable, 'c');
 
-        startCoord.multiply(1.2);
-        endCoord.multiply(1.2);
-
-        this.cameraPan = new SimpleLinearAnimation(0.005, startCoord.point, endCoord.point);
+        this.cameraPan = new CameraOrbiter(startTable, endTable, 0.003);
         this.baseTime = time;
         this.cameraPanning = true;
         this.startCamera = false;
@@ -83,10 +78,10 @@ Oolong.prototype.stateTurn = function(time)
     if (this.cameraPanning)
     {
         time -=  this.baseTime;
-        let mat = this.cameraPan.calculateMatrix(time);
+        let angle = this.cameraPan.calculateAngle(time);
 
-        if (mat != null)
-            this.cameraMatrix = mat;
+        if (angle != null)
+            this.cameraAngle = angle;
         else
         {
             this.readyForTurn = false;

@@ -32,7 +32,7 @@ CircularAnimation.prototype.constructor=CircularAnimation;
   */
 CircularAnimation.prototype.calculateMatrix = function(time)
 {
-	da = this.initialAngle + this.w * time;
+	let da = this.initialAngle + this.w * time;
 	if (da >= this.rotationAngle + this.initialAngle)
 		return null;
 

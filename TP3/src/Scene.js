@@ -90,8 +90,11 @@ Scene.prototype.initLights = function()
  */
 Scene.prototype.initCameras = function()
 {
-    this.cameraDynamic = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+    this.cameraDynamic = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 15, 20), vec3.fromValues(0, 0, 0));
     this.cameraStatic = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(1, 30, 1), vec3.fromValues(0, 0, 0));
+    this.cameraFree = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+
+    this.cameraStatic.orbit(CGFcameraAxis.Y, -Math.PI / 4);
     this.camera = this.cameraDynamic;
 };
 
@@ -193,19 +196,24 @@ Scene.prototype.update = function(currTime)
     	this.graph.objGraph.update(currTime);
         this.oolong.update(currTime);
 
-        if (this.cameraID == "Dynamic")
+        switch (this.cameraID)
         {
-            this.camera = this.cameraDynamic;/*
-            if (this.oolong.cameraMatrix != null)
-            {
-                let x = this.oolong.cameraMatrix[0][0];
-                let y = this.oolong.cameraMatrix[1][1];
-                let z = this.oolong.cameraMatrix[2][2];
-                this.camera.setPosition([x, y, z]);
-            }*/
+            case "Dynamic":
+                this.cameraDynamic = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 15, 20), vec3.fromValues(0, 0, 0));
+                this.camera = this.cameraDynamic;
+                let angle = this.oolong.cameraAngle;
+                this.camera.orbit(CGFcameraAxis.Y, angle);
+                this.interface.setActiveCamera(null);
+                break;
+            case "Static":
+                this.camera = this.cameraStatic;
+                this.interface.setActiveCamera(null);
+                break;
+            case "Free":
+                this.camera = this.cameraFree;
+                this.interface.setActiveCamera(this.camera);
+                break;
         }
-        else if (this.cameraID == "Static")
-            this.camera = this.cameraStatic;
     }
 
 	let factor = 0.5*Math.cos(currTime / this.speedOfShader) + 0.51;	//0.01 <= factor <= 1.01
