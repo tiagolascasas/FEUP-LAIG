@@ -199,8 +199,8 @@ Scene.prototype.update = function(currTime)
         switch (this.cameraID)
         {
             case "Dynamic":
-                this.cameraDynamic = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(0, 15, 20), vec3.fromValues(0, 0, 0));
                 this.camera = this.cameraDynamic;
+                this.camera.setPosition(vec3.fromValues(0, 15, 20));
                 let angle = this.oolong.cameraAngle;
                 this.camera.orbit(CGFcameraAxis.Y, angle);
                 this.interface.setActiveCamera(null);
