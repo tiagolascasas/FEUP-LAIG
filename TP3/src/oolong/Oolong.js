@@ -358,3 +358,11 @@ Oolong.prototype.getRandomPiece = function()
     }
     this.running = false;
 };
+
+Oolong.prototype.resignCurrentPlayer = function()
+{
+    this.running = false;
+    this.winnerIsSet = true;
+    this.winner = this.currentPlayer == "black" ? "green" : "black";
+    console.log("Player " + this.winner + " wins!");
+};

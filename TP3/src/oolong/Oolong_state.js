@@ -102,11 +102,8 @@ Oolong.prototype.stateChoice = function()
         let parent = this;
         let onTimeout = function()
         {
-            parent.running = false;
-            parent.winnerIsSet = true;
-            parent.winner = parent.currentPlayer == "black" ? "green" : "black";
             console.log("Timeout exceeded for player " + parent.currentPlayer);
-            console.log("Player " + parent.winner + " wins!");
+            parent.resignCurrentPlayer();
         };
 
         if (this.timeout == null)
