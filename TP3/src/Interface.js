@@ -49,7 +49,7 @@ Interface.prototype.addGameOptions = function()
 
     let listeners = {   "init": function()
                         {
-                            oolong.init(scene.mode, scene.difficulty);
+                            oolong.init(scene.mode, scene.difficulty, scene.timeout);
                         },
                         "undo": function()
                         {
@@ -76,12 +76,16 @@ Interface.prototype.addGameOptions = function()
     groupA.add(listeners, "abort").name("Shutdown SICStus server");
     groupA.add(listeners, "stop").name("Abort current match");
 
-    var groupB = this.gui.addFolder("Game settings");
+    var groupC = this.gui.addFolder("Game runtime settings");
+    groupC.open();
+    groupC.add(scene, 'cameraID', ['Dynamic', 'Static', 'Free']).name("Camera");
+    groupC.add(scene, 'currentScene', keys).name('Background scene');
+    groupC.add(listeners, "undo").name("Undo last move");
+
+    var groupB = this.gui.addFolder("Game initial settings");
     groupB.open();
-    groupB.add(scene, 'currentScene', keys).name('Background scene');
-    groupB.add(scene, 'cameraID', ['Dynamic', 'Static', 'Free']).name("Camera");
     groupB.add(scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
     groupB.add(scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
-    groupB.add(listeners, "undo").name("Undo last move");
+    groupB.add(scene, 'timeout', 10, 30).name("Turn timeout");
     groupB.add(listeners, "init").name("Start/reset game");
 };

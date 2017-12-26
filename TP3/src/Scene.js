@@ -19,6 +19,7 @@ function Scene(gui)
     this.mode = "1vs1";
     this.difficulty = "Easy";
     this.cameraID = "Dynamic";
+    this.timeout = 20;
 
     this.initGraphs();
 };

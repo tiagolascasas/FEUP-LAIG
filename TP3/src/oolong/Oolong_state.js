@@ -19,6 +19,7 @@ Oolong.prototype.resetState = function()
     this.startCamera = false;
     this.cameraPanning = false;
     this.cameraAngle = 0;
+    this.timeout = null;
 
     //state machine breakpoints
     this.readyForTurn = false;
@@ -98,6 +99,18 @@ Oolong.prototype.stateChoice = function()
     {
         let piece = this.getPickedPiece();
         let dish = this.getPickedDish();
+        let parent = this;
+        let onTimeout = function()
+        {
+            parent.running = false;
+            parent.winnerIsSet = true;
+            parent.winner = parent.currentPlayer == "black" ? "green" : "black";
+            console.log("Timeout exceeded for player " + parent.currentPlayer);
+            console.log("Player " + parent.winner + " wins!");
+        };
+
+        if (this.timeout == null)
+            this.timeout = setTimeout(onTimeout, this.timeoutValue);
 
         if (piece == null || dish == null)
             return;
@@ -109,6 +122,8 @@ Oolong.prototype.stateChoice = function()
         }
         if (this.moveIsValid)
         {
+            clearTimeout(this.timeout);
+            this.timeout = null;
             this.currentPickedDish = dish;
             this.currentPickedPiece = piece;
             this.readyForChoice = false;

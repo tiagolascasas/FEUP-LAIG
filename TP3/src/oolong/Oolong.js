@@ -15,11 +15,12 @@ function Oolong(scene)
     this.initPositions();
 }
 
-Oolong.prototype.init = function(mode, difficulty)
+Oolong.prototype.init = function(mode, difficulty, timeout)
 {
     //immutable during the match
     this.mode = mode;
     this.difficulty = difficulty;
+    this.timeoutValue = timeout * 1000;
 
     //(re)set mutable state machine flags to default values
     this.resetState();
@@ -28,7 +29,7 @@ Oolong.prototype.init = function(mode, difficulty)
     this.initPositions();
 
     console.clear();
-    console.log("Starting " + this.mode + " match with " + this.difficulty + " difficulty");
+    console.log("Starting " + this.mode + " match with " + this.difficulty + " difficulty and turn timeout " + timeout + "s");
 
     this.request("reset");
     this.request("init");
