@@ -37,10 +37,10 @@
             <MATERIAL id="material1" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="2" z="0"/>
+            <TRANSLATION x="0" y="0" z="-3"/>
 
             <DESCENDANTS>
-                <LEAF type="sphere" args="1 20 20"/>
+                <LEAF type="rectangle" args="-2 2 2 -2"/>
             </DESCENDANTS>
         </NODE>
     </NODES>
