@@ -9,7 +9,6 @@ const DEGREE_TO_RAD = Math.PI / 180;
 function Scene(gui)
 {
     CGFscene.call(this);
-
     this.interface = gui;
 
     this.lightValues = {};
@@ -20,6 +19,8 @@ function Scene(gui)
     this.mode = "1vs1";
     this.difficulty = "Easy";
     this.cameraID = "Dynamic";
+
+    this.initGraphs();
 };
 
 Scene.prototype = Object.create(CGFscene.prototype);
@@ -49,6 +50,16 @@ Scene.prototype.init = function(application)
 	this.customShader = new CGFshader(this.gl,
                                     "../lib/CGF/shaders/Phong/phong-vertex.glsl",
                                     "../lib/CGF/shaders/Phong/phong-fragment.glsl");
+};
+
+Scene.prototype.initGraphs = function()
+{
+    this.scenes = {
+        "Scene 1": new SceneGraphParser("scene1.xml", this, false),
+        "Scene 2": new SceneGraphParser("scene2.xml", this, false),
+        "Scene 3": new SceneGraphParser("scene3.xml", this, false)
+    };
+    this.currentScene = "Scene 1";
 };
 
 /**
@@ -141,7 +152,6 @@ Scene.prototype.display = function()
     this.applyViewMatrix();
 
     this.pushMatrix();
-
     if (this.graph.loadedOk)
     {
         this.multMatrix(this.graph.initialTransforms);
@@ -174,6 +184,11 @@ Scene.prototype.display = function()
 
         this.pushMatrix();
         this.oolong.display();
+        this.popMatrix();
+
+        this.pushMatrix();
+        if (this.scenes[this.currentScene].loadedOk)
+            this.scenes[this.currentScene].displayScene();
         this.popMatrix();
     }
 	else

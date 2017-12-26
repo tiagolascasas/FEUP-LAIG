@@ -24,10 +24,7 @@ let main = function()
     app.init();
     app.setScene(scene);
     app.setInterface(gui);
-
-	let filename = getUrlVars()['file'] || "oolong.xml";
-	let graph = new SceneGraphParser(filename, scene);
-
+    let graph = new SceneGraphParser("oolong.xml", scene, true);
     app.run();
 };
 

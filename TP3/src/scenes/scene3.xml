@@ -1,0 +1,48 @@
+<SCENE>
+
+    <!-- Textures -->
+    <TEXTURES>
+        <TEXTURE id="wood">
+            <file path="textures/wood.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+    </TEXTURES>
+
+    <MATERIALS>
+        <!-- A default material -->
+        <MATERIAL id="defaultMaterial">
+            <shininess value="1" />
+            <specular r="0.1" g="0.1" b="0.1" a="1" />
+            <diffuse r="0.4" g="0.4" b="0.4" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+        </MATERIAL>
+
+        <MATERIAL id="material3">
+            <shininess value="1" />
+            <specular r="1" g="0.0" b="1.0" a="1" />
+            <diffuse r="1" g="0.0" b="1.0" a="1" />
+            <ambient r="1" g="0.0" b="1.0" a="1" />
+            <emission r="1" g="0.0" b="1.0" a="1" />
+        </MATERIAL>
+    </MATERIALS>
+
+    <!-- The nodes -->
+    <NODES>
+        <!-- id of root node -->
+        <ROOT id="root" />
+
+        <!-- The root node -->
+        <NODE id="root">
+            <MATERIAL id="material3" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0" y="2" z="0"/>
+
+            <DESCENDANTS>
+                <LEAF type="sphere" args="1 20 20"/>
+            </DESCENDANTS>
+        </NODE>
+    </NODES>
+
+</SCENE>

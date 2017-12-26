@@ -15,13 +15,15 @@ let NODES_INDEX = 6;
  * definitions
  * @constructor
  */
-function SceneGraphParser(filename, scene)
+function SceneGraphParser(filename, scene, initScene)
 {
     this.loadedOk = null;
 
     // Establish bidirectional references between scene and graph.
     this.scene = scene;
     scene.graph = this;
+
+    this.initScene = initScene;
 
 	this.objGraph = new ObjectGraph(this.scene);	//Scene graph proper
 
@@ -65,8 +67,11 @@ SceneGraphParser.prototype.onXMLReady = function()
 
     this.loadedOk = true;
 
-    // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
-    this.scene.onGraphLoaded();
+    if (this.initScene)
+    {
+        // As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
+        this.scene.onGraphLoaded();
+    }
 };
 
 /**
@@ -88,41 +93,44 @@ SceneGraphParser.prototype.parseLSXFile = function(rootElement)
     }
 
     let error;
-
+    let index;
+    
     // Processes each node, verifying errors.
 
-    // <INITIALS>
-    let index;
-    if ((index = nodeNames.indexOf("INITIALS")) == -1)
-        return "tag <INITIALS> missing";
-    else {
-        if (index != INITIALS_INDEX)
-            this.onXMLMinorError("tag <INITIALS> out of order");
+    if (this.initScene)
+    {
+        // <INITIALS>
+        if ((index = nodeNames.indexOf("INITIALS")) == -1)
+            return "tag <INITIALS> missing";
+        else {
+            if (index != INITIALS_INDEX)
+                this.onXMLMinorError("tag <INITIALS> out of order");
 
-        if ((error = this.parseInitials(nodes[index])) != null )
-            return error;
-    }
+            if ((error = this.parseInitials(nodes[index])) != null )
+                return error;
+        }
 
-    // <ILLUMINATION>
-    if ((index = nodeNames.indexOf("ILLUMINATION")) == -1)
-        return "tag <ILLUMINATION> missing";
-    else {
-        if (index != ILLUMINATION_INDEX)
-            this.onXMLMinorError("tag <ILLUMINATION> out of order");
+        // <ILLUMINATION>
+        if ((index = nodeNames.indexOf("ILLUMINATION")) == -1)
+            return "tag <ILLUMINATION> missing";
+        else {
+            if (index != ILLUMINATION_INDEX)
+                this.onXMLMinorError("tag <ILLUMINATION> out of order");
 
-        if ((error = this.parseIllumination(nodes[index])) != null )
-            return error;
-    }
+            if ((error = this.parseIllumination(nodes[index])) != null )
+                return error;
+        }
 
-    // <LIGHTS>
-    if ((index = nodeNames.indexOf("LIGHTS")) == -1)
-        return "tag <LIGHTS> missing";
-    else {
-        if (index != LIGHTS_INDEX)
-            this.onXMLMinorError("tag <LIGHTS> out of order");
+        // <LIGHTS>
+        if ((index = nodeNames.indexOf("LIGHTS")) == -1)
+            return "tag <LIGHTS> missing";
+        else {
+            if (index != LIGHTS_INDEX)
+                this.onXMLMinorError("tag <LIGHTS> out of order");
 
-        if ((error = this.parseLights(nodes[index])) != null )
-            return error;
+            if ((error = this.parseLights(nodes[index])) != null )
+                return error;
+        }
     }
 
     // <TEXTURES>

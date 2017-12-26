@@ -67,6 +67,9 @@ Interface.prototype.addGameOptions = function()
                     };
 
     this.gui.width = 340;
+    let keys = [];
+    for (let key in scene.scenes)
+        keys.push(key);
 
     var groupA = this.gui.addFolder("Global settings");
     groupA.close();
@@ -75,9 +78,10 @@ Interface.prototype.addGameOptions = function()
 
     var groupB = this.gui.addFolder("Game settings");
     groupB.open();
-    groupB.add(this.scene, 'cameraID', ['Dynamic', 'Static', 'Free']).name("Camera");
-    groupB.add(this.scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
-    groupB.add(this.scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
+    groupB.add(scene, 'currentScene', keys).name('Background scene');
+    groupB.add(scene, 'cameraID', ['Dynamic', 'Static', 'Free']).name("Camera");
+    groupB.add(scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
+    groupB.add(scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
     groupB.add(listeners, "undo").name("Undo last move");
     groupB.add(listeners, "init").name("Start/reset game");
 };
