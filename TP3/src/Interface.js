@@ -71,7 +71,7 @@ Interface.prototype.addGameOptions = function()
     for (let key in scene.scenes)
         keys.push(key);
 
-    var groupA = this.gui.addFolder("Global settings");
+    var groupA = this.gui.addFolder("Other settings");
     groupA.close();
     groupA.add(listeners, "abort").name("Shutdown SICStus server");
     groupA.add(listeners, "stop").name("Abort current match");

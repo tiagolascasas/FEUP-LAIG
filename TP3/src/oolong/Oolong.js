@@ -99,7 +99,6 @@ Oolong.prototype.initPositions = function()
         let black = new Piece(new Coord(-x, y, z), 'b', 200 + i);
         this.pieces.push(green, black);
     }
-    console.log(this.pieces);
 
     this.waiter = {"table":'c', "pos":'c'};
     this.previousWaiter = {"table":'c', "pos":'c'};
@@ -112,7 +111,6 @@ Oolong.prototype.updatePickedElements = function(pickID)
         if (this.currentPickedDish != pickID && this.running)
         {
             this.currentPickedDish = pickID;
-            console.log("Current Picked dish: " + this.currentPickedDish);
             this.newPick = true;
         }
     }
@@ -121,7 +119,6 @@ Oolong.prototype.updatePickedElements = function(pickID)
         if (this.currentPickedPiece != pickID && this.running)
         {
             this.currentPickedPiece = pickID;
-            console.log("Current Picked piece: " + this.currentPickedPiece);
             this.newPick = true;
         }
     }
@@ -218,7 +215,6 @@ Oolong.prototype.request = function(answer)
 
                 parent.waiter.table = answer.split('-')[0];
                 parent.waiter.pos = answer.split('-')[1];
-                console.log("Waiter at pos " + parent.waiter.table + "-" + parent.waiter.pos);
                 parent.startCamera = true;
                 break;
             case 14:
@@ -318,8 +314,6 @@ Oolong.prototype.parseBoardState = function(board)
         positions[i][1] = positions[i][1].replace("]", "");
         positions[i][2] = positions[i][2].replace("]", "");
     }
-    //this.states.addState(positions);
-    console.log(positions);
     return positions;
 };
 

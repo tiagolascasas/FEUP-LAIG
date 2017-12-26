@@ -40,19 +40,19 @@ Oolong.prototype.resetState = function()
 
 Oolong.prototype.stateTurn = function(time)
 {
-    if (!this.requestedPlayerType)
+    if (!this.requestedPlayerType && !this.startCamera && !this.cameraPanning)
     {
         this.request("current_player_type");
         this.requestedPlayerType = true;
     }
 
-    if (!this.requestedPlayer)
+    if (!this.requestedPlayer && !this.startCamera && !this.cameraPanning)
     {
         this.request("current_player");
         this.requestedPlayer = true;
     }
 
-    if (!this.requestedWaiterTable)
+    if (!this.requestedWaiterTable && !this.startCamera && !this.cameraPanning)
     {
         this.request("waiter_pos");
         this.requestedWaiterTable = true;
@@ -70,7 +70,7 @@ Oolong.prototype.stateTurn = function(time)
             return;
         }
 
-        this.cameraPan = new CameraOrbiter(startTable, endTable, 0.003);
+        this.cameraPan = new CameraOrbiter(startTable, endTable, 0.004);
         this.baseTime = time;
         this.cameraPanning = true;
         this.startCamera = false;
@@ -96,8 +96,6 @@ Oolong.prototype.stateChoice = function()
     //if current player is human, get position from him
     if (this.currentPlayerType == "human")
     {
-        console.log("In Human");
-
         let piece = this.getPickedPiece();
         let dish = this.getPickedDish();
 
@@ -111,7 +109,6 @@ Oolong.prototype.stateChoice = function()
         }
         if (this.moveIsValid)
         {
-            console.log("valid human move");
             this.currentPickedDish = dish;
             this.currentPickedPiece = piece;
             this.readyForChoice = false;
@@ -134,7 +131,6 @@ Oolong.prototype.stateChoice = function()
         if (this.aiMoveReady == true)
         {
             this.aiMoveReady = false;
-            console.log("Making AI move " + this.aiMove);
             this.currentPickedDish = this.dishes[this.waiter.table][this.aiMove];
             this.currentPickedPiece = this.getRandomPiece();
             this.readyForChoice = false;
@@ -204,7 +200,6 @@ Oolong.prototype.stateUpdate = function()
 
     if (this.board != null)
     {
-        console.log("updating board...");
         let board = this.parseBoardState(this.board);
         this.doneUpdating = true;
     }
@@ -245,6 +240,7 @@ Oolong.prototype.update = function(time)
         {
             console.log(this.winner + " player wins!");
             this.running = false;
+            return;
         }
     }
 
