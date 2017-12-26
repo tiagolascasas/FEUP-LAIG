@@ -18,6 +18,7 @@ Oolong.prototype.resetState = function()
     this.retry = false;
     this.startCamera = false;
     this.cameraPanning = false;
+    this.cameraAngle = 0;
 
     //state machine breakpoints
     this.readyForTurn = false;

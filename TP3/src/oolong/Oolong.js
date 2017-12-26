@@ -164,83 +164,79 @@ Oolong.prototype.request = function(answer)
     request.open('GET', 'http://localhost:' + requestPort + '/' + answer, true);
     request.onload = function(data)
     {
-        this.answer = data.target.response;
-        console.log(this.answer);
-        switch (this.answer)
+        let code = data.target.response.split("/")[0];
+        let answer = data.target.response.split("/")[1];
+        console.log("Code: " + code + "| Answer: " + answer);
+
+        switch (parseInt(code))
         {
-            case "valid":
-                parent.moveIsValid = true;
-                //parent.requestedMove = false;
+            case 0:
+                this.running = false;
                 break;
-            case "invalid":
-                parent.moveIsValid = false;
-                //parent.retry = true;
-                parent.requestedMove = false;
+            case 7:
+                parent.board = answer;
                 break;
-            case "b":
-                parent.currentPlayer = "black";
-                parent.requestedPlayer = false;
-                //parent.readyForChoice = true;
+            case 8:
+                if (answer == "victory_black")
+                {
+                    parent.winner = "black";
+                    parent.winnerIsSet = true;
+                    parent.requestedWinner = false;
+                    parent.readyForUpdate = true;
+                }
+                if (answer == "victory_green")
+                {
+                    parent.winner = "green";
+                    parent.winnerIsSet = true;
+                    parent.requestedWinner = false;
+                    parent.readyForUpdate = true;
+                }
+                if (answer == "victory_none")
+                {
+                    parent.winner = "none";
+                    parent.winnerIsSet = false;
+                    parent.requestedWinner = false;
+                    parent.readyForUpdate = true;
+                }
                 break;
-            case "g":
-                parent.currentPlayer = "green";
-                parent.requestedPlayer = false;
-                //parent.readyForChoice = true;
+            case 10:
+                if (answer == "valid")
+                    parent.moveIsValid = true;
+                if (answer == "invalid")
+                    parent.moveIsValid = false;
                 break;
-            case "human":
-                parent.currentPlayerType = "human";
-                parent.requestedPlayerType = false;
-                //parent.readyForTurn = false;
+            case 11:
+                parent.aiMoveReady = true;
+                parent.aiMove = answer;
                 break;
-            case "ai":
-                parent.currentPlayerType = "ai";
-                parent.requestedPlayerType = false;
-                //parent.readyForTurn = false;
-                break;
-            case "moved":
+            case 12:
                 parent.readyForAnimation = true;
                 break;
-            case "victory_black":
-                parent.winner = "black";
-                parent.winnerIsSet = true;
-                parent.requestedWinner = false;
-                parent.readyForUpdate = true;
-                break;
-            case "victory_green":
-                parent.winner = "green";
-                parent.winnerIsSet = true;
-                parent.requestedWinner = false;
-                parent.readyForUpdate = true;
-                break;
-            case "victory_none":
-                parent.winner = "none";
-                parent.winnerIsSet = false;
-                parent.requestedWinner = false;
-                parent.readyForUpdate = true;
-                break;
-        }
-        let pattern = /ai-[a-z]?[a-z]/;
-        if (pattern.test(this.answer))
-        {
-            parent.aiMoveReady = true;
-            parent.aiMove = this.answer.split('-')[1];
-        }
-        pattern = /waiter-[a-z]?[a-z]-[a-z]?[a-z]/;
-        if (pattern.test(this.answer))
-        {
-            parent.previousWaiter.table = parent.waiter.table;
-            parent.previousWaiter.pos = parent.waiter.pos;
+            case 13:
+                parent.previousWaiter.table = parent.waiter.table;
+                parent.previousWaiter.pos = parent.waiter.pos;
 
-            parent.waiter.table = this.answer.split('-')[1];
-            parent.waiter.pos = this.answer.split('-')[2];
-            console.log("Waiter at pos " + parent.waiter.table + "-" + parent.waiter.pos);
-
-            parent.startCamera = true;
-        }
-        pattern = /\[.*/;
-        if (pattern.test(this.answer))
-        {
-            parent.board = this.answer;
+                parent.waiter.table = answer.split('-')[0];
+                parent.waiter.pos = answer.split('-')[1];
+                console.log("Waiter at pos " + parent.waiter.table + "-" + parent.waiter.pos);
+                parent.startCamera = true;
+                break;
+            case 14:
+                if (answer == "human")
+                    parent.currentPlayerType = "human";
+                if (answer == "ai")
+                    parent.currentPlayerType = "ai";
+                parent.requestedPlayerType = false;
+                break;
+            case 15:
+                if (answer == "b")
+                    parent.currentPlayer = "black";
+                if (answer == "g")
+                    parent.currentPlayer = "green";
+                parent.requestedPlayer = false;
+                break;
+            default:
+                break;
         }
     };
     request.onerror = function(data)

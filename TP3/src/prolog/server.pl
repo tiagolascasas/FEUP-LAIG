@@ -112,19 +112,19 @@ parse_input(quit, goodbye).
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 
-parse_input(request_init, 'Game initialized') :- request_init.
-parse_input(request_start_1vs1, '1vs1 started') :- request_start_1vs1.
-parse_input(request_start_1vsAI, '1vsAI started') :- request_start_1vsAI.
-parse_input(request_start_AIvsAI, 'AIvsAI started') :- request_start_AIvsAI.
-parse_input(request_AI_easy, 'AI set to easy') :- request_AI_easy.
-parse_input(request_AI_hard, 'AI set to hard') :- request_AI_hard.
-parse_input(request_board, B) :- request_board(B).
-parse_input(request_victory, P) :- request_victory(P).
-parse_input(request_reset, 'Game reset') :- request_reset.
-parse_input(request_move_human(T-P), V) :- request_move_human(T-P, V).
-parse_input(request_move_AI, ai-P) :- request_move_AI(P).
-parse_input(request_move(P), 'moved') :- waiterPos(T, _), move(T, P).
-parse_input(request_waiter_pos, waiter-T-P) :- request_waiter_pos(T, P).
-parse_input(request_current_player_type, T) :- request_current_player_type(T).
-parse_input(request_current_player, P) :- currentPiece(P).
-parse_input(request_quit, goodbye).
+parse_input(request_quit, 000-goodbye).
+parse_input(request_init, '001/Game initialized') :- request_init.
+parse_input(request_start_1vs1, '002/1vs1 started') :- request_start_1vs1.
+parse_input(request_start_1vsAI, '003/1vsAI started') :- request_start_1vsAI.
+parse_input(request_start_AIvsAI, '004/AIvsAI started') :- request_start_AIvsAI.
+parse_input(request_AI_easy, '005/AI set to easy') :- request_AI_easy.
+parse_input(request_AI_hard, '006/AI set to hard') :- request_AI_hard.
+parse_input(request_board, 007/B) :- request_board(B).
+parse_input(request_victory, 008/P) :- request_victory(P).
+parse_input(request_reset, '009/Game reset') :- request_reset.
+parse_input(request_move_human(T-P), 010/V) :- request_move_human(T-P, V).
+parse_input(request_move_AI, 011/P) :- request_move_AI(P).
+parse_input(request_move(P), '012/moved') :- waiterPos(T, _), move(T, P).
+parse_input(request_waiter_pos, 013/T-P) :- request_waiter_pos(T, P).
+parse_input(request_current_player_type, 014/T) :- request_current_player_type(T).
+parse_input(request_current_player, 015/P) :- currentPiece(P).
