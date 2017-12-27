@@ -55,12 +55,15 @@ Interface.prototype.addGameOptions = function()
                         {
                             oolong.undo();
                         },
-                        "abort": function()
+                        "redo": function()
+                        {
+                            oolong.redo();
+                        },
+                        "shutdown": function()
                         {
                             oolong.request("quit");
-                            oolong.running = false;
                         },
-                        "stop": function()
+                        "resign": function()
                         {
                             oolong.resignCurrentPlayer();
                         }
@@ -73,14 +76,15 @@ Interface.prototype.addGameOptions = function()
 
     var groupA = this.gui.addFolder("Other settings");
     groupA.close();
-    groupA.add(listeners, "abort").name("Shutdown SICStus server");
+    groupA.add(listeners, "shutdown").name("Shutdown SICStus server");
 
     var groupC = this.gui.addFolder("Match runtime settings");
     groupC.open();
     groupC.add(scene, 'cameraID', ['Dynamic', 'Static', 'Free']).name("Camera");
     groupC.add(scene, 'currentScene', keys).name('Background scene');
-    groupC.add(listeners, "undo").name("Undo last move");
-    groupC.add(listeners, "stop").name("Resign from current match");
+    groupC.add(listeners, "undo").name("Undo move");
+    groupC.add(listeners, "redo").name("Redo move");
+    groupC.add(listeners, "resign").name("Resign from current match");
 
     var groupB = this.gui.addFolder("Match initial settings");
     groupB.open();

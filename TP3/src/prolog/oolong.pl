@@ -322,4 +322,14 @@ request_current_player_type(human) :- gameType('1vs1').
 request_current_player_type(human) :- gameType('1vsAI'), currentPiece(b).
 request_current_player_type(ai) :- gameType('1vsAI'), currentPiece(g).
 request_current_player_type(ai) :- gameType('AIvsAI').
+
+request_set_board(Board) :-
+            retractall(pos(_,_,_)),
+            assertNewBoard(Board),
+            flipCurrentPiece.
+assertNewBoard([]).
+assertNewBoard([Table-Pos-Piece|Bs]) :-
+            assert(pos(Table, Pos, Piece)),
+            assertNewBoard(Bs).
+request_set_waiter(Table-Pos) :- retractall(waiterPos(_,_)), assert(waiterPos(Table, Pos)).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

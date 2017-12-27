@@ -39,6 +39,43 @@ Oolong.prototype.resetState = function()
     this.requestedBoard = false;
 };
 
+Oolong.prototype.update = function(time)
+{
+    if (!this.running)
+        return;
+
+    //get current player and its type
+    if (this.readyForTurn)
+        this.stateTurn(time);
+
+    //current player chooses a piece and a position
+    if (this.readyForChoice)
+        this.stateChoice();
+
+    //move the piece
+    if (this.readyForMove)
+        this.stateMove(time);
+
+    //check for victory
+    if (!this.requestedWinner && this.readyForVictory)
+        this.stateVictory();
+
+    //end game if one of the players wins
+    if (this.winnerIsSet)
+    {
+        if (this.winner == "black" || this.winner == "green")
+        {
+            console.log(this.winner + " player wins!");
+            this.running = false;
+            return;
+        }
+    }
+
+    //update board
+    if (this.readyForUpdate)
+        this.stateUpdate();
+};
+
 Oolong.prototype.stateTurn = function(time)
 {
     if (!this.requestedPlayerType && !this.startCamera && !this.cameraPanning)
@@ -212,7 +249,7 @@ Oolong.prototype.stateUpdate = function()
 
     if (this.board != null)
     {
-        let board = this.parseBoardState(this.board);
+        this.parseBoard(this.board);
         this.doneUpdating = true;
     }
 
@@ -222,41 +259,4 @@ Oolong.prototype.stateUpdate = function()
         //back at beginning
         this.readyForTurn = true;
     }
-};
-
-Oolong.prototype.update = function(time)
-{
-    if (!this.running)
-        return;
-
-    //get current player and its type
-    if (this.readyForTurn)
-        this.stateTurn(time);
-
-    //current player chooses a piece and a position
-    if (this.readyForChoice)
-        this.stateChoice();
-
-    //move the piece
-    if (this.readyForMove)
-        this.stateMove(time);
-
-    //check for victory
-    if (!this.requestedWinner && this.readyForVictory)
-        this.stateVictory();
-
-    //end game if one of the players wins
-    if (this.winnerIsSet)
-    {
-        if (this.winner == "black" || this.winner == "green")
-        {
-            console.log(this.winner + " player wins!");
-            this.running = false;
-            return;
-        }
-    }
-
-    //update board
-    if (this.readyForUpdate)
-        this.stateUpdate();
 };

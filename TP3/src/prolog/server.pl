@@ -128,3 +128,5 @@ parse_input(request_move(P), '012/moved') :- waiterPos(T, _), move(T, P).
 parse_input(request_waiter_pos, 013/T-P) :- request_waiter_pos(T, P).
 parse_input(request_current_player_type, 014/T) :- request_current_player_type(T).
 parse_input(request_current_player, 015/P) :- currentPiece(P).
+parse_input(request_set_board(Board), '016/Board set') :- request_set_board(Board).
+parse_input(request_set_waiter(Waiter), '017/Waiter set') :- request_set_waiter(Waiter).

@@ -28,6 +28,9 @@ Oolong.prototype.init = function(mode, difficulty, timeout)
     //instantiate the dishes and pieces objects
     this.initPositions();
 
+    //create new state list for undo/redo moves
+    this.stateList = new StateList();
+
     console.clear();
     console.log("Starting " + this.mode + " match with " + this.difficulty + " difficulty and turn timeout " + timeout + "s");
 
@@ -162,11 +165,11 @@ Oolong.prototype.request = function(answer)
     request.open('GET', 'http://localhost:' + requestPort + '/' + answer, true);
     request.onload = function(data)
     {
-        let code = data.target.response.split("/")[0];
+        let code = parseInt(data.target.response.split("/")[0]);
         let answer = data.target.response.split("/")[1];
         console.log("Code: " + code + "| Answer: " + answer);
 
-        switch (parseInt(code))
+        switch (code)
         {
             case 0:
                 this.running = false;
@@ -233,6 +236,7 @@ Oolong.prototype.request = function(answer)
                 parent.requestedPlayer = false;
                 break;
             default:
+                //other requests return only predetermined data with no useful situation
                 break;
         }
     };
@@ -302,7 +306,12 @@ Oolong.prototype.undo = function()
     console.log("Undo");
 };
 
-Oolong.prototype.parseBoardState = function(board)
+Oolong.prototype.redo = function()
+{
+    console.log("Redo");
+};
+
+Oolong.prototype.parseBoard = function(board)
 {
     let positions = board.split(",");
     for (let i = 0; i < positions.length; i++)
@@ -315,7 +324,12 @@ Oolong.prototype.parseBoardState = function(board)
         positions[i][1] = positions[i][1].replace("]", "");
         positions[i][2] = positions[i][2].replace("]", "");
     }
-    return positions;
+};
+
+Oolong.prototype.convertBoardToProlog = function()
+{
+    let board = [];
+
 };
 
 Oolong.prototype.getPickedDish = function()
