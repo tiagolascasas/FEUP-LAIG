@@ -2,6 +2,7 @@
 
 function Piece(coord, color, pickID)
 {
+    this.originalCoord = coord;
     this.coord = coord;
     this.color = color;
     this.pickID = pickID;

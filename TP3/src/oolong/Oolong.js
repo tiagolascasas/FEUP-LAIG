@@ -304,11 +304,46 @@ Oolong.prototype.display = function()
 Oolong.prototype.undo = function()
 {
     console.log("Undo");
+    let state = this.stateList.getPreviousState();
+    let prologBoard = this.convertBoardToProlog(state.board);
+    if (state != null)
+    {
+        this.request("set_board(" + prologBoard + ")");
+        this.request("set_waiter(" + state.waiter + ")");
+        this.resetState();
+        this.setState(state);
+    }
 };
 
 Oolong.prototype.redo = function()
 {
     console.log("Redo");
+    let state = this.stateList.getNextState();
+    let prologBoard = this.convertBoardToProlog(state.board);
+    if (state != null)
+    {
+        this.request("set_board(" + prologBoard + ")");
+        this.request("set_waiter(" + state.waiter + ")");
+        this.resetState();
+        this.setState(state);
+    }
+};
+
+Oolong.prototype.setState = function(state)
+{
+    let waiter = state.waiter.split("-");
+    this.waiter.table = waiter[0];
+    this.waiter.pos = waiter[1];
+
+    let board = state.board;
+    this.resetAllPieces();
+    for (let i = 0; i < board.length; i++)
+    {
+        let dish = board[i];
+        if (dish[2] != "o")
+            this.placeRandomPiece(dish[2], dish[0], dish[1]);
+    }
+    this.readyForTurn = true;
 };
 
 Oolong.prototype.parseBoard = function(board)
@@ -324,12 +359,22 @@ Oolong.prototype.parseBoard = function(board)
         positions[i][1] = positions[i][1].replace("]", "");
         positions[i][2] = positions[i][2].replace("]", "");
     }
+    let waiter = this.waiter.table + "-" + this.waiter.pos;
+    this.stateList.addState(positions, waiter);
 };
 
-Oolong.prototype.convertBoardToProlog = function()
+Oolong.prototype.convertBoardToProlog = function(board)
 {
-    let board = [];
-
+    let prologBoard = [];
+    for (let i = 0; i < board.length; i++)
+    {
+        let args = board[i].join("-");
+        prologBoard.push(args);
+    }
+    let prologString = "[";
+    prologString += prologBoard.join();
+    prologString += "]";
+    return prologString;
 };
 
 Oolong.prototype.getPickedDish = function()
@@ -371,6 +416,29 @@ Oolong.prototype.getRandomPiece = function()
 
     }
     this.running = false;
+};
+
+Oolong.prototype.resetAllPieces = function()
+{
+    for (let i = 0; i < this.pieces.length; i++)
+    {
+        this.pieces[i].coord = this.pieces[i].originalCoord;
+        this.pieces[i].placed = false;
+    }
+};
+
+Oolong.prototype.placeRandomPiece = function(color, table, pos)
+{
+    if (table == "null" || pos == "null")
+        return;
+    for (let i = 0; i < this.pieces.length; i++)
+    {
+        if (!this.pieces[i].placed && this.pieces[i].color == color)
+        {
+            let coord = this.calculateCoord(table, pos);
+            return this.pieces[i].place(table, pos, coord);
+        }
+    }
 };
 
 Oolong.prototype.resignCurrentPlayer = function()

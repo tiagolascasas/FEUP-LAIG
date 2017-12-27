@@ -1,29 +1,44 @@
 "use strict";
 
+function State(board, waiter)
+{
+    this.board = board;
+    this.waiter = waiter;
+}
+State.prototype.constructor = State;
+
 function StateList()
 {
     this.states = [];
-    this.currentState = null;
+    this.currentState = -1;
 }
+StateList.prototype.constructor = StateList;
 
-StateList.prototype.addState = function(state)
+StateList.prototype.addState = function(board, waiter)
 {
-    this.states.push(state);
-    this.currentState = this.states.length - 1;
+    this.currentState++;
+    this.states.length = this.currentState;
+    this.states.push(new State(board, waiter));
 };
 
-StateList.prototype.removeState = function()
+StateList.prototype.getPreviousState = function()
 {
     if (this.currentState > 0)
     {
-        this.states.pop();
         this.currentState--;
         return this.states[this.currentState];
     }
     else
-    {
-        this.states.pop();
-        this.currentState = null;
         return null;
+};
+
+StateList.prototype.getNextState = function()
+{
+    if (this.currentState + 1 < this.states.length)
+    {
+        this.currentState++;
+        return this.states[this.currentState];
     }
+    else
+        return null;
 };
