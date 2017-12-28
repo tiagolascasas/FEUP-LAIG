@@ -11,6 +11,7 @@ function Oolong(scene)
     this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
     this.matrix = mat4.identity(mat4.create());
     this.cameraAngle = 0;
+    this.timeoutValue = 0;
 
     this.initPositions();
 }
@@ -204,7 +205,10 @@ Oolong.prototype.request = function(answer)
                 if (answer == "valid")
                     parent.moveIsValid = true;
                 if (answer == "invalid")
+                {
                     parent.moveIsValid = false;
+                    parent.requestedMove = false;
+                }
                 break;
             case 11:
                 parent.aiMoveReady = true;
@@ -234,6 +238,14 @@ Oolong.prototype.request = function(answer)
                 if (answer == "g")
                     parent.currentPlayer = "green";
                 parent.requestedPlayer = false;
+                break;
+            case 18:
+                parent.tablesBlack = answer;
+                parent.requestedTableBlack = false;
+                break;
+            case 19:
+                parent.tablesGreen = answer;
+                parent.requestedTableGreen = false;
                 break;
             default:
                 //other requests return only predetermined data with no useful situation

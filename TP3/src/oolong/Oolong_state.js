@@ -19,7 +19,11 @@ Oolong.prototype.resetState = function()
     this.startCamera = false;
     this.cameraPanning = false;
     this.cameraAngle = 0;
-    this.timeout = null;
+    this.timeout = this.timeoutValue;
+    this.baseTimeout = 0;
+    this.timeoutSet = false;
+    this.tablesBlack = 0;
+    this.tablesGreen = 0;
 
     //state machine breakpoints
     this.readyForTurn = false;
@@ -50,7 +54,7 @@ Oolong.prototype.update = function(time)
 
     //current player chooses a piece and a position
     if (this.readyForChoice)
-        this.stateChoice();
+        this.stateChoice(time);
 
     //move the piece
     if (this.readyForMove)
@@ -90,6 +94,14 @@ Oolong.prototype.stateTurn = function(time)
         this.requestedPlayer = true;
     }
 
+    if ((!this.requestedTableBlack || !this.requestedTableGreen) && !this.startCamera && !this.cameraPanning)
+    {
+        this.request("n_tables(black)");
+        this.request("n_tables(green)");
+        this.requestedTableBlack = true;
+        this.requestedTableGreen = true;
+    }
+
     if (!this.requestedWaiterTable && !this.startCamera && !this.cameraPanning)
     {
         this.request("waiter_pos");
@@ -112,6 +124,7 @@ Oolong.prototype.stateTurn = function(time)
         this.baseTime = time;
         this.cameraPanning = true;
         this.startCamera = false;
+        this.stateList.updateCurrentWaiter(this.waiter.table + "-" + this.waiter.pos);
     }
 
     if (this.cameraPanning)
@@ -129,7 +142,7 @@ Oolong.prototype.stateTurn = function(time)
     }
 };
 
-Oolong.prototype.stateChoice = function()
+Oolong.prototype.stateChoice = function(time)
 {
     //if current player is human, get position from him
     if (this.currentPlayerType == "human")
@@ -137,14 +150,24 @@ Oolong.prototype.stateChoice = function()
         let piece = this.getPickedPiece();
         let dish = this.getPickedDish();
         let parent = this;
-        let onTimeout = function()
-        {
-            console.log("Timeout exceeded for player " + parent.currentPlayer);
-            parent.resignCurrentPlayer();
-        };
 
-        if (this.timeout == null)
-            this.timeout = setTimeout(onTimeout, this.timeoutValue);
+        if (!this.timeoutSet)
+        {
+            this.baseTimeout = time;
+            this.timeoutSet = true;
+        }
+        else
+        {
+            let delta = time - this.baseTimeout;
+            this.baseTimeout = time;
+            this.timeout -= delta;
+            this.scene.currentTimeout = Math.floor(this.timeout / 1000);
+            if (this.timeout <= 0)
+            {
+                console.log("Timeout exceeded for player " + parent.currentPlayer);
+                this.resignCurrentPlayer();
+            }
+        }
 
         if (piece == null || dish == null)
             return;

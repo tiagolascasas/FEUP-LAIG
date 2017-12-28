@@ -42,3 +42,9 @@ StateList.prototype.getNextState = function()
     else
         return null;
 };
+
+StateList.prototype.updateCurrentWaiter = function(waiter)
+{
+    if (this.currentState >= 0)
+        this.states[this.currentState].waiter = waiter;
+};

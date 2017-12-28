@@ -69,7 +69,7 @@ Interface.prototype.addGameOptions = function()
                         }
                     };
 
-    this.gui.width = 340;
+    this.gui.width = 360;
     let keys = [];
     for (let key in scene.scenes)
         keys.push(key);
@@ -82,6 +82,7 @@ Interface.prototype.addGameOptions = function()
     groupC.open();
     groupC.add(scene, 'cameraID', ['Dynamic', 'Static', 'Free']).name("Camera");
     groupC.add(scene, 'currentScene', keys).name('Background scene');
+    groupC.add(scene, 'currentTimeout', 0, 30).name("Time left for current player").listen();
     groupC.add(listeners, "undo").name("Undo move");
     groupC.add(listeners, "redo").name("Redo move");
     groupC.add(listeners, "resign").name("Resign from current match");
@@ -90,6 +91,6 @@ Interface.prototype.addGameOptions = function()
     groupB.open();
     groupB.add(scene, 'mode', [ '1vs1', '1vsAI', 'AIvsAI' ]).name("Game mode");
     groupB.add(scene, 'difficulty', [ 'Easy', 'Hard' ]).name("Difficulty");
-    groupB.add(scene, 'timeout', 10, 30).name("Turn timeout");
+    groupB.add(scene, 'timeout', 10, 30).name("Turn timeout value");
     groupB.add(listeners, "init").name("Start/reset game");
 };

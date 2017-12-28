@@ -20,6 +20,7 @@ function Scene(gui)
     this.difficulty = "Easy";
     this.cameraID = "Dynamic";
     this.timeout = 20;
+    this.currentTimeout = 0;
 
     this.initGraphs();
 };
@@ -230,6 +231,11 @@ Scene.prototype.update = function(currTime)
                 this.interface.setActiveCamera(this.camera);
                 break;
         }
+/*
+        for (let i in this.interface.__controllers)
+        {
+            this.interface.__controllers[i].updateDisplay();
+        }*/
     }
 
 	let factor = 0.5*Math.cos(currTime / this.speedOfShader) + 0.51;	//0.01 <= factor <= 1.01
