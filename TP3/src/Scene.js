@@ -53,9 +53,7 @@ Scene.prototype.init = function(application)
 
 	this.setUpdatePeriod(10);
 
-	this.customShader = new CGFshader(this.gl,
-                                    "../lib/CGF/shaders/Phong/phong-vertex.glsl",
-                                    "../lib/CGF/shaders/Phong/phong-fragment.glsl");
+	this.customShader = new CGFshader(this.gl, "shaders/dimension.vert", "shaders/saturated.frag");
 };
 
 Scene.prototype.initGraphs = function()
@@ -235,15 +233,10 @@ Scene.prototype.update = function(currTime)
                 this.interface.setActiveCamera(this.camera);
                 break;
         }
-/*
-        for (let i in this.interface.__controllers)
-        {
-            this.interface.__controllers[i].updateDisplay();
-        }*/
     }
 
-	let factor = 0.5*Math.cos(currTime / this.speedOfShader) + 0.51;	//0.01 <= factor <= 1.01
-	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: this.colorComponent});
+	let factor = 0.5 * Math.cos(currTime / this.speedOfShader) + 0.51;	//0.01 <= factor <= 1.01
+	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: 0});
 };
 
 Scene.prototype.processPicking = function ()

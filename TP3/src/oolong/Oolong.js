@@ -12,6 +12,8 @@ function Oolong(scene)
     this.matrix = mat4.identity(mat4.create());
     this.cameraAngle = 0;
     this.timeoutValue = 0;
+    this.counterTables = new Counter(this.scene, "scenes/textures/label1.png");
+    this.counterTimeout = new Counter(this.scene, "scenes/textures/label2.png");
 
     this.initPositions();
 }
@@ -312,6 +314,46 @@ Oolong.prototype.display = function()
     let coord = this.calculateCoord(this.waiter.table, this.waiter.pos);
     this.scene.translate(coord.x, coord.y, coord.z);
     this.graph.display("waiter");
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    coord = this.calculateCoord('nw', 'c');
+    this.scene.translate(coord.x - 0.9, coord.y, coord.z - 0.9);
+    this.scene.rotate(Math.PI / 4, 0, 1, 0);
+    this.displayCounter(this.counterTables, this.tablesGreen * 10 + this.tablesBlack);
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    coord = this.calculateCoord('sw', 'c');
+    this.scene.translate(coord.x - 0.9, coord.y, coord.z + 0.9);
+    this.scene.rotate(Math.PI - Math.PI / 4, 0, 1, 0);
+    this.displayCounter(this.counterTimeout, this.scene.currentTimeout);
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    coord = this.calculateCoord('ne', 'c');
+    this.scene.translate(coord.x + 0.9, coord.y, coord.z - 0.9);
+    this.scene.rotate(-Math.PI / 4, 0, 1, 0);
+    this.displayCounter(this.counterTimeout, this.scene.currentTimeout);
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    coord = this.calculateCoord('se', 'c');
+    this.scene.translate(coord.x + 0.9, coord.y, coord.z + 0.9);
+    this.scene.rotate(Math.PI + Math.PI / 4, 0, 1, 0);
+    this.displayCounter(this.counterTables, this.tablesGreen * 10 + this.tablesBlack);
+    this.scene.popMatrix();
+
+};
+
+Oolong.prototype.displayCounter = function(counter, val)
+{
+    this.scene.pushMatrix();
+    let mat = new CGFappearance(this.scene);
+    mat.apply();
+    this.scene.translate(-0.25, 0, -0.125);
+    this.scene.scale(0.25, 0.25, 0.25);
+    counter.display(val);
     this.scene.popMatrix();
 };
 

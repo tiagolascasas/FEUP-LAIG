@@ -17,7 +17,7 @@ LightingScene.prototype.init = function (application) {
 
     this.initLights();
 
-    this.gl.clearColor(0,0,0, 1.0);
+    this.gl.clearColor(0.5,0.5,0.5, 1.0);
     this.gl.clearDepth(10000.0);
     this.gl.enable(this.gl.DEPTH_TEST);
 	this.gl.enable(this.gl.CULL_FACE);
@@ -25,6 +25,8 @@ LightingScene.prototype.init = function (application) {
 
 	this.axis=new CGFaxis(this);
     this.setUpdatePeriod(10);
+
+    this.enableTextures(true);
 
 	this.appearance = new CGFappearance(this);
 	this.appearance.setAmbient(0.3, 0.3, 0.3, 1);
@@ -41,6 +43,7 @@ LightingScene.prototype.init = function (application) {
 
     this.cyl = new PrimitiveCylinder(this, 1, 0.3, 0.7, 20, 20, 1, 1);
     this.x = 0;
+    this.counter = new Counter(this, "2", "1", "scenes/textures/label1.png");
 };
 
 LightingScene.prototype.initLights = function () {
@@ -82,11 +85,10 @@ LightingScene.prototype.display = function ()
 
 	this.appearance.apply();
 
-    this.cyl.display();
+    this.counter.display();
 };
 
 LightingScene.prototype.update = function(currTime)
 {
     //console.log(this.camera);
-    this.camera.orbit(CGFcameraAxis.Y, this.x += 0.00001);
 };
