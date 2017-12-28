@@ -22,34 +22,34 @@
     <LIGHTS>
         <LIGHT id="Light 1">
             <enable value ="1" />
-            <position x="9.0" y="1.0" z="-0.5" w="1.0" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <position x="-4.0" y="4.0" z="-4.0" w="1.0" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.4" g="0.4" b="0.4" a="1.0" />
         </LIGHT>
 
         <LIGHT id="Light 2">
             <enable value ="1" />
-            <position x="9.5" y="1.0" z="8.0" w="1.0" />
-            <ambient r="0.7" g="0.7" b="0.7" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <position x="4.0" y="4.0" z="4.0" w="1.0" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.4" g="0.4" b="0.4" a="1.0" />
         </LIGHT>
 
         <LIGHT id="Light 3">
             <enable value ="1" />
-            <position x="-1.0" y="1.0" z="7.5" w="1" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <position x="-4.0" y="4.0" z="4.0" w="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.4" g="0.4" b="0.4" a="1.0" />
         </LIGHT>
 
         <LIGHT id="Light 4">
-            <enable value ="0" />
-            <position x="1.0" y="5.0" z="1.0" w="1" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1.0" />
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
-            <specular r="1.0" g="1.0" b="1.0" a="1.0" />
+            <enable value ="1" />
+            <position x="4.0" y="4.0" z="-4.0" w="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1.0" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1.0" />
+            <specular r="0.4" g="0.4" b="0.4" a="1.0" />
         </LIGHT>
     </LIGHTS>
 
@@ -63,8 +63,24 @@
             <file path="textures/wood.jpg" />
             <amplif_factor s="0.1" t="10" />
         </TEXTURE>
+        <TEXTURE id="board">
+            <file path="textures/board.jpg" />
+            <amplif_factor s="1" t="1.06" />
+        </TEXTURE>
         <TEXTURE id="porcelain">
             <file path="textures/porcelain.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+        <TEXTURE id="green">
+            <file path="textures/green.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+        <TEXTURE id="black">
+            <file path="textures/black.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+        <TEXTURE id="table">
+            <file path="textures/table.jpg" />
             <amplif_factor s="1" t="1" />
         </TEXTURE>
     </TEXTURES>
@@ -81,17 +97,17 @@
 
         <MATERIAL id="green">
             <shininess value="1" />
-            <specular r="0.1" g="1" b="0.1" a="1" />
-            <diffuse r="0.4" g="1" b="0.4" a="1" />
-            <ambient r="0.2" g="1" b="0.2" a="1" />
-            <emission r="0.0" g="1" b="0.0" a="1" />
+            <specular r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.0" g="0.6" b="0.0" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
         </MATERIAL>
 
         <MATERIAL id="black">
             <shininess value="1" />
-            <specular r="0.0" g="0.0" b="0.0" a="1" />
-            <diffuse r="0.0" g="0.0" b="0.0" a="1" />
-            <ambient r="0.0" g="0.0" b="0.0" a="1" />
+            <specular r="0.7" g="0.7" b="0.7" a="1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
             <emission r="0.0" g="0.0" b="0.0" a="1" />
         </MATERIAL>
 
@@ -100,7 +116,7 @@
             <specular r="1.0" g="1.0" b="1.0" a="1" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1" />
             <ambient r="1.0" g="1.0" b="1.0" a="1" />
-            <emission r="1.0" g="1.0" b="1.0" a="1" />
+            <emission r="0.0" g="0.0" b="1.0" a="1" />
         </MATERIAL>
 
         <MATERIAL id="red">
@@ -108,8 +124,17 @@
             <specular r="1.0" g="0.0" b="0.0" a="1" />
             <diffuse r="1.0" g="0.0" b="0.0" a="1" />
             <ambient r="1.0" g="0.0" b="0.0" a="1" />
-            <emission r="1.0" g="0.0" b="0.0" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
         </MATERIAL>
+
+        <MATERIAL id="pink">
+            <shininess value="1" />
+            <specular r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="1.0" g="0.71" b="0.75" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+        </MATERIAL>
+
     </MATERIALS>
 
 	<ANIMATIONS>
@@ -161,7 +186,7 @@
 
         <NODE id="top">
             <MATERIAL id="defaultMaterial" />
-            <TEXTURE id="wood" />
+            <TEXTURE id="board" />
 
             <ROTATION axis="x" angle="-90" />
 
@@ -312,7 +337,7 @@
 
         <NODE id="greenPiece">
             <MATERIAL id="green" />
-            <TEXTURE id="null" />
+            <TEXTURE id="green" />
 
             <DESCENDANTS>
                 <NODEREF id="piece"/>
@@ -321,7 +346,7 @@
 
         <NODE id="blackPiece">
             <MATERIAL id="black" />
-            <TEXTURE id="null" />
+            <TEXTURE id="black" />
 
             <DESCENDANTS>
                 <NODEREF id="piece"/>
@@ -340,7 +365,7 @@
         </NODE>
 
         <NODE id="dish">
-            <MATERIAL id="defaultMaterial" />
+            <MATERIAL id="pink" />
             <TEXTURE id="porcelain" />
 
             <TRANSLATION x="0" y="0.015" z="0"/>
@@ -354,7 +379,7 @@
 
         <NODE id="roundTable">
             <MATERIAL id="white" />
-            <TEXTURE id="null" />
+            <TEXTURE id="table" />
 
             <ROTATION axis="x" angle="-90" />
 

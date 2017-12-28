@@ -89,7 +89,7 @@ Scene.prototype.initLights = function()
             this.lights[i].setDiffuse(light[3][0], light[3][1], light[3][2], light[3][3]);
             this.lights[i].setSpecular(light[4][0], light[4][1], light[4][2], light[4][3]);
 
-            this.lights[i].setVisible(true);
+            this.lights[i].setVisible(false);
             if (light[0])
                 this.lights[i].enable();
             else
