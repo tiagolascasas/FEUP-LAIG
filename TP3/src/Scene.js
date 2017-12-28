@@ -16,11 +16,15 @@ function Scene(gui)
     this.colorComponent = 0;
     this.speedOfShader = 1000;
     this.scaleFactor = 1.0;
+
+    //variables for GUI, updated by it and/or by the Oolong object
     this.mode = "1vs1";
     this.difficulty = "Easy";
     this.cameraID = "Dynamic";
     this.timeout = 20;
     this.currentTimeout = 0;
+    this.tablesGreen = 0;
+    this.tablesBlack = 0;
 
     this.initGraphs();
 };

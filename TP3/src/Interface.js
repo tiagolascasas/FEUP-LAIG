@@ -21,6 +21,7 @@ Interface.prototype.init = function(application)
     CGFinterface.prototype.init.call(this, application);
 
     this.gui = new dat.GUI();
+    this.groupA = this.gui.addFolder("Other settings");
 
     return true;
 };
@@ -30,16 +31,17 @@ Interface.prototype.init = function(application)
  * @param {Array} lights - an associative array with the lights
  */
 Interface.prototype.addLightsGroup = function(lights)
-{/*
-    var group = this.gui.addFolder("Lights");
-    group.open();
+{
+    this.groupA.open();
 
-    for (var key in lights) {
-        if (lights.hasOwnProperty(key)) {
+    for (let key in lights)
+    {
+        if (lights.hasOwnProperty(key))
+        {
             this.scene.lightValues[key] = lights[key][0];
-            group.add(this.scene.lightValues, key);
+            this.groupA.add(this.scene.lightValues, key);
         }
-    }*/
+    }
 }
 
 Interface.prototype.addGameOptions = function()
@@ -74,15 +76,16 @@ Interface.prototype.addGameOptions = function()
     for (let key in scene.scenes)
         keys.push(key);
 
-    var groupA = this.gui.addFolder("Other settings");
-    groupA.close();
-    groupA.add(listeners, "shutdown").name("Shutdown SICStus server");
+    this.groupA.close();
+    this.groupA.add(listeners, "shutdown").name("Shutdown SICStus server");
 
     var groupC = this.gui.addFolder("Match runtime settings");
     groupC.open();
     groupC.add(scene, 'cameraID', ['Dynamic', 'Static', 'Free']).name("Camera");
     groupC.add(scene, 'currentScene', keys).name('Background scene');
     groupC.add(scene, 'currentTimeout', 0, 30).name("Time left for current player").listen();
+    groupC.add(scene, 'tablesBlack', 0, 5).name("Green's conquered tables").listen();
+    groupC.add(scene, 'tablesGreen', 0, 5).name("Black's conquered tables").listen();
     groupC.add(listeners, "undo").name("Undo move");
     groupC.add(listeners, "redo").name("Redo move");
     groupC.add(listeners, "resign").name("Resign from current match");

@@ -241,10 +241,12 @@ Oolong.prototype.request = function(answer)
                 break;
             case 18:
                 parent.tablesBlack = answer;
+                parent.scene.tablesBlack = answer;
                 parent.requestedTableBlack = false;
                 break;
             case 19:
                 parent.tablesGreen = answer;
+                parent.scene.tablesGreen = answer;
                 parent.requestedTableGreen = false;
                 break;
             default:
