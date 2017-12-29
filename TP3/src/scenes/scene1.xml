@@ -6,6 +6,31 @@
             <file path="textures/wood.jpg" />
             <amplif_factor s="1" t="1" />
         </TEXTURE>
+
+        <TEXTURE id="door">
+            <file path="textures/door.png" />
+            <amplif_factor s="6" t="4" />
+        </TEXTURE>
+
+        <TEXTURE id="stone">
+            <file path="textures/stone.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+
+        <TEXTURE id="porcelain">
+            <file path="textures/porcelain.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+
+        <TEXTURE id="wall">
+            <file path="textures/wall.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+
+        <TEXTURE id="ground">
+            <file path="textures/grass.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
     </TEXTURES>
 
     <MATERIALS>
@@ -18,12 +43,12 @@
             <emission r="0.0" g="0.0" b="0.0" a="1" />
         </MATERIAL>
 
-        <MATERIAL id="material1">
+        <MATERIAL id="red">
             <shininess value="1" />
-            <specular r="1" g="0.0" b="0.0" a="1" />
-            <diffuse r="1" g="0.0" b="0.0" a="1" />
-            <ambient r="1" g="0.0" b="0.0" a="1" />
-            <emission r="1" g="0.0" b="0.0" a="1" />
+            <specular r="0.7" g="0.1" b="0.2" a="1" />
+            <diffuse r="0.7" g="0.1" b="0.2" a="1" />
+            <ambient r="0.7" g="0.1" b="0.2" a="1" />
+            <emission r="0.7" g="0.1" b="0.2" a="1" />
         </MATERIAL>
     </MATERIALS>
 
@@ -34,15 +59,241 @@
 
         <!-- The root node -->
         <NODE id="root">
-            <MATERIAL id="material1" />
+            <MATERIAL id="defaultMaterial" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="0" z="-3"/>
-
             <DESCENDANTS>
-                <LEAF type="rectangle" args="-2 2 2 -2"/>
+                <NODEREF id = "ground" />
+                <NODEREF id = "walls"/>
+                <NODEREF id = "columns" />
             </DESCENDANTS>
         </NODE>
+
+        
+        <NODE id = "ground">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "ground" />
+
+            <ROTATION axis = "x" angle = "-90" />
+            <TRANSLATION x = "-6" y = "-7" z = "-2"/>
+            <SCALE sx = "2" sy = "3" sz = "0" />
+
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+            
+        </NODE>
+        
+        <NODE id = "walls">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "wall" />
+
+            <DESCENDANTS>
+                <NODEREF id = "wall1" />
+                <NODEREF id = "wall2" />
+                <NODEREF id = "wall3" />
+                <NODEREF id = "wall4" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "wall1">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "door" />
+
+            <TRANSLATION x="-6" y="-2" z="-5"/>
+            <SCALE sx = "2" sy = "2" sz = "1" />
+
+            <DESCENDANTS>
+               <!-- <NODEREF id = "door" />-->
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "wall2">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "y" angle = "-90" />
+            <TRANSLATION x="-5" y="-2" z="-6"/>
+            <SCALE sx = "2" sy = "2" sz = "1" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "wall3">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "y" angle = "90" />
+            <TRANSLATION x="-7" y="-2" z="-6"/>
+            <SCALE sx = "2" sy = "2" sz = "1" />
+
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "wall4">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "door" />
+
+            <ROTATION axis = "y" angle = "180" />
+            <TRANSLATION x="-6" y="-2" z="-7"/>
+            <SCALE sx = "2" sy = "2" sz = "1" />
+
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "door">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "door" />
+
+            <TRANSLATION x="1.5" y="0" z="0.02"/>
+            <SCALE sx = "0.5" sy = "0.5" sz = "1" />
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "columns" >
+            <MATERIAL id = "null" />
+            <TEXTURE id = "stone" />
+
+            <ROTATION axis = "x" angle = "-90"/>
+
+            <DESCENDANTS>
+                <NODEREF id = "col1" />
+                <NODEREF id = "col2" />
+                <NODEREF id = "col3" />
+                <NODEREF id = "col4" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "col1">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <TRANSLATION x = "3" y = "3" z = "-2" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+                <NODEREF id = "decorations" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "col2">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <TRANSLATION x = "-3" y = "3" z = "-2" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+                <NODEREF id = "decorations" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "col3">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <TRANSLATION x = "-3" y = "-3" z = "-2" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+                <NODEREF id = "decorations" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "col4">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <TRANSLATION x = "3" y = "-3" z = "-2" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+                <NODEREF id = "decorations" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "decorations">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "porcelain" />
+
+            <DESCENDANTS>
+                <NODEREF id = "cyl"/>
+                <NODEREF id = "sphere" />
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id = "cyl">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+
+            <TRANSLATION x="0" y="0" z="2"/>
+            <SCALE sx = "0.1" sy = "0.1" sz = "0.05" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+            </DESCENDANTS>
+
+        </NODE>
+        <NODE id = "sphere">
+            <MATERIAL id = "red" />
+            <TEXTURE id = "clear" />
+
+            <TRANSLATION x = "0" y = "0" z = "2.4" />
+
+            <DESCENDANTS>
+                <NODEREF id = "spherePrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "quadPrimitive">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <DESCENDANTS>
+                <LEAF type = "rectangle" args="0 4 6 0" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "cylPrimitive">
+            <MATERIAL id = "null" />
+            <TEXTURE id ="null" />
+
+            <DESCENDANTS>
+                <LEAF type="cylinder" args="2 0.5 0.5 20 20 1 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "spherePrimitive">
+            <MATERIAL id = "null" />
+            <TEXTURE id ="null" />
+
+            <DESCENDANTS>
+                <LEAF type="sphere" args="0.3 20 20"/>
+            </DESCENDANTS>
+        </NODE>
+
     </NODES>
 
 </SCENE>
