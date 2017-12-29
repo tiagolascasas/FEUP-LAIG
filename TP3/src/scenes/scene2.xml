@@ -231,7 +231,7 @@
             <TEXTURE id = "null" />
 
             <ROTATION axis = "x" angle = "90" />
-            <TRANSLATION x = "3" y = "3" z = "-2.7" />
+            <TRANSLATION x = "3" y = "5" z = "-2.7" />
 
             <DESCENDANTS>
                 <NODEREF id = "mainleg" />
@@ -245,7 +245,7 @@
             <TEXTURE id = "null" />
 
             <ROTATION axis = "x" angle = "90" />
-            <TRANSLATION x = "-3" y = "3" z = "-2.7" />
+            <TRANSLATION x = "-3" y = "5" z = "-2.7" />
 
             <DESCENDANTS>
                 <NODEREF id = "mainleg" />
