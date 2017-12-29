@@ -234,7 +234,7 @@ Scene.prototype.update = function(currTime)
     }
 
 	let factor = 0.5 * Math.cos(currTime / this.speedOfShader) + 0.51;	//0.01 <= factor <= 1.01
-	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: 0});
+	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: -1});
 };
 
 Scene.prototype.processPicking = function ()

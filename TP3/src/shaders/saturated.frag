@@ -22,6 +22,10 @@ void main()
     if (color.r == 0.0 && color.g == 0.0 && color.b == 0.0)
         color = materialColor;
 
+    if (component == -1)
+    {
+        gl_FragColor = vec4(color.r, color.g, color.b, color.a);
+    }
 	if (component == 0)
 	{
 		float d = 1.0 - color.r;

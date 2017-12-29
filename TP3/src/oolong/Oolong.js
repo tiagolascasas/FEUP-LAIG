@@ -4,17 +4,20 @@ function Oolong(scene)
 {
     this.scene = scene;
     this.graph = scene.objGraph;
-    this.greenPiece = this.graph.getNodeByID("greenPiece");
-    this.blackPiece = this.graph.getNodeByID("blackPiece");
-    this.table = this.graph.getNodeByID("roundTable");
-    this.dish = this.graph.getNodeByID("dish");
-    this.sideboard = this.graph.getNodeByID("sideboard");
     this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
     this.matrix = mat4.identity(mat4.create());
     this.cameraAngle = 0;
     this.timeoutValue = 0;
     this.counterTables = new Counter(this.scene, "scenes/textures/label1.png");
     this.counterTimeout = new Counter(this.scene, "scenes/textures/label2.png");
+
+    this.greenPiece = this.graph.getNodeByID("greenPiece");
+    this.blackPiece = this.graph.getNodeByID("blackPiece");
+    this.table = this.graph.getNodeByID("roundTable");
+    this.dish = this.graph.getNodeByID("dish");
+    this.sideboard = this.graph.getNodeByID("sideboard");
+    this.victorySphereBlack = this.graph.getNodeByID("victorySphereBlack");
+    this.victorySphereGreen = this.graph.getNodeByID("victorySphereGreen");
 
     this.initPositions();
 }
@@ -66,6 +69,8 @@ Oolong.prototype.init = function(mode, difficulty, timeout)
 
     this.running = true;
     this.readyForTurn = true;
+    this.tablesBlack = 0;
+    this.tablesGreen = 0;
 };
 
 Oolong.prototype.initPositions = function()
@@ -292,6 +297,8 @@ Oolong.prototype.display = function()
         }
     }
 
+    this.displayCurrentWinner();
+
     if (!this.running)
         return;
 
@@ -516,4 +523,17 @@ Oolong.prototype.resignCurrentPlayer = function()
     this.winnerIsSet = true;
     this.winner = this.currentPlayer == "black" ? "green" : "black";
     console.log("Player " + this.winner + " wins!");
+};
+
+Oolong.prototype.displayCurrentWinner = function()
+{
+    if (!this.running && this.winnerIsSet)
+    {
+        this.scene.setActiveShader(this.scene.customShader);
+        if (this.winner == "black")
+            this.graph.display("victorySphereBlack");
+        else if (this.winner == "green")
+            this.graph.display("victorySphereGreen");
+        this.scene.setActiveShader(this.scene.defaultShader);
+    }
 };

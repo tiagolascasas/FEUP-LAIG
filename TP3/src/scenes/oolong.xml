@@ -91,6 +91,14 @@
             <file path="textures/waiter.jpg" />
             <amplif_factor s="1" t="1" />
         </TEXTURE>
+        <TEXTURE id="winnerGreen">
+            <file path="textures/winnerGreen.png" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+        <TEXTURE id="winnerBlack">
+            <file path="textures/winnerBlack.png" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
     </TEXTURES>
 
     <MATERIALS>
@@ -466,6 +474,30 @@
 
             <DESCENDANTS>
                 <LEAF type="rectangle" args="1.2 0 0 0.4"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="victorySphereBlack" selectable="true">
+            <MATERIAL id="black" />
+            <TEXTURE id="winnerBlack" />
+
+            <TRANSLATION x="0" y="1" z="0" />
+            <ROTATION axis="x" angle="-90" />
+
+            <DESCENDANTS>
+                <LEAF type="sphere" args="0.2 20 20"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="victorySphereGreen" selectable="true">
+            <MATERIAL id="green" />
+            <TEXTURE id="winnerGreen" />
+
+            <TRANSLATION x="0" y="1" z="0" />
+            <ROTATION axis="x" angle="-90" />
+
+            <DESCENDANTS>
+                <LEAF type="sphere" args="0.2 20 20"/>
             </DESCENDANTS>
         </NODE>
 

@@ -22,8 +22,6 @@ Oolong.prototype.resetState = function()
     this.timeout = this.timeoutValue;
     this.baseTimeout = 0;
     this.timeoutSet = false;
-    this.tablesBlack = 0;
-    this.tablesGreen = 0;
 
     //state machine breakpoints
     this.readyForTurn = false;
