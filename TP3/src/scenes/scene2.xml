@@ -2,8 +2,28 @@
 
     <!-- Textures -->
     <TEXTURES>
+        <TEXTURE id="wall">
+            <file path="textures/brick_wall.jpg" />
+            <amplif_factor s="6" t="4" />
+        </TEXTURE>
+
+        <TEXTURE id="ground">
+            <file path="textures/floor.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+
+        <TEXTURE id="bin">
+            <file path="textures/trashbin.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+
+        <TEXTURE id="window">
+            <file path="textures/window.png" />
+            <amplif_factor s="6" t="4" />
+        </TEXTURE>
+
         <TEXTURE id="wood">
-            <file path="textures/wood.jpg" />
+            <file path="textures/stick.jpg" />
             <amplif_factor s="1" t="1" />
         </TEXTURE>
     </TEXTURES>
@@ -34,13 +54,270 @@
 
         <!-- The root node -->
         <NODE id="root">
-            <MATERIAL id="material2" />
+            <MATERIAL id="defaultMaterial" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="2" z="0"/>
+            <DESCENDANTS>
+                <NODEREF id = "ground" />
+                <NODEREF id = "walls"/>
+                <NODEREF id = "bins" />
+                <NODEREF id = "cloth_hang" />
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id = "ground">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "ground" />
+
+            <ROTATION axis = "x" angle = "-90" />
+            <TRANSLATION x = "-6" y = "-7" z = "-2"/>
+            <SCALE sx = "2" sy = "3" sz = "0" />
 
             <DESCENDANTS>
-                <LEAF type="sphere" args="1 20 20"/>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "walls">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "wall" />
+
+            <DESCENDANTS>
+                <NODEREF id = "wall1" />
+                <NODEREF id = "wall2" />
+                <NODEREF id = "wall3" />
+                <NODEREF id = "wall4" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "wall1">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "window" />
+
+            <TRANSLATION x="-6" y="-2" z="-5"/>
+            <SCALE sx = "2" sy = "2" sz = "1" />
+
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+
+
+        <NODE id = "wall2">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "y" angle = "-90" />
+            <TRANSLATION x="-5" y="-2" z="-6"/>
+            <SCALE sx = "2" sy = "2" sz = "1" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "wall3">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "y" angle = "90" />
+            <TRANSLATION x="-7" y="-2" z="-6"/>
+            <SCALE sx = "2" sy = "2" sz = "1" />
+
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "wall4">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "y" angle = "180" />
+            <TRANSLATION x="-6" y="-2" z="-7"/>
+            <SCALE sx = "2" sy = "2" sz = "1" />
+
+            <DESCENDANTS>
+                <NODEREF id = "quadPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "bins" >
+            <MATERIAL id = "null" />
+            <TEXTURE id = "bin" />
+
+            <ROTATION axis = "x" angle = "-90"/>
+
+            <DESCENDANTS>
+                <NODEREF id = "bin1" />
+                <NODEREF id = "bin2" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "bin1">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <TRANSLATION x = "3" y = "3" z = "-2" />
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+                <NODEREF id = "cover1" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "bin2">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <TRANSLATION x = "-3" y = "3" z = "-2" />
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+                <NODEREF id = "cover2" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "cover1">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis="y" angle="-110"/>
+            <ROTATION axis="x" angle="-50"/>
+            <TRANSLATION x="0.5" y = "0" z="-1.1"/>
+            <SCALE sx="1.1" sy="1.1" sz="0.05"/>
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "cover2">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis="y" angle="-170"/>
+            <TRANSLATION x="0" y = "0" z="-1.65"/>
+            <SCALE sx="1.15" sy="1.1" sz="0.05"/>
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "cloth_hang">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "wood" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "leg1" />
+                <NODEREF id = "leg2" />
+            </DESCENDANTS>
+
+        </NODE>
+
+        <NODE id = "leg1">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "x" angle = "90" />
+            <TRANSLATION x = "3" y = "3" z = "-2.7" />
+
+            <DESCENDANTS>
+                <NODEREF id = "mainleg" />
+                <NODEREF id = "arm1" />
+                <NODEREF id = "arm2" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "leg2">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "x" angle = "90" />
+            <TRANSLATION x = "-3" y = "3" z = "-2.7" />
+
+            <DESCENDANTS>
+                <NODEREF id = "mainleg" />
+                <NODEREF id = "arm1" />
+                <NODEREF id = "arm2" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "mainleg">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <SCALE sx="0.5" sy ="0.5" sz="3" />
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "arm1">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "x" angle = "135"/>
+            <TRANSLATION x="0" y="0.2" z="0"/>
+            <SCALE sx="0.2" sy ="0.2" sz="0.5" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "arm2">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <ROTATION axis = "x" angle = "-135"/>
+            <TRANSLATION x="0" y="-0.2" z="0"/>
+            <SCALE sx="0.2" sy ="0.2" sz="0.5" />
+
+
+            <DESCENDANTS>
+                <NODEREF id = "cylPrimitive" />
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id = "quadPrimitive">
+            <MATERIAL id = "null" />
+            <TEXTURE id = "null" />
+
+            <DESCENDANTS>
+                <LEAF type = "rectangle" args="0 4 6 0" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "cylPrimitive">
+            <MATERIAL id = "null" />
+            <TEXTURE id ="null" />
+
+            <DESCENDANTS>
+                <LEAF type="cylinder" args="1.5 0.5 0.7 20 20 0 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id = "spherePrimitive">
+            <MATERIAL id = "null" />
+            <TEXTURE id ="null" />
+
+            <DESCENDANTS>
+                <LEAF type="sphere" args="0.3 20 20"/>
             </DESCENDANTS>
         </NODE>
     </NODES>
