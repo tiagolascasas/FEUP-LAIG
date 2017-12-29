@@ -16,5 +16,6 @@ Piece.prototype.place = function(table, pos, coord)
     this.table = table;
     this.pos = pos;
     this.coord = coord;
+    this.coord.y += 0.02;
     this.placed = true;
 };

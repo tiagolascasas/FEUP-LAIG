@@ -84,8 +84,8 @@ Interface.prototype.addGameOptions = function()
     groupC.add(scene, 'cameraID', ['Dynamic', 'Static', 'Free']).name("Camera");
     groupC.add(scene, 'currentScene', keys).name('Background scene');
     groupC.add(scene, 'currentTimeout', 0, 30).name("Time left for current player").listen();
-    groupC.add(scene, 'tablesBlack', 0, 5).name("Green's conquered tables").listen();
-    groupC.add(scene, 'tablesGreen', 0, 5).name("Black's conquered tables").listen();
+    groupC.add(scene, 'tablesGreen', 0, 5).name("Green's conquered tables").listen();
+    groupC.add(scene, 'tablesBlack', 0, 5).name("Black's conquered tables").listen();
     groupC.add(listeners, "undo").name("Undo move");
     groupC.add(listeners, "redo").name("Redo move");
     groupC.add(listeners, "resign").name("Resign from current match");

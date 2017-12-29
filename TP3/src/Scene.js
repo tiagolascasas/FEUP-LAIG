@@ -160,8 +160,6 @@ Scene.prototype.display = function()
     {
         this.multMatrix(this.graph.initialTransforms);
 
-		//this.axis.display();
-
         let i = 0;
         for (let key in this.lightValues)
         {
@@ -169,7 +167,7 @@ Scene.prototype.display = function()
             {
                 if (this.lightValues[key])
                 {
-                    this.lights[i].setVisible(true);
+                    this.lights[i].setVisible(false);
                     this.lights[i].enable();
                 }
                 else

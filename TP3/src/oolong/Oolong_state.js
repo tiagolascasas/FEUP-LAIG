@@ -161,7 +161,7 @@ Oolong.prototype.stateChoice = function(time)
             let delta = time - this.baseTimeout;
             this.baseTimeout = time;
             this.timeout -= delta;
-            this.scene.currentTimeout = Math.floor(this.timeout / 1000);
+            this.scene.currentTimeout = Math.floor(this.timeout / 1000) + 1;
             if (this.timeout <= 0)
             {
                 console.log("Timeout exceeded for player " + parent.currentPlayer);

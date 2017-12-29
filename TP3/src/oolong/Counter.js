@@ -8,6 +8,19 @@ function Counter(scene, label)
     this.plane = new PrimitiveRectangle(scene, 0, 1, 2, 0);
     this.plane.setTexCoords(2, 1);
 
+    this.material1 = new CGFappearance(scene);
+    this.material1.setAmbient(0.2, 0.2, 0.2, 1);
+    this.material1.setDiffuse(0.3, 0.3, 0.3, 1);
+    this.material1.setSpecular(0.8, 0.8, 0.8, 1);
+    this.material1.setShininess(200);
+    this.material1.loadTexture("scenes/textures/redmetal.jpg");
+
+    this.material2 = new CGFappearance(scene);
+    this.material2.setAmbient(0.2, 0.2, 0.2, 1);
+    this.material2.setDiffuse(0.7, 0.7, 0.7, 1);
+    this.material2.setSpecular(0.2, 0.2, 0.2, 1);
+    this.material2.setShininess(200);
+
     this.digits = {
         "0": new CGFtexture(this.scene, "scenes/textures/numbers/zero.png"),
         "1": new CGFtexture(this.scene, "scenes/textures/numbers/one.png"),
@@ -37,28 +50,32 @@ Counter.prototype.display = function(n)
         d0 = n.toString()[0];
         d1 = "0";
     }
-    console.log(d0 + "  " + d1);
 
     this.scene.pushMatrix();
+        this.material1.apply();
         this.triangle1.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+        this.material1.apply();
         this.triangle2.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+        this.material1.apply();
         this.scene.translate(2, 0, 0);
         this.scene.rotate(Math.PI, 0, 1, 0);
         this.plane.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+        this.material1.apply();
         this.scene.rotate(Math.PI / 2, 1, 0, 0);
         this.plane.display();
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+        this.material1.apply();
         this.scene.translate(0, 0, 1);
         this.scene.rotate(-Math.PI / 4, 1, 0, 0);
         this.scene.scale(1, Math.sqrt(2), 1);
@@ -66,6 +83,7 @@ Counter.prototype.display = function(n)
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+        this.material2.apply();
         this.digits[d1].bind();
         this.scene.translate(0.1, 0.1, 0.91);
         this.scene.rotate(-Math.PI / 4, 1, 0, 0);
@@ -74,6 +92,7 @@ Counter.prototype.display = function(n)
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+        this.material2.apply();
         this.digits[d0].bind();
         this.scene.translate(1.1, 0.1, 0.91);
         this.scene.rotate(-Math.PI / 4, 1, 0, 0);
@@ -82,6 +101,7 @@ Counter.prototype.display = function(n)
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
+        this.material2.apply();
         this.label.bind();
         this.scene.translate(0.1, 0.8, 0.201);
         this.scene.rotate(-Math.PI / 4, 1, 0, 0);

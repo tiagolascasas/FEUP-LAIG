@@ -83,6 +83,14 @@
             <file path="textures/table.jpg" />
             <amplif_factor s="1" t="1" />
         </TEXTURE>
+        <TEXTURE id="sideboard">
+            <file path="textures/sideboard.jpg" />
+            <amplif_factor s="2" t="1" />
+        </TEXTURE>
+        <TEXTURE id="waiter">
+            <file path="textures/waiter.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
     </TEXTURES>
 
     <MATERIALS>
@@ -113,10 +121,18 @@
 
         <MATERIAL id="white">
             <shininess value="1" />
-            <specular r="1.0" g="1.0" b="1.0" a="1" />
+            <specular r="0.2" g="0.2" b="0.2" a="1" />
             <diffuse r="1.0" g="1.0" b="1.0" a="1" />
-            <ambient r="1.0" g="1.0" b="1.0" a="1" />
-            <emission r="0.0" g="0.0" b="1.0" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+        </MATERIAL>
+
+        <MATERIAL id="metal">
+            <shininess value="250" />
+            <specular r="0.9" g="0.9" b="0.9" a="1" />
+            <diffuse r="0.2" g="0.2" b="0.2" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
         </MATERIAL>
 
         <MATERIAL id="red">
@@ -131,6 +147,22 @@
             <shininess value="1" />
             <specular r="0.2" g="0.2" b="0.2" a="1" />
             <diffuse r="1.0" g="0.71" b="0.75" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+        </MATERIAL>
+
+        <MATERIAL id="sideboard">
+            <shininess value="1" />
+            <specular r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="0.6" g="0.6" b="0.6" a="1" />
+            <ambient r="0.2" g="0.2" b="0.2" a="1" />
+            <emission r="0.0" g="0.0" b="0.0" a="1" />
+        </MATERIAL>
+
+        <MATERIAL id="flesh">
+            <shininess value="1" />
+            <specular r="0.2" g="0.2" b="0.2" a="1" />
+            <diffuse r="1" g="0.87" b="0.74" a="1" />
             <ambient r="0.2" g="0.2" b="0.2" a="1" />
             <emission r="0.0" g="0.0" b="0.0" a="1" />
         </MATERIAL>
@@ -324,9 +356,10 @@
         </NODE>
 
         <NODE id="primitiveCylinder" selectable="true">
-            <MATERIAL id="null" />
+            <MATERIAL id="metal" />
             <TEXTURE id="null" />
 
+            <SCALE sx="0.4" sy="1" sz="0.4" />
             <TRANSLATION x="0" y="-0.1" z="0"/>
             <ROTATION axis="x" angle="90" />
 
@@ -392,14 +425,49 @@
             <MATERIAL id="red" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="0.1" z="0"/>
+            <TRANSLATION x="0" y="0.05" z="0"/>
+
+            <DESCENDANTS>
+                <NODEREF id="waiterBall" />
+                <NODEREF id="waiterCone" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="waiterBall">
+            <MATERIAL id="flesh" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0" y="0.23" z="0"/>
 
             <DESCENDANTS>
                 <LEAF type="sphere" args="0.03 20 20"/>
             </DESCENDANTS>
         </NODE>
 
+        <NODE id="waiterCone">
+            <MATERIAL id="black" />
+            <TEXTURE id="waiter" />
 
+            <TRANSLATION x="0" y="0.0" z="0"/>
+            <ROTATION axis="x" angle="-90" />
+
+            <DESCENDANTS>
+                <LEAF type="cylinder" args="0.2 0.001 0.03 20 20 0 1"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="sideboard">
+            <MATERIAL id="sideboard" />
+            <TEXTURE id="sideboard" />
+
+            <TRANSLATION x="-0.2" y="0.001" z="-0.6" />
+            <ROTATION axis="y" angle="-90"/>
+            <ROTATION axis="x" angle="-90"/>
+
+            <DESCENDANTS>
+                <LEAF type="rectangle" args="1.2 0 0 0.4"/>
+            </DESCENDANTS>
+        </NODE>
 
     </NODES>
 

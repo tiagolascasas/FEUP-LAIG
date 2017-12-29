@@ -8,6 +8,7 @@ function Oolong(scene)
     this.blackPiece = this.graph.getNodeByID("blackPiece");
     this.table = this.graph.getNodeByID("roundTable");
     this.dish = this.graph.getNodeByID("dish");
+    this.sideboard = this.graph.getNodeByID("sideboard");
     this.cardinals = ['c', 'n', 's', 'e', 'w', 'nw', 'ne', 'sw', 'se'];
     this.matrix = mat4.identity(mat4.create());
     this.cameraAngle = 0;
@@ -100,7 +101,7 @@ Oolong.prototype.initPositions = function()
     for (let i = 0; i < 40; i++)
     {
         let x = 1.55 + (~~(i / 10)) * 0.1;
-        let y = 0;
+        let y = 0.002;
         let z = -0.4 + (i % 10) * 0.1;
         let green = new Piece(new Coord(x, y, z), 'g', 100 + i);
         let black = new Piece(new Coord(-x, y, z), 'b', 200 + i);
@@ -311,6 +312,16 @@ Oolong.prototype.display = function()
     }
 
     this.scene.pushMatrix();
+    this.scene.translate(-1.7, 0, 0);
+    this.graph.display("sideboard");
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    this.scene.translate(1.7, 0, 0);
+    this.graph.display("sideboard");
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
     let coord = this.calculateCoord(this.waiter.table, this.waiter.pos);
     this.scene.translate(coord.x, coord.y, coord.z);
     this.graph.display("waiter");
@@ -318,30 +329,32 @@ Oolong.prototype.display = function()
 
     this.scene.pushMatrix();
     coord = this.calculateCoord('nw', 'c');
-    this.scene.translate(coord.x - 0.9, coord.y, coord.z - 0.9);
+    this.scene.translate(coord.x - 0.9, coord.y - 0.01, coord.z - 0.9);
     this.scene.rotate(Math.PI / 4, 0, 1, 0);
-    this.displayCounter(this.counterTables, this.tablesGreen * 10 + this.tablesBlack);
+    let number = this.tablesGreen.toString() + this.tablesBlack.toString();
+    this.displayCounter(this.counterTables, number);
+    this.scene.popMatrix();
+
+    this.scene.pushMatrix();
+    coord = this.calculateCoord('se', 'c');
+    this.scene.translate(coord.x + 0.9, coord.y - 0.01, coord.z + 0.9);
+    this.scene.rotate(Math.PI + Math.PI / 4, 0, 1, 0);
+    number = this.tablesGreen.toString() + this.tablesBlack.toString();
+    this.displayCounter(this.counterTables, number);
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
     coord = this.calculateCoord('sw', 'c');
-    this.scene.translate(coord.x - 0.9, coord.y, coord.z + 0.9);
+    this.scene.translate(coord.x - 0.9, coord.y - 0.01, coord.z + 0.9);
     this.scene.rotate(Math.PI - Math.PI / 4, 0, 1, 0);
     this.displayCounter(this.counterTimeout, this.scene.currentTimeout);
     this.scene.popMatrix();
 
     this.scene.pushMatrix();
     coord = this.calculateCoord('ne', 'c');
-    this.scene.translate(coord.x + 0.9, coord.y, coord.z - 0.9);
+    this.scene.translate(coord.x + 0.9, coord.y - 0.01, coord.z - 0.9);
     this.scene.rotate(-Math.PI / 4, 0, 1, 0);
     this.displayCounter(this.counterTimeout, this.scene.currentTimeout);
-    this.scene.popMatrix();
-
-    this.scene.pushMatrix();
-    coord = this.calculateCoord('se', 'c');
-    this.scene.translate(coord.x + 0.9, coord.y, coord.z + 0.9);
-    this.scene.rotate(Math.PI + Math.PI / 4, 0, 1, 0);
-    this.displayCounter(this.counterTables, this.tablesGreen * 10 + this.tablesBlack);
     this.scene.popMatrix();
 
 };
