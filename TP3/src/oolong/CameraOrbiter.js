@@ -21,6 +21,15 @@ function CameraOrbiter(startPos, endPos, v)
 
 CameraOrbiter.prototype.calculateAngle = function(time)
 {
-    let da = this.startAngle + this.w * time;
-	return da >= this.endAngle ? null : da;
+    let da;
+    if (this.startAngle < this.endAngle)
+    {
+        da = this.startAngle + this.w * time;
+        return da >= this.endAngle ? null : da;
+    }
+    else
+    {
+        da = this.startAngle - this.w * time;
+        return da <= this.endAngle ? null : da;
+    }
 };
