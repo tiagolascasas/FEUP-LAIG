@@ -415,7 +415,7 @@
             <MATERIAL id="defaultMaterial" />
             <TEXTURE id="hp" />
 
-            <TRANSLATION x="0" y="0" z="0.5"/>
+            <TRANSLATION x="0" y="0" z="0.501"/>
 
             <DESCENDANTS>
                 <LEAF  type="rectangle" args="-0.9 0.4 0.9 -0.4" />
