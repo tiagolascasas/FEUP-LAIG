@@ -373,7 +373,6 @@
                 <NODEREF id="tv_sec" />
                 <NODEREF id="tv_thrd" />
                 <NODEREF id="tv_screen" />
-                <NODEREF id="tv_antenna" />
             </DESCENDANTS>
         </NODE>
 
@@ -388,7 +387,6 @@
             </DESCENDANTS>
         </NODE>
 
-        <!-- Television second box -->
         <NODE id="tv_sec">
             <MATERIAL id="null" />
             <TEXTURE id="null" />
@@ -425,54 +423,7 @@
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="tv_antenna">
-            <MATERIAL id="null" />
-            <TEXTURE id="null" />
 
-            <TRANSLATION x="0.5" y="0.5025" z="0"/>
-            <ROTATION axis="y" angle="-30"/>
-
-            <DESCENDANTS>
-                <NODEREF id="tv_antenna_base" />
-                <NODEREF id="tv_antenna_wire_l" />
-                <NODEREF id="tv_antenna_wire_r" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="tv_antenna_base">
-            <MATERIAL id="null" />
-            <TEXTURE id="null" />
-
-            <SCALE sx="0.15" sy="0.005" sz="0.15" />
-
-            <DESCENDANTS>
-                <LEAF type="sphere" args="2 5 20" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="tv_antenna_wire_l">
-            <MATERIAL id="null" />
-            <TEXTURE id="null" />
-
-            <ROTATION axis="z" angle="-20"/>
-            <ROTATION axis="x" angle="-90"/>
-
-            <DESCENDANTS>
-                <LEAF type="cylinder" args="0.7 0.01 0.01 5 5 0 0" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="tv_antenna_wire_r">
-            <MATERIAL id="null" />
-            <TEXTURE id="null" />
-
-            <ROTATION axis="z" angle="30"/>
-            <ROTATION axis="x" angle="-90"/>
-
-            <DESCENDANTS>
-                <LEAF type="cylinder" args="0.5 0.01 0.01 5 5 0 0" />
-            </DESCENDANTS>
-        </NODE>
 
         <NODE id="cube">
             <MATERIAL id="null" />
