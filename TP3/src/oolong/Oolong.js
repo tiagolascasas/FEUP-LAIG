@@ -67,10 +67,12 @@ Oolong.prototype.init = function(mode, difficulty, timeout)
             break;
     }
 
+    //variables that are not reset every turn change or otherwise need initialization
     this.running = true;
     this.readyForTurn = true;
     this.tablesBlack = 0;
     this.tablesGreen = 0;
+    this.cameraAngle = 0;
 };
 
 Oolong.prototype.initPositions = function()

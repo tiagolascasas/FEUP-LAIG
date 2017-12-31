@@ -18,7 +18,6 @@ Oolong.prototype.resetState = function()
     this.retry = false;
     this.startCamera = false;
     this.cameraPanning = false;
-    this.cameraAngle = 0;
     this.timeout = this.timeoutValue;
     this.baseTimeout = 0;
     this.timeoutSet = false;

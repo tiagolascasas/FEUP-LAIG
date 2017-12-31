@@ -103,7 +103,7 @@ Counter.prototype.display = function(n)
     this.scene.pushMatrix();
         this.material2.apply();
         this.label.bind();
-        this.scene.translate(0.1, 0.8, 0.201);
+        this.scene.translate(0.1, 0.8, 0.21);
         this.scene.rotate(-Math.PI / 4, 1, 0, 0);
         this.scene.scale(0.9, 0.2, 0.4);
         this.plane.display();
