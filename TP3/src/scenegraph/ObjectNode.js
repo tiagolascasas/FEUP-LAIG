@@ -51,6 +51,7 @@ ObjectNode.prototype.addAnimation = function(anim)
   * Displays all the primitives the node has, changing their
   * texture coordinates based on the current texture's properties
   * @param {ObjectTexture} currTex - the current texture object
+  * @param {Number} pickID - the pick id to register the primitives to. Does nothing if it is -1
   */
 ObjectNode.prototype.displayPrimitives = function(currTex, pickID)
 {

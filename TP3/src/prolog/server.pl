@@ -112,6 +112,7 @@ parse_input(quit, goodbye).
 test(_,[],N) :- N =< 0.
 test(A,[A|Bs],N) :- N1 is N-1, test(A,Bs,N1).
 
+% Requests to manipulate Oolong's state
 parse_input(request_quit, 000-goodbye).
 parse_input(request_init, '001/Game initialized') :- request_init.
 parse_input(request_start_1vs1, '002/1vs1 started') :- request_start_1vs1.

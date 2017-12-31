@@ -1,4 +1,6 @@
 <SCENE>
+    <!--Main LSX file for the game. Holds the scene initial variables and the lighting information as
+    well as objects to represent various elements of the table and board-->
 
     <!-- Initial values -->
     <INITIALS>

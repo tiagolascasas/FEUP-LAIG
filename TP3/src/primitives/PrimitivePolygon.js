@@ -1,9 +1,11 @@
 "use strict";
 
 /**
- * PrimitivePolygon
- * @param gl {WebGLRenderingContext}
+ * Primitive that represents a regular polygon with a given
+ * number of edges
  * @constructor
+ * @param {CGFscene} scene - the scene to which this primitive will belong
+ * @param {Number} [edges=3] - the number of edges of this polygon
  */
 function PrimitivePolygon(scene, edges)
 {

@@ -142,7 +142,8 @@ ObjectGraph.prototype.update = function(currTime)
   * Starts the display process of the graph by resetting the
   * textures and materials stacks and by initiating a recursive
   * depth-first search through the graph from the root node
-  * @param {String} [rootNode] - the node to start from. Uses default root node if not specified
+  * @param {String} [rootNode="root"] - the node to start from. Uses default root node if not specified
+  * @param {Number} [pickID=-1] - the pick id to register any primitives drawn
   */
 ObjectGraph.prototype.display = function(rootNode, pickID)
 {
@@ -158,6 +159,7 @@ ObjectGraph.prototype.display = function(rootNode, pickID)
   * objects of the graph, applying their transformations,
   * textures and materials accordingly
   * @param {ObjectNode} node - the current node
+  * @param {Number} pickID - the pick id to register any primitives drawn
   */
 ObjectGraph.prototype.displayObjects = function(node, pickID)
 {

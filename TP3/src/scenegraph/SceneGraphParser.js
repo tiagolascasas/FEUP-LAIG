@@ -14,6 +14,9 @@ let NODES_INDEX = 6;
  * an ObjectGraph with the nodes information, and also holds all the configuration and lights
  * definitions
  * @constructor
+ * @param {String} filename - the name of the LSX file containing the graph information
+ * @param {CGFscene} scene - the scene to bind this graph to
+ * @param {Boolean} initScene - indicates whether the initials, illumination and lights information of the file should be applied to the scene or ignored
  */
 function SceneGraphParser(filename, scene, initScene)
 {
@@ -94,7 +97,7 @@ SceneGraphParser.prototype.parseLSXFile = function(rootElement)
 
     let error;
     let index;
-    
+
     // Processes each node, verifying errors.
 
     if (this.initScene)
