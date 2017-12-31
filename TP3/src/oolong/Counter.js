@@ -1,5 +1,11 @@
 "use strict";
 
+/**
+  * Represents a counter object, which displays two digits and a label
+  * @constructor
+  * @param {CGFscene} scene - the scene to which this counter is bound to
+  * @param {String} label - the path to the label's texture
+  */
 function Counter(scene, label)
 {
     this.scene = scene;
@@ -37,11 +43,20 @@ function Counter(scene, label)
 }
 Counter.prototype.constructor = Counter;
 
+/**
+  * Displays the counter with the digits set to a given number
+  * @param {Number} n - the number to display. Must be lower or equal than 99
+  */
 Counter.prototype.display = function(n)
 {
     let d0;
     let d1;
-    if (n > 9)
+
+    if (n > 99)
+    {
+        return;
+    }
+    else if (n > 9)
     {
         d0 = n.toString()[1];
         d1 = n.toString()[0];

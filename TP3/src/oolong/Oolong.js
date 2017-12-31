@@ -1,5 +1,11 @@
 "use strict";
 
+/**
+  * Represents an Oolong game, managing the connection to the SICStus server,
+  * processing the requests and displaying the board
+  * @constructor
+  * @param {Scene} scene - the scene this Oolong instance is associated to
+  */
 function Oolong(scene)
 {
     this.scene = scene;
@@ -22,6 +28,12 @@ function Oolong(scene)
     this.initPositions();
 }
 
+/**
+  * Initializes a new Oolong match
+  * @param {String} mode - the game mode
+  * @param {String} difficulty - the AI's difficulty
+  * @param {Number} timeout - the human player's turn timeout, in seconds
+  */
 Oolong.prototype.init = function(mode, difficulty, timeout)
 {
     //immutable during the match
@@ -75,6 +87,9 @@ Oolong.prototype.init = function(mode, difficulty, timeout)
     this.cameraAngle = 0;
 };
 
+/**
+  * Initializes the coordinates of the pieces, tables and dishes
+  */
 Oolong.prototype.initPositions = function()
 {
     const mid = Math.cos(Math.PI / 4);
@@ -139,6 +154,11 @@ Oolong.prototype.updatePickedElements = function(pickID)
     }
 };
 
+/**
+  * Calculates the 3D coordinate of a dish
+  * @param {String} table - the cardinal coordinate of the table the dish belongs to
+  * @param {String} pos - the position of the dish inside the table (cardinal coordinate)
+  */
 Oolong.prototype.calculateCoord = function(table, pos)
 {
     let mid = Math.cos(Math.PI / 4);
@@ -166,14 +186,18 @@ Oolong.prototype.calculateCoord = function(table, pos)
     }
 };
 
-Oolong.prototype.request = function(answer)
+/**
+  * Makes a request to the SICStus server, handling its answer using two inline functions
+  * @param {String} requestString - the request
+  */
+Oolong.prototype.request = function(requestString)
 {
-    answer = "request_" + answer;
+    requestString = "request_" + requestString;
     let requestPort = 8081;
     let request = new XMLHttpRequest();
     let parent = this;
 
-    request.open('GET', 'http://localhost:' + requestPort + '/' + answer, true);
+    request.open('GET', 'http://localhost:' + requestPort + '/' + requestString, true);
     request.onload = function(data)
     {
         let code = parseInt(data.target.response.split("/")[0]);
@@ -273,6 +297,9 @@ Oolong.prototype.request = function(answer)
     request.send();
 };
 
+/**
+  * Displays the current Oolong board
+  */
 Oolong.prototype.display = function()
 {
     for (let pos in this.tables)
@@ -368,6 +395,11 @@ Oolong.prototype.display = function()
 
 };
 
+/**
+  * Displays a counter
+  * @param {Counter} counter - the counter to display
+  * @param {Number} val - the value to set the counter to
+  */
 Oolong.prototype.displayCounter = function(counter, val)
 {
     this.scene.pushMatrix();
@@ -379,6 +411,9 @@ Oolong.prototype.displayCounter = function(counter, val)
     this.scene.popMatrix();
 };
 
+/**
+  * Undoes the last move
+  */
 Oolong.prototype.undo = function()
 {
     console.log("Undo");
@@ -393,6 +428,9 @@ Oolong.prototype.undo = function()
     }
 };
 
+/**
+  * Redoes the last cancelled move
+  */
 Oolong.prototype.redo = function()
 {
     console.log("Redo");
@@ -407,6 +445,10 @@ Oolong.prototype.redo = function()
     }
 };
 
+/**
+  * Changes the current board using a state
+  * @param {State} state - the new state
+  */
 Oolong.prototype.setState = function(state)
 {
     let waiter = state.waiter.split("-");
@@ -424,6 +466,11 @@ Oolong.prototype.setState = function(state)
     this.readyForTurn = true;
 };
 
+/**
+  * Parses a board from the notation returned by the server
+  * into an array and adds it to the state list
+  * @param {String} board - the board in the notation used by Prolog
+  */
 Oolong.prototype.parseBoard = function(board)
 {
     let positions = board.split(",");
@@ -441,6 +488,11 @@ Oolong.prototype.parseBoard = function(board)
     this.stateList.addState(positions, waiter);
 };
 
+/**
+  * Converts a board to the notation used by Prolog
+  * @param {Array} board - the board to convert
+  * @return {String} the converted board
+  */
 Oolong.prototype.convertBoardToProlog = function(board)
 {
     let prologBoard = [];
@@ -455,6 +507,10 @@ Oolong.prototype.convertBoardToProlog = function(board)
     return prologString;
 };
 
+/**
+  * Returns the currently picked dish
+  * @return {Dish} the currently picked dish. null if no dish is picked
+  */
 Oolong.prototype.getPickedDish = function()
 {
     for (let table in this.dishes)
@@ -468,6 +524,10 @@ Oolong.prototype.getPickedDish = function()
     return null;
 };
 
+/**
+  * Returns the currently picked piece
+  * @return {Piece} the currently picked piece. null if no piece is picked
+  */
 Oolong.prototype.getPickedPiece = function()
 {
     let currPlayer = this.currentPlayer[0];
@@ -483,6 +543,11 @@ Oolong.prototype.getPickedPiece = function()
     return null;
 };
 
+/**
+  * Returns a random unplaced piece that belongs to the current player. Ends the game
+  * if there isn't any piece left
+  * @return {Piece} the selected piece
+  */
 Oolong.prototype.getRandomPiece = function()
 {
     let currPlayer = this.currentPlayer[0];
@@ -496,6 +561,9 @@ Oolong.prototype.getRandomPiece = function()
     this.running = false;
 };
 
+/**
+  * Unplaces all pieces and sets them back to their original positions
+  */
 Oolong.prototype.resetAllPieces = function()
 {
     for (let i = 0; i < this.pieces.length; i++)
@@ -505,6 +573,12 @@ Oolong.prototype.resetAllPieces = function()
     }
 };
 
+/**
+  * Places a random piece
+  * @param {String} color - the color of the piece
+  * @param {String} table - the table of the piece
+  * @param {String} pos - the dish of the piece
+  */
 Oolong.prototype.placeRandomPiece = function(color, table, pos)
 {
     if (table == "null" || pos == "null")
@@ -519,6 +593,9 @@ Oolong.prototype.placeRandomPiece = function(color, table, pos)
     }
 };
 
+/**
+  * Resigns the current player, making the other win
+  */
 Oolong.prototype.resignCurrentPlayer = function()
 {
     this.running = false;
@@ -527,6 +604,9 @@ Oolong.prototype.resignCurrentPlayer = function()
     console.log("Player " + this.winner + " wins!");
 };
 
+/**
+  * Displays an orb with the winner, using a shader to inflate/deflate it
+  */
 Oolong.prototype.displayCurrentWinner = function()
 {
     if (!this.running && this.winnerIsSet)

@@ -1,5 +1,13 @@
 "use strict";
 
+/**
+  * This class represents a very simple animation for the camera between
+  * two cardinal points, calculating its angle at a given time
+  * @constructor
+  * @param {String} startPos - the start coordinate (cardinal point)
+  * @param {String} endPos - the end coordinate (cardinal point)
+  * @param {Number} v - the velocity of the animation, in 3Dunits/ms
+  */
 function CameraOrbiter(startPos, endPos, v)
 {
     this.radius = 2;
@@ -19,6 +27,11 @@ function CameraOrbiter(startPos, endPos, v)
     this.endAngle = this.angles[endPos] * Math.PI / 180;
 }
 
+/**
+  * Calculates the camera angle at a given instant
+  * @param {Number} time - time elapsed since the start of the animation in ms
+  * @return {Number} the camera angle if time is within the animation's range, null otherwise
+  */
 CameraOrbiter.prototype.calculateAngle = function(time)
 {
     let da;

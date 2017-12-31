@@ -1,3 +1,8 @@
+//Oolong methods that manage its internal state machine
+
+/**
+  * Resets the state machine flags to the values they have at the beginning of a turn
+  */
 Oolong.prototype.resetState = function()
 {
     //altered during the match
@@ -40,6 +45,10 @@ Oolong.prototype.resetState = function()
     this.requestedBoard = false;
 };
 
+/**
+  * Updates the state machine
+  * @param {Number} time - the system time in milliseconds
+  */
 Oolong.prototype.update = function(time)
 {
     if (!this.running)
@@ -77,6 +86,10 @@ Oolong.prototype.update = function(time)
         this.stateUpdate();
 };
 
+/**
+  * Manages the state machine when the current state is the beginning of a turn
+  * @param {Number} time - the system time in milliseconds
+  */
 Oolong.prototype.stateTurn = function(time)
 {
     if (!this.requestedPlayerType && !this.startCamera && !this.cameraPanning)
@@ -139,6 +152,10 @@ Oolong.prototype.stateTurn = function(time)
     }
 };
 
+/**
+  * Manages the state machine when the current state is the player picking a piece
+  * @param {Number} time - the system time in milliseconds
+  */
 Oolong.prototype.stateChoice = function(time)
 {
     //if current player is human, get position from him
@@ -209,6 +226,10 @@ Oolong.prototype.stateChoice = function(time)
     }
 };
 
+/**
+  * Manages the state machine when the current state is a piece moving to its destination
+  * @param {Number} time - the system time in milliseconds
+  */
 Oolong.prototype.stateMove = function(time)
 {
     if (!this.requestedMovePiece)
@@ -251,6 +272,9 @@ Oolong.prototype.stateMove = function(time)
     }
 };
 
+/**
+  * Manages the state machine when the current state is checking if the game is over
+  */
 Oolong.prototype.stateVictory = function()
 {
     this.readyForVictory = false;
@@ -258,6 +282,10 @@ Oolong.prototype.stateVictory = function()
     this.requestedWinner = true;
 };
 
+/**
+  * Manages the state machine when the current state is at the end of a full turn,
+  * updating the state list
+  */
 Oolong.prototype.stateUpdate = function()
 {
     //request board
