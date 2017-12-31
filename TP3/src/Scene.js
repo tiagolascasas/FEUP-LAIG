@@ -237,6 +237,9 @@ Scene.prototype.update = function(currTime)
 	this.customShader.setUniformsValues({timeFactor: factor, scaleFactor: 1 / this.scaleFactor, component: -1});
 };
 
+/**
+  * Updates the Oolong object with the currently picked objects
+  */
 Scene.prototype.processPicking = function ()
 {
 	if (this.pickMode == false)

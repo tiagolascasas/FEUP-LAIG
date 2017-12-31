@@ -44,6 +44,9 @@ Interface.prototype.addLightsGroup = function(lights)
     }
 }
 
+/**
+  * Adds the game options to the interface
+  */
 Interface.prototype.addGameOptions = function()
 {
     let scene = this.scene;
