@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: primitives/PrimitiveTriangle.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: primitives/PrimitiveTriangle.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>"use strict";
+
+/**
+ * Primitive that represents a triangle defined by its 3 points
+ * @constructor
+ * @param {CGFScene} scene - the scene to which this primitive will belong
+ * @param {int} x1 - X coordinate of the first point
+ * @param {int} y1 - Y coordinate of the first point
+ * @param {int} z1 - Z coordinate of the first point
+ * @param {int} x2 - X coordinate of the second point
+ * @param {int} y2 - Y coordinate of the second point
+ * @param {int} z2 - Z coordinate of the second point
+ * @param {int} x3 - X coordinate of the third point
+ * @param {int} y3 - Y coordinate of the third point
+ * @param {int} z3 - Z coordinate of the third point
+ */
+function PrimitiveTriangle(scene, x1, y1, z1, x2, y2, z2, x3, y3, z3)
+{
+	CGFobject.call(this, scene);
+
+	this.ampT = null;
+	this.ampS = null;
+
+	this.initBuffers(x1, y1, z1, x2, y2, z2, x3, y3, z3);
+};
+
+PrimitiveTriangle.prototype = Object.create(CGFobject.prototype);
+PrimitiveTriangle.prototype.constructor=PrimitiveTriangle;
+
+/**
+  * Initializes the triangle's buffers
+  */
+PrimitiveTriangle.prototype.initBuffers = function (x1, y1, z1, x2, y2, z2, x3, y3, z3)
+{
+	let vertex_A = vec3.fromValues(x1,y1,z1);
+	let vertex_B = vec3.fromValues(x2,y2,z2);
+	let vertex_C = vec3.fromValues(x3,y3,z3);
+
+	let AB = vec3.create();
+	vec3.sub(AB,vertex_B,vertex_A);
+	let AC = vec3.create();
+	vec3.sub(AC,vertex_C,vertex_A);
+
+	this.vertices = [
+		x1, y1, z1,
+		x2, y2, z2,
+		x3, y3, z3
+	];
+
+	this.indices = [
+		0, 1, 2
+	];
+
+	// Normals
+	let N = vec3.create();
+	vec3.cross(N,AB,AC);
+	vec3.normalize(N,N);
+
+	this.normals = [
+		N[0],N[1],N[2],
+		N[0],N[1],N[2],
+		N[0],N[1],N[2]
+	];
+
+	//Dot Product to get the angle
+	let beta = Math.acos(vec3.dot(AB,AC)/(vec3.len(AB)*vec3.len(AC)));
+
+	//TexCoords of the top vertex, C
+	let C = [Math.cos(beta) * vec3.len(AC), Math.sin(beta) * vec3.len(AC)];
+
+	this.texCoords = [
+		0, 0,
+		vec3.length(AB), 0,
+		C[0], C[1]
+	];
+
+	this.primitiveType=this.scene.gl.TRIANGLES;
+	this.initGLBuffers();
+};
+
+/**
+  * Applies texture amplification factors to the texture coordinates
+  * @param {int} ampS - amplification factor in the S dimension
+  * @param {int} ampT - amplification factor in the T dimension
+  */
+PrimitiveTriangle.prototype.setTexCoords = function (ampS, ampT)
+{
+	if (this.ampS == ampS &amp;&amp; this.ampT == ampT)
+		return;
+
+	this.ampS = ampS;
+	this.ampT = ampT;
+
+	for (let i = 0; i &lt; this.texCoords.length; i+=2) {
+		this.texCoords[i] = this.texCoords[i]/this.ampS;
+		this.texCoords[i+1] = this.texCoords[i+1]/this.ampT;
+	}
+
+	this.updateTexCoordsGLBuffers();
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Animation.html">Animation</a></li><li><a href="BezierAnimation.html">BezierAnimation</a></li><li><a href="CameraOrbiter.html">CameraOrbiter</a></li><li><a href="CircularAnimation.html">CircularAnimation</a></li><li><a href="ComboAnimation.html">ComboAnimation</a></li><li><a href="Coord.html">Coord</a></li><li><a href="Counter.html">Counter</a></li><li><a href="Dish.html">Dish</a></li><li><a href="Interface.html">Interface</a></li><li><a href="LinearAnimation.html">LinearAnimation</a></li><li><a href="ObjectGraph.html">ObjectGraph</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="ObjectTexture.html">ObjectTexture</a></li><li><a href="Oolong.html">Oolong</a></li><li><a href="Piece.html">Piece</a></li><li><a href="PrimitiveCylinder.html">PrimitiveCylinder</a></li><li><a href="PrimitiveNURBS.html">PrimitiveNURBS</a></li><li><a href="PrimitivePolygon.html">PrimitivePolygon</a></li><li><a href="PrimitiveRectangle.html">PrimitiveRectangle</a></li><li><a href="PrimitiveSphere.html">PrimitiveSphere</a></li><li><a href="PrimitiveTriangle.html">PrimitiveTriangle</a></li><li><a href="Scene.html">Scene</a></li><li><a href="SceneGraphParser.html">SceneGraphParser</a></li><li><a href="SimpleLinearAnimation.html">SimpleLinearAnimation</a></li><li><a href="State.html">State</a></li><li><a href="StateList.html">StateList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Dec 31 2017 18:14:02 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

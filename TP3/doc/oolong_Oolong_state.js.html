@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: oolong/Oolong_state.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: oolong/Oolong_state.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>//Oolong methods that manage its internal state machine
+
+/**
+  * Resets the state machine flags to the values they have at the beginning of a turn
+  */
+Oolong.prototype.resetState = function()
+{
+    //altered during the match
+    this.currentPickedPiece = -1;
+    this.currentPickedDish = -1;
+    this.newPick = false;
+    this.moveIsValid = false;
+    this.currentPlayer = "none";
+    this.currentPlayerType = false;
+    this.winner = "none";
+    this.winnerIsSet = false;
+    this.aiMove = null;
+    this.aiMoveReady = false;
+    this.startedMoving = false;
+    this.board = null;
+    this.doneUpdating = false;
+    this.move = null;
+    this.retry = false;
+    this.startCamera = false;
+    this.cameraPanning = false;
+    this.timeout = this.timeoutValue;
+    this.baseTimeout = 0;
+    this.timeoutSet = false;
+
+    //state machine breakpoints
+    this.readyForTurn = false;
+    this.readyForChoice = false;
+    this.readyForMove = false;
+    this.readyForAnimation = false;
+    this.readyForVictory = false;
+    this.readyForUpdate = false;
+
+    //server request flags
+    this.requestedMove = false;
+    this.requestedMovePiece = false;
+    this.requestedPlayer = false;
+    this.requestedPlayerType = false;
+    this.requestedWinner = false;
+    this.requestedWaiterTable = false;
+    this.requestedBoard = false;
+};
+
+/**
+  * Updates the state machine
+  * @param {Number} time - the system time in milliseconds
+  */
+Oolong.prototype.update = function(time)
+{
+    if (!this.running)
+        return;
+
+    //get current player and its type
+    if (this.readyForTurn)
+        this.stateTurn(time);
+
+    //current player chooses a piece and a position
+    if (this.readyForChoice)
+        this.stateChoice(time);
+
+    //move the piece
+    if (this.readyForMove)
+        this.stateMove(time);
+
+    //check for victory
+    if (!this.requestedWinner &amp;&amp; this.readyForVictory)
+        this.stateVictory();
+
+    //end game if one of the players wins
+    if (this.winnerIsSet)
+    {
+        if (this.winner == "black" || this.winner == "green")
+        {
+            console.log(this.winner + " player wins!");
+            this.running = false;
+            return;
+        }
+    }
+
+    //update board
+    if (this.readyForUpdate)
+        this.stateUpdate();
+};
+
+/**
+  * Manages the state machine when the current state is the beginning of a turn
+  * @param {Number} time - the system time in milliseconds
+  */
+Oolong.prototype.stateTurn = function(time)
+{
+    if (!this.requestedPlayerType &amp;&amp; !this.startCamera &amp;&amp; !this.cameraPanning)
+    {
+        this.request("current_player_type");
+        this.requestedPlayerType = true;
+    }
+
+    if (!this.requestedPlayer &amp;&amp; !this.startCamera &amp;&amp; !this.cameraPanning)
+    {
+        this.request("current_player");
+        this.requestedPlayer = true;
+    }
+
+    if ((!this.requestedTableBlack || !this.requestedTableGreen) &amp;&amp; !this.startCamera &amp;&amp; !this.cameraPanning)
+    {
+        this.request("n_tables(black)");
+        this.request("n_tables(green)");
+        this.requestedTableBlack = true;
+        this.requestedTableGreen = true;
+    }
+
+    if (!this.requestedWaiterTable &amp;&amp; !this.startCamera &amp;&amp; !this.cameraPanning)
+    {
+        this.request("waiter_pos");
+        this.requestedWaiterTable = true;
+    }
+
+    if (this.startCamera)
+    {
+        let startTable = this.previousWaiter.table;
+        let endTable = this.waiter.table;
+
+        if (startTable == endTable)
+        {
+            this.readyForTurn = false;
+            this.readyForChoice = true;
+            return;
+        }
+
+        this.cameraPan = new CameraOrbiter(startTable, endTable, 0.004);
+        this.baseTime = time;
+        this.cameraPanning = true;
+        this.startCamera = false;
+        this.stateList.updateCurrentWaiter(this.waiter.table + "-" + this.waiter.pos);
+    }
+
+    if (this.cameraPanning)
+    {
+        time -=  this.baseTime;
+        let angle = this.cameraPan.calculateAngle(time);
+
+        if (angle != null)
+            this.cameraAngle = angle;
+        else
+        {
+            this.readyForTurn = false;
+            this.readyForChoice = true;
+        }
+    }
+};
+
+/**
+  * Manages the state machine when the current state is the player picking a piece
+  * @param {Number} time - the system time in milliseconds
+  */
+Oolong.prototype.stateChoice = function(time)
+{
+    //if current player is human, get position from him
+    if (this.currentPlayerType == "human")
+    {
+        let piece = this.getPickedPiece();
+        let dish = this.getPickedDish();
+        let parent = this;
+
+        if (!this.timeoutSet)
+        {
+            this.baseTimeout = time;
+            this.timeoutSet = true;
+        }
+        else
+        {
+            let delta = time - this.baseTimeout;
+            this.baseTimeout = time;
+            this.timeout -= delta;
+            this.scene.currentTimeout = Math.floor(this.timeout / 1000) + 1;
+            if (this.timeout &lt;= 0)
+            {
+                console.log("Timeout exceeded for player " + parent.currentPlayer);
+                this.resignCurrentPlayer();
+            }
+        }
+
+        if (piece == null || dish == null)
+            return;
+
+        if (!this.requestedMove)
+        {
+            this.request("move_human(" + dish.table + "-" + dish.pos + ")");
+            this.requestedMove = true;
+        }
+        if (this.moveIsValid)
+        {
+            clearTimeout(this.timeout);
+            this.timeout = null;
+            this.currentPickedDish = dish;
+            this.currentPickedPiece = piece;
+            this.readyForChoice = false;
+            this.readyForMove = true;
+            this.move = dish.pos;
+        }
+    }
+    //if current player is AI, ask the logic to generate a move
+    if (this.currentPlayerType == "ai")
+    {
+        this.currentPickedDish = -1;
+        this.currentPickedPiece = -1;
+        this.newPick = false;
+
+        if (!this.requestedMove)
+        {
+            this.request("move_AI");
+            this.requestedMove = true;
+        }
+        if (this.aiMoveReady == true)
+        {
+            this.aiMoveReady = false;
+            this.currentPickedDish = this.dishes[this.waiter.table][this.aiMove];
+            this.currentPickedPiece = this.getRandomPiece();
+            this.readyForChoice = false;
+            this.readyForMove = true;
+            this.move = this.aiMove;
+        }
+    }
+};
+
+/**
+  * Manages the state machine when the current state is a piece moving to its destination
+  * @param {Number} time - the system time in milliseconds
+  */
+Oolong.prototype.stateMove = function(time)
+{
+    if (!this.requestedMovePiece)
+    {
+        this.request("move(" + this.move + ")");
+        this.requestedMovePiece = true;
+    }
+
+    if (!this.startedMoving &amp;&amp; this.readyForAnimation)
+    {
+        let origin = this.currentPickedPiece.coord;
+        let dest = this.currentPickedDish.coord;
+
+        let p1 = [origin.x, origin.y, origin.z];
+        let p2 = [origin.x, origin.y + 1, origin.z];
+        let p3 = [dest.x, dest.y + 1, dest.z];
+        let p4 = [dest.x, dest.y + 0.1, dest.z];
+
+        this.bezier = new BezierAnimation(0.002, [p1, p2, p3, p4]);
+        this.baseTime = time;
+        this.startedMoving = true;
+    }
+    if (this.startedMoving &amp;&amp; this.readyForAnimation)
+    {
+        time -= this.baseTime;
+        let mat = this.bezier.calculateMatrix(time);
+        if (mat != null)
+            this.matrix = mat;
+        else
+        {
+            this.readyForAnimation = false;
+            this.matrix = mat4.identity(mat4.create());
+            this.readyForMove = false;
+            this.readyForVictory = true;
+            let pos = this.currentPickedDish.pos;
+            let table = this.currentPickedDish.table;
+            let coord = this.calculateCoord(table, pos);
+            this.currentPickedPiece.place(table, pos, coord);
+        }
+    }
+};
+
+/**
+  * Manages the state machine when the current state is checking if the game is over
+  */
+Oolong.prototype.stateVictory = function()
+{
+    this.readyForVictory = false;
+    this.request("victory");
+    this.requestedWinner = true;
+};
+
+/**
+  * Manages the state machine when the current state is at the end of a full turn,
+  * updating the state list
+  */
+Oolong.prototype.stateUpdate = function()
+{
+    //request board
+    if (!this.requestedBoard)
+    {
+        this.request("board");
+        this.requestedBoard = true;
+    }
+
+    if (this.board != null)
+    {
+        this.parseBoard(this.board);
+        this.doneUpdating = true;
+    }
+
+    if (this.doneUpdating)
+    {
+        this.resetState();
+        //back at beginning
+        this.readyForTurn = true;
+    }
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Animation.html">Animation</a></li><li><a href="BezierAnimation.html">BezierAnimation</a></li><li><a href="CameraOrbiter.html">CameraOrbiter</a></li><li><a href="CircularAnimation.html">CircularAnimation</a></li><li><a href="ComboAnimation.html">ComboAnimation</a></li><li><a href="Coord.html">Coord</a></li><li><a href="Counter.html">Counter</a></li><li><a href="Dish.html">Dish</a></li><li><a href="Interface.html">Interface</a></li><li><a href="LinearAnimation.html">LinearAnimation</a></li><li><a href="ObjectGraph.html">ObjectGraph</a></li><li><a href="ObjectNode.html">ObjectNode</a></li><li><a href="ObjectTexture.html">ObjectTexture</a></li><li><a href="Oolong.html">Oolong</a></li><li><a href="Piece.html">Piece</a></li><li><a href="PrimitiveCylinder.html">PrimitiveCylinder</a></li><li><a href="PrimitiveNURBS.html">PrimitiveNURBS</a></li><li><a href="PrimitivePolygon.html">PrimitivePolygon</a></li><li><a href="PrimitiveRectangle.html">PrimitiveRectangle</a></li><li><a href="PrimitiveSphere.html">PrimitiveSphere</a></li><li><a href="PrimitiveTriangle.html">PrimitiveTriangle</a></li><li><a href="Scene.html">Scene</a></li><li><a href="SceneGraphParser.html">SceneGraphParser</a></li><li><a href="SimpleLinearAnimation.html">SimpleLinearAnimation</a></li><li><a href="State.html">State</a></li><li><a href="StateList.html">StateList</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Dec 31 2017 18:14:02 GMT+0000 (GMT Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
